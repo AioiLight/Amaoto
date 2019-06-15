@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animation\Animator.cs" />
     <Compile Include="ConfigManager.cs" />
     <Compile Include="Counter.cs" />
     <Compile Include="FontRender.cs" />
@@ -71,5 +72,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
