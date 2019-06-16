@@ -9,7 +9,7 @@ namespace Amaoto.Animation
     /// <summary>
     /// アニメーター抽象クラス、
     /// </summary>
-    abstract class Animator
+    public abstract class Animator
     {
         /// <summary>
         /// アニメーターを初期化します。
@@ -54,7 +54,10 @@ namespace Amaoto.Animation
         {
             Counter?.Tick();
         }
-
+        /// <summary>
+        /// アニメーターの現在の値を返します。
+        /// </summary>
+        /// <returns>現在の値。</returns>
         public abstract object GetAnimation();
 
 
