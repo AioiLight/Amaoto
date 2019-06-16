@@ -53,6 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\Animator.cs" />
+    <Compile Include="Animation\EaseIn.cs" />
+    <Compile Include="Animation\EaseInOut.cs" />
+    <Compile Include="Animation\EaseOut.cs" />
+    <Compile Include="Animation\FadeIn.cs" />
     <Compile Include="Animation\FadeOut.cs" />
     <Compile Include="Animation\Linear.cs" />
     <Compile Include="ConfigManager.cs" />
