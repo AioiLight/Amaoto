@@ -26,11 +26,6 @@ namespace Amaoto
             State = TimerState.Stopped;
         }
 
-        protected virtual void OnThresholdReached(EventArgs e)
-        {
-            Looped?.Invoke(this, e);
-        }
-
         /// <summary>
         /// Tickします。
         /// </summary>
@@ -50,22 +45,25 @@ namespace Amaoto
 
             // 現在時間から以前Tick()したまでの時間の差
             var diffTime = nowTime - NowTime;
-            while (diffTime > Interval)
+            while (diffTime >= Interval)
             {
                 // 時間の差が間隔未満になるまで進める
                 Value++;
                 tickCount++;
-                if(IsLoop && Value > End)
+                if (Value >= End)
                 {
-                    // ループ設定かつ現在の値が終了値より大きかったら
-                    Value = Begin;
-                    OnThresholdReached(EventArgs.Empty);
-                }
-                if(!IsLoop && Value > End)
-                {
-                    // 非ループ設定かつ現在の値が終了値より大きかったら、終了値を維持してタイマーを停止する。
-                    Value = End;
-                    Stop();
+                    if (IsLoop)
+                    {
+                        // ループ設定かつ現在の値が終了値より大きかったら
+                        Value = Begin;
+                        Looped?.Invoke();
+                    }
+                    else
+                    {
+                        // 非ループ設定かつ現在の値が終了値より大きかったら、終了値を維持してタイマーを停止する。
+                        Value = End;
+                        Stop();
+                    }
                 }
                 diffTime -= Interval;
             }
@@ -132,7 +130,7 @@ namespace Amaoto
         /// <summary>
         /// ループした場合、イベントが発生します。
         /// </summary>
-        public event EventHandler Looped;
+        public event Action Looped;
         /// <summary>
         /// 現在のコンピュータの時間(マイクロ秒)。
         /// </summary>
