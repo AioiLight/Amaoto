@@ -18,10 +18,6 @@ namespace Amaoto
             {
                 IsEnable = true;
             }
-            else
-            {
-                throw new Exception();
-            }
             FileName = fileName;
         }
 
@@ -120,11 +116,15 @@ namespace Amaoto
         /// <summary>
         /// 再生位置。
         /// </summary>
-        public int Position
+        public int Time
         {
             get
             {
-                return DX.GetSoundCurrentPosition(ID);
+                return DX.GetSoundCurrentTime(ID);
+            }
+            set
+            {
+                DX.SetSoundCurrentTime(value, ID);
             }
         }
         private int _pan;
