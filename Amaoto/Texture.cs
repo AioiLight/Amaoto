@@ -160,6 +160,26 @@ namespace Amaoto
             {
                 DX.SetDrawBlendMode(DX.DX_BLENDMODE_MULA, blendParam);
             }
+
+            // 軽量化
+            if (ReferencePoint == ReferencePoint.TopLeft)
+            {
+                // 右上描画
+                if (rectangle == new Rectangle(0, 0, width, height))
+                {
+                    // 範囲指定なし
+                    if (ScaleX == 1.0f && ScaleY == 1.0f)
+                    {
+                        // 等倍
+                        DX.DrawGraph(x, y, ID, DX.TRUE);
+                        return;
+                    }
+
+                    DX.DrawExtendGraph(x, y, (int)((x + width) * ScaleX), (int)((y + height) * ScaleY), ID, DX.TRUE);]
+                    return;
+                }
+            }
+
             DX.DrawRectRotaGraph3(
                 // 座標
                 x,
