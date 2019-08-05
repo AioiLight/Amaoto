@@ -89,7 +89,7 @@ namespace Amaoto
         /// <param name="x">X座標。</param>
         /// <param name="y">Y座標。</param>
         /// <param name="rectangle">描画範囲。</param>
-        public void Draw(int x, int y, Rectangle? rectangle = null)
+        public void Draw(float x, float y, Rectangle? rectangle = null)
         {
             var origin = new Point();
             DX.GetGraphSize(ID, out var width, out var height);
@@ -161,26 +161,7 @@ namespace Amaoto
                 DX.SetDrawBlendMode(DX.DX_BLENDMODE_MULA, blendParam);
             }
 
-            // 軽量化
-            if (ReferencePoint == ReferencePoint.TopLeft)
-            {
-                // 右上描画
-                if (rectangle == new Rectangle(0, 0, width, height))
-                {
-                    // 範囲指定なし
-                    if (ScaleX == 1.0f && ScaleY == 1.0f)
-                    {
-                        // 等倍
-                        DX.DrawGraph(x, y, ID, DX.TRUE);
-                        return;
-                    }
-
-                    DX.DrawExtendGraph(x, y, (int)((x + width) * ScaleX), (int)((y + height) * ScaleY), ID, DX.TRUE);]
-                    return;
-                }
-            }
-
-            DX.DrawRectRotaGraph3(
+            DX.DrawRectRotaGraph3F(
                 // 座標
                 x,
                 y,
@@ -191,8 +172,8 @@ namespace Amaoto
                 rectangle.Value.Width,
                 rectangle.Value.Height,
                 // 描画基準点
-                (int)(origin.X * ScaleX),
-                (int)(origin.Y * ScaleY),
+                origin.X,
+                origin.Y,
                 // 拡大率
                 ScaleX,
                 ScaleY,

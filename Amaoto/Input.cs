@@ -7,6 +7,9 @@ namespace Amaoto
     /// </summary>
     public class Input
     {
+        /// <summary>
+        /// 入力を管理するクラス。
+        /// </summary>
         public Input()
         {
             Keys = new byte[256];

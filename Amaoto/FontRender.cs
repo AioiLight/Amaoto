@@ -13,6 +13,7 @@ namespace Amaoto
         /// </summary>
         /// <param name="fontFamily">書体名。</param>
         /// <param name="fontSize">フォントサイズ。</param>
+        /// <param name="edge">縁取りの大きさ。</param>
         /// <param name="fontStyle">フォントスタイル。</param>
         public FontRender(FontFamily fontFamily, int fontSize, int edge = 0, FontStyle fontStyle = FontStyle.Regular)
         {

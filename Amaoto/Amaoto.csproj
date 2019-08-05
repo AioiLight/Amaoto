@@ -96,9 +96,7 @@
     <Compile Include="Texture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DxLibW.dll" />
     <Content Include="DxLibWDotNet.dll" />
-    <Content Include="DxLibW_x64.dll" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

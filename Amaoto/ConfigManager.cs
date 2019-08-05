@@ -9,7 +9,7 @@ namespace Amaoto
     public static class ConfigManager
     {
         /// <summary>
-        /// 設定ファイルの読み込みを行います。
+        /// 設定ファイルの読み込みを行います。ファイルが存在しなかった場合、そのクラスの新規インスタンスを返します。
         /// </summary>
         /// <typeparam name="T">シリアライズしたクラス。</typeparam>
         /// <param name="filePath">ファイル名。</param>

@@ -2,6 +2,9 @@
 
 namespace Amaoto
 {
+    /// <summary>
+    /// FPSを計測するクラス。
+    /// </summary>
     public class FPSCounter
     {
         /// <summary>

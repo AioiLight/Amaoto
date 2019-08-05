@@ -63,10 +63,25 @@ namespace Amaoto.Animation
 
 
         // プロパティ
+        /// <summary>
+        /// カウンター。
+        /// </summary>
         public Counter Counter { get; private set; }
+        /// <summary>
+        /// 開始値。
+        /// </summary>
         public long StartValue { get; private set; }
+        /// <summary>
+        /// 終了値。
+        /// </summary>
         public long EndValue { get; private set; }
+        /// <summary>
+        /// 更新間隔。
+        /// </summary>
         public long TickInterval { get; private set; }
+        /// <summary>
+        /// ループするかどうか。
+        /// </summary>
         public bool IsLoop { get; private set; }
     }
 }
