@@ -7,6 +7,9 @@ namespace Amaoto
     /// </summary>
     public class Scene
     {
+        /// <summary>
+        /// シーンの初期化を行います。
+        /// </summary>
         public Scene()
         {
             Enabled = true;
@@ -68,12 +71,15 @@ namespace Amaoto
             if (!Enabled) return;
         }
 
+        /// <summary>
+        /// そのシーンの名前(名前空間付き)を返します。
+        /// </summary>
+        /// <returns>そのシーンの名前(名前空間付き)。</returns>
         public override string ToString()
         {
             return GetType().ToString();
         }
 
-        // フィールド
         /// <summary>
         /// 利用可能かどうか。
         /// </summary>

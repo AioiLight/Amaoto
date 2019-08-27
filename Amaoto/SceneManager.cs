@@ -7,6 +7,9 @@ namespace Amaoto
     /// </summary>
     public class SceneManager
     {
+        /// <summary>
+        /// シーン管理クラスを初期化します。
+        /// </summary>
         public SceneManager()
         {
             Scenes = new List<Scene>();

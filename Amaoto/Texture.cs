@@ -1,9 +1,10 @@
-﻿using DxLibDLL;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Numerics;
+using DxLibDLL;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Amaoto
 {
@@ -235,6 +236,7 @@ namespace Amaoto
     /// <summary>
     /// 合成モード。
     /// </summary>
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum BlendMode
     {
         /// <summary>
@@ -257,6 +259,7 @@ namespace Amaoto
     /// <summary>
     /// 描画基準点。
     /// </summary>
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ReferencePoint
     {
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Amaoto
 {
@@ -8,6 +9,13 @@ namespace Amaoto
     /// </summary>
     public static class ConfigManager
     {
+        private static readonly JsonSerializerSettings Settings =
+            new JsonSerializerSettings()
+            { ObjectCreationHandling = ObjectCreationHandling.Auto,
+                DefaultValueHandling = DefaultValueHandling.Include,
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
+
         /// <summary>
         /// 設定ファイルの読み込みを行います。ファイルが存在しなかった場合、そのクラスの新規インスタンスを返します。
         /// </summary>
@@ -19,13 +27,14 @@ namespace Amaoto
             var json = "";
             if (!System.IO.File.Exists(filePath))
             {
-                return new T();
+                // ファイルが存在しないので
+                SaveConfig(new T(), filePath);
             }
             using (var stream = new System.IO.StreamReader(filePath, Encoding.UTF8))
             {
                 json = stream.ReadToEnd();
             }
-            return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings() { ObjectCreationHandling = ObjectCreationHandling.Reuse, DefaultValueHandling  = DefaultValueHandling.Populate});
+            return JsonConvert.DeserializeObject<T>(json, Settings);
         }
 
         /// <summary>
@@ -37,7 +46,7 @@ namespace Amaoto
         {
             using (var stream = new System.IO.StreamWriter(filePath, false, Encoding.UTF8))
             {
-                stream.Write(JsonConvert.SerializeObject(obj, Formatting.Indented));
+                stream.Write(JsonConvert.SerializeObject(obj, Formatting.Indented, Settings));
             }
         }
     }

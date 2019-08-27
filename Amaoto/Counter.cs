@@ -1,5 +1,5 @@
-﻿using DxLibDLL;
-using System;
+﻿using System;
+using DxLibDLL;
 
 namespace Amaoto
 {
