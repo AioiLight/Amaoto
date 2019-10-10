@@ -14,10 +14,10 @@ namespace Amaoto.Animation
         /// <summary>
         /// フェードインを初期化します。
         /// </summary>
-        /// <param name="timems">フェードインに掛ける秒数(ミリ秒)</param>
-        public FadeIn(int timems) : base(0, timems - 1, 1, false)
+        /// <param name="timeNs">フェードインに掛ける秒数(ミリ秒)</param>
+        public FadeIn(int timeNs) : base(0, timeNs - 1, 1, false)
         {
-            TimeMs = timems;
+            TimeNs = timeNs;
         }
 
         /// <summary>
@@ -26,10 +26,10 @@ namespace Amaoto.Animation
         /// <returns>不透明度。</returns>
         public override object GetAnimation()
         {
-            var opacity = base.Counter.Value / TimeMs;
+            var opacity = base.Counter.Value / TimeNs;
             return opacity;
         }
 
-        private readonly int TimeMs;
+        private readonly int TimeNs;
     }
 }

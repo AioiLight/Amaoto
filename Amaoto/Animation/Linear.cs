@@ -16,24 +16,24 @@ namespace Amaoto.Animation
         /// </summary>
         /// <param name="startPoint">始点。</param>
         /// <param name="endPoint">終点。</param>
-        /// <param name="timeMs">移動にかける時間。</param>
-        public Linear(int startPoint, int endPoint, int timeMs) : base(0, timeMs - 1, 1, false)
+        /// <param name="timeNs">移動にかける時間。</param>
+        public Linear(int startPoint, int endPoint, int timeNs) : base(0, timeNs - 1, 1, false)
         {
             StartPoint = startPoint;
             EndPoint = endPoint;
             Sa = EndPoint - StartPoint;
-            TimeMs = timeMs;
+            TimeNs = timeNs;
         }
 
         public override object GetAnimation()
         {
-            var persent = Counter.Value / (double)TimeMs;
+            var persent = Counter.Value / (double)TimeNs;
             return (Sa * persent) + StartPoint;
         }
 
         private readonly int StartPoint;
         private readonly int EndPoint;
         private readonly int Sa;
-        private readonly int TimeMs;
+        private readonly int TimeNs;
     }
 }

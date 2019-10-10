@@ -16,13 +16,13 @@ namespace Amaoto.Animation
         /// </summary>
         /// <param name="startPoint">始点。</param>
         /// <param name="endPoint">終点。</param>
-        /// <param name="timeMs">イージングにかける時間。</param>
-        public EaseInOut(int startPoint, int endPoint, int timeMs) : base(0, timeMs - 1, 1, false)
+        /// <param name="timeNs">イージングにかける時間。</param>
+        public EaseInOut(int startPoint, int endPoint, int timeNs) : base(0, timeNs - 1, 1, false)
         {
             StartPoint = startPoint;
             EndPoint = endPoint;
             Sa = EndPoint - StartPoint;
-            TimeMs = timeMs;
+            TimeNs = timeNs;
         }
         /// <summary>
         /// 座標を返します。
@@ -30,7 +30,7 @@ namespace Amaoto.Animation
         /// <returns>double型の座標。</returns>
         public override object GetAnimation()
         {
-            var persent = Counter.Value / (double)TimeMs * 2.0;
+            var persent = Counter.Value / (double)TimeNs * 2.0;
             if (persent < 1)
             {
                 return ((double)Sa / 2.0 * persent * persent * persent) + StartPoint;
@@ -45,6 +45,6 @@ namespace Amaoto.Animation
         private readonly int StartPoint;
         private readonly int EndPoint;
         private readonly int Sa;
-        private readonly int TimeMs;
+        private readonly int TimeNs;
     }
 }

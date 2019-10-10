@@ -73,7 +73,7 @@ namespace Amaoto
         }
 
         /// <summary>
-        /// タイマーを開始します。必ずこのメソッドを読んでください。
+        /// タイマーを開始します。必ずこのメソッドを呼び出してください。
         /// </summary>
         public void Start()
         {
