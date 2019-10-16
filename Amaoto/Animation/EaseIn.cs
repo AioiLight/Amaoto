@@ -9,7 +9,7 @@ namespace Amaoto.Animation
     /// <summary>
     /// イーズインを行うクラス。
     /// </summary>
-    class EaseIn : Animator
+    public class EaseIn : Animator
     {
         /// <summary>
         /// イーズインを初期化します。
