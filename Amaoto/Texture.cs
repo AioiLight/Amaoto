@@ -186,6 +186,16 @@ namespace Amaoto
         }
 
         /// <summary>
+        /// テクスチャをPNGファイルに出力します。
+        /// </summary>
+        /// <param name="path">保存先。</param>
+        public void SaveAsPNG(string path)
+        {
+            DX.SaveDrawValidGraphToPNG(ID, 0, 0, TextureSize.width, TextureSize.height, path, 0);
+        }
+
+
+        /// <summary>
         /// 有効かどうか。
         /// </summary>
         public bool IsEnable { get; private set; }
