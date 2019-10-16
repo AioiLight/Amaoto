@@ -39,6 +39,24 @@ namespace Amaoto
         }
 
         /// <summary>
+        /// シーンを指定の位置に追加します。
+        /// </summary>
+        /// <param name="scene">シーン。</param>
+        /// <param name="index">位置。</param>
+        public void InsertScene(Scene scene, int index = 0)
+        {
+            if (Scenes.Count <= index)
+            {
+                AddScene(scene);
+            }
+            else
+            {
+                Scenes.Insert(index, scene);
+            }
+            scene.Enable();
+        }
+
+        /// <summary>
         /// 描画します。
         /// </summary>
         public void Draw()
