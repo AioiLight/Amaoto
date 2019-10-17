@@ -51,10 +51,10 @@ namespace Amaoto
 
             if (Edge > 0)
             {
-                gp.AddString(text, FontFamily, (int)FontStyle, FontSize, new Point(Edge, Edge), stringFormat);
+                gp.AddString(text, FontFamily, (int)FontStyle, FontSize, new Point(Edge / 2, Edge / 2), stringFormat);
 
                 // 縁取りをする。
-                graphics.DrawPath(new Pen(BackColor, Edge), gp);
+                graphics.DrawPath(new Pen(BackColor, Edge) { LineJoin = System.Drawing.Drawing2D.LineJoin.Round}, gp);
 
                 graphics.FillPath(new SolidBrush(ForeColor), gp);
             }
