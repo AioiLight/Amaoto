@@ -53,6 +53,7 @@ namespace Amaoto
             {
                 item.Disable();
             }
+            ChildScene.Clear();
         }
 
         /// <summary>
