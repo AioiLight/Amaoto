@@ -114,20 +114,46 @@ namespace Amaoto
             }
         }
         /// <summary>
-        /// 再生位置。
+        /// 再生位置。秒が単位。
         /// </summary>
-        public int Time
+        public double Time
         {
             get
             {
-                return DX.GetSoundCurrentTime(ID);
+                var freq = DX.GetFrequencySoundMem(ID);
+                var pos = DX.GetCurrentPositionSoundMem(ID);
+                // サンプル数で割ると秒数が出るが出る
+                return 1.0 * pos / freq;
             }
             set
             {
-                DX.SetSoundCurrentTime(value, ID);
+                var freq = DX.GetFrequencySoundMem(ID);
+                var pos = value;
+                DX.SetCurrentPositionSoundMem((int)(1.0 * pos * freq), ID);
+            }
+        }
+        /// <summary>
+        /// 再生速度を倍率で変更する。
+        /// </summary>
+        public double PlaySpeed
+        {
+            get
+            {
+                return _ratio;
+            }
+            set
+            {
+                _ratio = value;
+                DX.ResetFrequencySoundMem(ID);
+                var freq = DX.GetFrequencySoundMem(ID);
+                // 倍率変更
+                var speed = value * freq;
+                // 1秒間に再生すべきサンプル数を上げ下げすると速度が変化する。
+                DX.SetFrequencySoundMem((int)speed, ID);
             }
         }
         private int _pan;
         private int _volume;
+        private double _ratio;
     }
 }
