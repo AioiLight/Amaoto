@@ -26,7 +26,7 @@ namespace Amaoto.Animation
         /// <returns>不透明度。</returns>
         public override object GetAnimation()
         {
-            var opacity = base.Counter.Value / TimeNs;
+            var opacity = 1.0 * base.Counter.Value / TimeNs;
             return opacity;
         }
 
