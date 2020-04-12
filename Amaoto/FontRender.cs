@@ -37,7 +37,7 @@ namespace Amaoto
             var bitmap = new Bitmap((int)Math.Ceiling(size.Width), (int)Math.Ceiling(size.Height));
             bitmap.MakeTransparent();
             var graphics = Graphics.FromImage(bitmap);
-            var stringFormat = new StringFormat();
+            var stringFormat = new StringFormat(StringFormat.GenericTypographic);
             // どんなに長くて単語の区切りが良くても改行しない
             stringFormat.FormatFlags = StringFormatFlags.NoWrap;
             // どんなに長くてもトリミングしない
@@ -78,23 +78,26 @@ namespace Amaoto
         private SizeF MeasureText(string text)
         {
             var bitmap = new Bitmap(16, 16);
+            // .NETの敗北
             var graphicsSize = Graphics.FromImage(bitmap).
                 MeasureString(text, new Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel));
+            var trueGraphicsSize = Graphics.FromImage(bitmap).
+                MeasureString(text, new Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel), (int)graphicsSize.Width, StringFormat.GenericTypographic);
             bitmap.Dispose();
-            if (graphicsSize.Width == 0 || graphicsSize.Height == 0)
+            if (trueGraphicsSize.Width == 0 || trueGraphicsSize.Height == 0)
             {
                 // サイズが0だったとき、とりあえずテクスチャとして成り立つそれっぽいサイズを返す。
-                graphicsSize = new SizeF(16f, 16f);
+                trueGraphicsSize = new SizeF(16f, 16f);
             }
 
             if (Edge > 0)
             {
                 // 縁取りをするので、補正分。
-                graphicsSize.Width += Edge;
-                graphicsSize.Height += Edge;
+                trueGraphicsSize.Width += Edge;
+                trueGraphicsSize.Height += Edge;
             }
 
-            return graphicsSize;
+            return trueGraphicsSize;
         }
 
         /// <summary>
