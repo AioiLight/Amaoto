@@ -41,6 +41,21 @@ namespace Amaoto
         }
 
         /// <summary>
+        /// DXLibのグラフィックハンドルから生成します。
+        /// </summary>
+        /// <param name="handle">DxLibのグラフィックハンドル。</param>
+        public Texture(int handle)
+            : this()
+        {
+            ID = handle;
+            if (ID != -1)
+            {
+                IsEnable = true;
+            }
+            FileName = null;
+        }
+
+        /// <summary>
         /// ビットマップからテクスチャを生成します。
         /// </summary>
         /// <param name="bitmap">ビットマップ。</param>
