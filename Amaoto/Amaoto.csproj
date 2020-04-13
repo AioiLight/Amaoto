@@ -94,6 +94,7 @@
     <Compile Include="SceneManager.cs" />
     <Compile Include="Sound.cs" />
     <Compile Include="Texture.cs" />
+    <Compile Include="VirtualScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DxLibWDotNet.dll" />
