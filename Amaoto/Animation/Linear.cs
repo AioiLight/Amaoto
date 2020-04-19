@@ -25,7 +25,7 @@ namespace Amaoto.Animation
             TimeNs = timeNs;
         }
 
-        public override object GetAnimation()
+        public override double GetAnimation()
         {
             var persent = Counter.Value / (double)TimeNs;
             return (Sa * persent) + StartPoint;

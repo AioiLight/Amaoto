@@ -28,17 +28,17 @@ namespace Amaoto.Animation
         /// 座標を返します。
         /// </summary>
         /// <returns>double型の座標。</returns>
-        public override object GetAnimation()
+        public override double GetAnimation()
         {
             var persent = Counter.Value / (double)TimeNs * 2.0;
             if (persent < 1)
             {
-                return ((double)Sa / 2.0 * persent * persent * persent) + StartPoint;
+                return (Sa / 2.0 * persent * persent * persent) + StartPoint;
             }
             else
             {
                 persent -= 2;
-                return ((double)Sa / 2.0 * ((persent * persent * persent) + 2)) + StartPoint;
+                return (Sa / 2.0 * ((persent * persent * persent) + 2)) + StartPoint;
             }
         }
 

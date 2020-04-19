@@ -58,9 +58,7 @@ namespace Amaoto.Animation
         /// アニメーターの現在の値を返します。
         /// </summary>
         /// <returns>現在の値。</returns>
-        public abstract object GetAnimation();
-
-
+        public abstract double GetAnimation();
 
         // プロパティ
         /// <summary>

@@ -24,7 +24,7 @@ namespace Amaoto.Animation
         /// フェードインの不透明度を0～1の範囲で返します。
         /// </summary>
         /// <returns>不透明度。</returns>
-        public override object GetAnimation()
+        public override double GetAnimation()
         {
             var opacity = 1.0 * base.Counter.Value / TimeNs;
             return opacity;
