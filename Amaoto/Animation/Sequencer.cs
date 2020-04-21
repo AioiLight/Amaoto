@@ -56,9 +56,9 @@ namespace Amaoto.Animation
             Animators[Index].Tick();
             if (Animators[Index].Counter.State == TimerState.Stopped)
             {
-                Animators[Index].Reset();
-                if (Animators.Count > Index)
+                if (Animators.Count - 1 > Index)
                 {
+                    Animators[Index].Reset();
                     Index++;
                     Animators[Index].Start();
                 }
@@ -93,6 +93,40 @@ namespace Amaoto.Animation
                 item.Stop();
                 item.Reset();
             }
+        }
+
+        /// <summary>
+        /// 現在のアニメーターのインスタンスを返す。
+        /// </summary>
+        /// <returns>現在のアニメーターのインスタンス。</returns>
+        public Animator GetCurrentAnimator()
+        {
+            return Animators[GetCurrentAnimatorIndex()];
+        }
+
+        /// <summary>
+        /// 現在のアニメーターの位置を返す。
+        /// </summary>
+        /// <returns>現在のアニメーターの位置。</returns>
+        public int GetCurrentAnimatorIndex()
+        {
+            return Index;
+        }
+
+        /// <summary>
+        /// アニメーションが全て完了しているか
+        /// </summary>
+        /// <returns>アニメーションが全て完了しているかどうか。</returns>
+        public bool IsFinished()
+        {
+            foreach (var item in Animators)
+            {
+                if (item.Counter.State == TimerState.Started)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         /// <summary>
