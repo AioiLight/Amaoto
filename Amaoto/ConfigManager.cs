@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
 namespace Amaoto
@@ -13,7 +14,8 @@ namespace Amaoto
             new JsonSerializerSettings()
             { ObjectCreationHandling = ObjectCreationHandling.Auto,
                 DefaultValueHandling = DefaultValueHandling.Include,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                Converters = new StringEnumConverter[] { new StringEnumConverter() }
             };
 
         /// <summary>
