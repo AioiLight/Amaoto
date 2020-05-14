@@ -20,7 +20,7 @@ namespace Amaoto
         /// </summary>
         public void Update()
         {
-            Wheel = DX.GetMouseHWheelRotVolF();
+            Wheel = DX.GetMouseWheelRotVolF();
 
             DX.GetMousePoint(out var x, out var y);
             Point = (x, y);
