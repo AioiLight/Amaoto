@@ -89,6 +89,7 @@
     <Compile Include="Counter.cs" />
     <Compile Include="FontRender.cs" />
     <Compile Include="FPSCounter.cs" />
+    <Compile Include="GUI\CheckBox.cs" />
     <Compile Include="GUI\Button.cs" />
     <Compile Include="GUI\IDrawable.cs" />
     <Compile Include="Input.cs" />
