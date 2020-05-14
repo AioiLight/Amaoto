@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace Amaoto
 {
@@ -37,24 +38,42 @@ namespace Amaoto
             var bitmap = new Bitmap((int)Math.Ceiling(size.Width), (int)Math.Ceiling(size.Height));
             bitmap.MakeTransparent();
             var graphics = Graphics.FromImage(bitmap);
+            var stringFormat = GetStringFormat(graphics);
+            var gp = DrawString(text, graphics, stringFormat);
+
+            var tex = new Texture(bitmap);
+
+            // 破棄
+            bitmap.Dispose();
+            graphics.Dispose();
+            gp.Dispose();
+            return tex;
+        }
+
+        private static StringFormat GetStringFormat(Graphics graphics)
+        {
             var stringFormat = new StringFormat(StringFormat.GenericTypographic);
             // どんなに長くて単語の区切りが良くても改行しない
             stringFormat.FormatFlags = StringFormatFlags.NoWrap;
             // どんなに長くてもトリミングしない
             stringFormat.Trimming = StringTrimming.None;
             // ハイクオリティレンダリング
-            graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             // アンチエイリアスをかける
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
+            return stringFormat;
+        }
 
-            var gp = new System.Drawing.Drawing2D.GraphicsPath();
+        private GraphicsPath DrawString(string text, Graphics graphics, StringFormat stringFormat)
+        {
+            var gp = new GraphicsPath();
 
             if (Edge > 0)
             {
                 gp.AddString(text, FontFamily, (int)FontStyle, FontSize, new Point(Edge / 2, Edge / 2), stringFormat);
 
                 // 縁取りをする。
-                graphics.DrawPath(new Pen(BackColor, Edge) { LineJoin = System.Drawing.Drawing2D.LineJoin.Round}, gp);
+                graphics.DrawPath(new Pen(BackColor, Edge) { LineJoin = System.Drawing.Drawing2D.LineJoin.Round }, gp);
 
                 graphics.FillPath(new SolidBrush(ForeColor), gp);
             }
@@ -64,15 +83,7 @@ namespace Amaoto
                 graphics.FillPath(new SolidBrush(ForeColor), gp);
             }
 
-            var tex = new Texture(bitmap);
-
-            // Tex.SaveAsPng(File.Open(@"D:\aaa.png", FileMode.OpenOrCreate, FileAccess.Write), Tex.Width, Tex.Height);
-
-            // 破棄
-            bitmap.Dispose();
-            graphics.Dispose();
-            gp.Dispose();
-            return tex;
+            return gp;
         }
 
         private SizeF MeasureText(string text)
