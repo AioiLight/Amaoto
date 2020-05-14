@@ -37,6 +37,18 @@ namespace Amaoto
         }
 
         /// <summary>
+        /// 画面をクリアする。
+        /// </summary>
+        public void ClearScreen()
+        {
+            DX.SetDrawScreen(Texture.ID);
+
+            DX.ClearDrawScreen();
+
+            DX.SetDrawScreen(DefaultScreen);
+        }
+
+        /// <summary>
         /// 仮想スクリーンを破棄する。
         /// </summary>
         public void Dispose()
