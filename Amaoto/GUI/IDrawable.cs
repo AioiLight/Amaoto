@@ -51,7 +51,7 @@ namespace Amaoto.GUI
                 {
                     LeftJudge = (true, MousePoint);
                     LongClickCounter?.Start();
-                    OnMouseDown?.Invoke();
+                    OnMouseDown?.Invoke(this, null);
                 }
             }
             else if (mouse.IsPushingButton(MouseButton.Left))
@@ -62,7 +62,7 @@ namespace Amaoto.GUI
                     if (MousePoint.x < 0 || MousePoint.y < 0 || MousePoint.x > Width || MousePoint.y > Height)
                     {
                         LeftJudge = (false, MousePoint);
-                        OnMouseUp?.Invoke();
+                        OnMouseUp?.Invoke(this, null);
                         LongClickCounter.Stop();
                         LongClickCounter.Reset();
                     }
@@ -73,8 +73,8 @@ namespace Amaoto.GUI
                         {
                             // ロングタップ
                             LeftJudge = (false, MousePoint);
-                            OnMouseUp?.Invoke();
-                            LongClicked?.Invoke();
+                            OnMouseUp?.Invoke(this, null);
+                            LongClicked?.Invoke(this, null);
                             LongClickCounter.Stop();
                             LongClickCounter.Reset();
                         }
@@ -86,8 +86,8 @@ namespace Amaoto.GUI
                 // クリック判定
                 if (LeftJudge.Item1)
                 {
-                    Clicked?.Invoke();
-                    OnMouseUp?.Invoke();
+                    Clicked?.Invoke(this, null);
+                    OnMouseUp?.Invoke(this, null);
                 }
                 LongClickCounter.Stop();
                 LongClickCounter.Reset();
@@ -153,22 +153,22 @@ namespace Amaoto.GUI
         /// <summary>
         /// 要素がクリックされた。
         /// </summary>
-        public event Action Clicked;
+        public event EventHandler Clicked;
 
         /// <summary>
         /// 要素がロングクリックされた。
         /// </summary>
-        public event Action LongClicked;
+        public event EventHandler LongClicked;
 
         /// <summary>
         /// 要素が押下された。
         /// </summary>
-        public event Action OnMouseDown;
+        public event EventHandler OnMouseDown;
 
         /// <summary>
         /// 要素の押下が終わった。
         /// </summary>
-        public event Action OnMouseUp;
+        public event EventHandler OnMouseUp;
 
         /// <summary>
         /// 相対座標。

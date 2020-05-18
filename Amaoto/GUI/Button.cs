@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace Amaoto.GUI
 {
@@ -117,14 +118,14 @@ namespace Amaoto.GUI
             }
         }
 
-        private void Button_OnMouseDown()
+        private void Button_OnMouseDown(object sender, EventArgs e)
         {
             UpAnimation.Stop();
             UpAnimation.Reset();
             DownAnimation.Start();
         }
 
-        private void Button_OnMouseUp()
+        private void Button_OnMouseUp(object sender, EventArgs e)
         {
             DownAnimation.Stop();
             DownAnimation.Reset();

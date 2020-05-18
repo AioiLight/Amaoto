@@ -1,4 +1,6 @@
-﻿namespace Amaoto.GUI
+﻿using System;
+
+namespace Amaoto.GUI
 {
     public class CheckBox : DrawPart
     {
@@ -26,7 +28,7 @@
 
         }
 
-        private void CheckBox_Clicked()
+        private void CheckBox_Clicked(object sender, EventArgs e)
         {
             Checked = !Checked;
         }
