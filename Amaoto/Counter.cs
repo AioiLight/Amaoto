@@ -128,6 +128,32 @@ namespace Amaoto
         }
 
         /// <summary>
+        /// タイマーの終了値を変更します。
+        /// </summary>
+        /// <param name="end">終了値。</param>
+        public void ChangeEnd(long end)
+        {
+            End = end;
+            if (End < Value)
+            {
+                Value = End;
+            }
+        }
+
+        /// <summary>
+        /// タイマーの開始値を変更します。
+        /// </summary>
+        /// <param name="begin">開始値。</param>
+        public void ChangeBegin(long begin)
+        {
+            Begin = begin;
+            if (Begin > Value)
+            {
+                Value = Begin;
+            }
+        }
+
+        /// <summary>
         /// ループした場合、イベントが発生します。
         /// </summary>
         public event Action Looped;
@@ -138,11 +164,11 @@ namespace Amaoto
         /// <summary>
         /// 開始値。
         /// </summary>
-        public long Begin { get; }
+        public long Begin { get; private set; }
         /// <summary>
         /// 終了値。
         /// </summary>
-        public long End { get; }
+        public long End { get; private set; }
         /// <summary>
         /// タイマー間隔。
         /// </summary>
