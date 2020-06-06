@@ -56,7 +56,7 @@ namespace Amaoto
                     {
                         // ループ設定かつ現在の値が終了値より大きかったら
                         Value = Begin;
-                        Looped?.Invoke();
+                        Looped?.Invoke(this, null);
                     }
                     else
                     {
@@ -156,7 +156,7 @@ namespace Amaoto
         /// <summary>
         /// ループした場合、イベントが発生します。
         /// </summary>
-        public event Action Looped;
+        public event EventHandler Looped;
         /// <summary>
         /// 現在のコンピュータの時間(マイクロ秒)。
         /// </summary>
