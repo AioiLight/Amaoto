@@ -47,18 +47,11 @@ namespace Amaoto.Animation
         /// </summary>
         public void Update()
         {
-            if (Animators[Index].Counter.State == TimerState.Stopped)
-            {
-                // すでに停止してたら、Update()は処理しない。
-                return;
-            }
-
             Animators[Index].Tick();
-            if (Animators[Index].Counter.State == TimerState.Stopped)
+            if (Animators[Index].Counter.Value >= Animators[Index].Counter.End && Animators[Index].Counter.State == TimerState.Stopped)
             {
                 if (Animators.Count - 1 > Index)
                 {
-                    Animators[Index].Reset();
                     Index++;
                     Animators[Index].Start();
                 }
@@ -119,14 +112,7 @@ namespace Amaoto.Animation
         /// <returns>アニメーションが全て完了しているかどうか。</returns>
         public bool IsFinished()
         {
-            foreach (var item in Animators)
-            {
-                if (item.Counter.State == TimerState.Started)
-                {
-                    return false;
-                }
-            }
-            return true;
+            return Animators.Last().Counter.Value >= Animators.Last().Counter.End;
         }
 
         /// <summary>
