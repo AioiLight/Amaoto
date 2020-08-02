@@ -78,8 +78,10 @@
   <ItemGroup>
     <Compile Include="Animation\Animator.cs" />
     <Compile Include="Animation\Blank.cs" />
+    <Compile Include="Animation\EaseInBack.cs" />
     <Compile Include="Animation\EaseIn.cs" />
     <Compile Include="Animation\EaseInOut.cs" />
+    <Compile Include="Animation\EaseOutBack.cs" />
     <Compile Include="Animation\EaseOut.cs" />
     <Compile Include="Animation\FadeIn.cs" />
     <Compile Include="Animation\FadeOut.cs" />
