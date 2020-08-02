@@ -29,7 +29,7 @@
             var c1 = 1.70158;
             var c3 = c1 + 1;
 
-            return (c3 * persent * persent * persent) - (c1 * persent * persent);
+            return Sa * ((c3 * persent * persent * persent) - (c1 * persent * persent)) + StartPoint;
         }
 
         private readonly int StartPoint;
