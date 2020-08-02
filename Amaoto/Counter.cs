@@ -157,22 +157,27 @@ namespace Amaoto
         /// ループした場合、イベントが発生します。
         /// </summary>
         public event EventHandler Looped;
+
         /// <summary>
         /// 現在のコンピュータの時間(マイクロ秒)。
         /// </summary>
         public long NowTime { get; private set; }
+
         /// <summary>
         /// 開始値。
         /// </summary>
         public long Begin { get; private set; }
+
         /// <summary>
         /// 終了値。
         /// </summary>
         public long End { get; private set; }
+
         /// <summary>
         /// タイマー間隔。
         /// </summary>
         public long Interval { get; private set; }
+
         /// <summary>
         /// カウンターの現在の値。
         /// </summary>
@@ -198,14 +203,17 @@ namespace Amaoto
                 _value = value;
             }
         }
+
         /// <summary>
         /// ループするかどうか。
         /// </summary>
         public bool IsLoop { get; }
+
         /// <summary>
         /// 現在の状態。
         /// </summary>
         public TimerState State { get; private set; }
+
         private long _value { get; set; }
     }
 
@@ -218,6 +226,7 @@ namespace Amaoto
         /// 停止している。
         /// </summary>
         Stopped,
+
         /// <summary>
         /// 動作している。
         /// </summary>

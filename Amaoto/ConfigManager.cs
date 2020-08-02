@@ -12,7 +12,8 @@ namespace Amaoto
     {
         private static readonly JsonSerializerSettings Settings =
             new JsonSerializerSettings()
-            { ObjectCreationHandling = ObjectCreationHandling.Auto,
+            {
+                ObjectCreationHandling = ObjectCreationHandling.Auto,
                 DefaultValueHandling = DefaultValueHandling.Include,
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 Converters = new StringEnumConverter[] { new StringEnumConverter() }

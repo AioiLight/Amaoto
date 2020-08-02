@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Amaoto.Animation
 {
@@ -24,6 +20,7 @@ namespace Amaoto.Animation
             Sa = EndPoint - StartPoint;
             TimeNs = timeNs;
         }
+
         /// <summary>
         /// 座標を返します。
         /// </summary>

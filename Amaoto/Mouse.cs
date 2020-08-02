@@ -96,14 +96,19 @@ namespace Amaoto
             {
                 case MouseButton.Left:
                     return 0;
+
                 case MouseButton.Right:
                     return 1;
+
                 case MouseButton.Middle:
                     return 2;
+
                 case MouseButton.Button4:
                     return 3;
+
                 case MouseButton.Button5:
                     return 4;
+
                 default:
                     return 0;
             }
@@ -115,14 +120,19 @@ namespace Amaoto
             {
                 case 0:
                     return MouseButton.Left;
+
                 case 1:
                     return MouseButton.Right;
+
                 case 2:
                     return MouseButton.Middle;
+
                 case 3:
                     return MouseButton.Button4;
+
                 case 4:
                     return MouseButton.Button5;
+
                 default:
                     return MouseButton.Left;
             }
@@ -151,18 +161,22 @@ namespace Amaoto
         /// 左
         /// </summary>
         Left = DX.MOUSE_INPUT_LEFT,
+
         /// <summary>
         /// 右
         /// </summary>
         Right = DX.MOUSE_INPUT_RIGHT,
+
         /// <summary>
         /// 中央
         /// </summary>
         Middle = DX.MOUSE_INPUT_MIDDLE,
+
         /// <summary>
         /// ボタン4。
         /// </summary>
         Button4 = DX.MOUSE_INPUT_4,
+
         /// <summary>
         /// ボタン5。
         /// </summary>

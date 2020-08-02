@@ -14,7 +14,6 @@ namespace Amaoto
         public Movie(string fileName)
             : base(fileName)
         {
-
         }
 
         /// <summary>

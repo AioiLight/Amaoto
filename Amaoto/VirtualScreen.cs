@@ -61,6 +61,7 @@ namespace Amaoto
         /// 仮想スクリーンが生成される前のスクリーン。
         /// </summary>
         public int DefaultScreen { get; private set; }
+
         /// <summary>
         /// 仮想スクリーンのハンドル。
         /// </summary>

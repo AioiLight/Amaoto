@@ -10,7 +10,7 @@ namespace Amaoto.GUI
             var textTex = fontRender.GetTexture(str);
             // 土台の描画。
             var boxTextureSize = boxTexture.TextureSize;
-            
+
             var screen = new VirtualScreen(Width, Height);
 
             Checked = check;
@@ -25,14 +25,12 @@ namespace Amaoto.GUI
             CheckTex.ReferencePoint = ReferencePoint.CenterLeft;
 
             Clicked += CheckBox_Clicked;
-
         }
 
         private void CheckBox_Clicked(object sender, EventArgs e)
         {
             Checked = !Checked;
         }
-
 
         /// <summary>
         /// GUI部品を描画する。

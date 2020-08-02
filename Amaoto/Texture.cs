@@ -85,7 +85,7 @@ namespace Amaoto
 
         ~Texture()
         {
-            if(IsEnable)
+            if (IsEnable)
             {
                 Dispose();
             }
@@ -121,38 +121,47 @@ namespace Amaoto
                     origin.X = 0;
                     origin.Y = 0;
                     break;
+
                 case ReferencePoint.TopCenter:
                     origin.X = rectangle.Value.Width / 2;
                     origin.Y = 0;
                     break;
+
                 case ReferencePoint.TopRight:
                     origin.X = rectangle.Value.Width;
                     origin.Y = 0;
                     break;
+
                 case ReferencePoint.CenterLeft:
                     origin.X = 0;
                     origin.Y = rectangle.Value.Height / 2;
                     break;
+
                 case ReferencePoint.Center:
                     origin.X = rectangle.Value.Width / 2;
                     origin.Y = rectangle.Value.Height / 2;
                     break;
+
                 case ReferencePoint.CenterRight:
                     origin.X = rectangle.Value.Width;
                     origin.Y = rectangle.Value.Height / 2;
                     break;
+
                 case ReferencePoint.BottomLeft:
                     origin.X = 0;
                     origin.Y = rectangle.Value.Height;
                     break;
+
                 case ReferencePoint.BottomCenter:
                     origin.X = rectangle.Value.Width / 2;
                     origin.Y = rectangle.Value.Height;
                     break;
+
                 case ReferencePoint.BottomRight:
                     origin.X = rectangle.Value.Width;
                     origin.Y = rectangle.Value.Height;
                     break;
+
                 default:
                     origin.X = 0;
                     origin.Y = 0;
@@ -209,43 +218,51 @@ namespace Amaoto
             DX.SaveDrawValidGraphToPNG(ID, 0, 0, TextureSize.width, TextureSize.height, path, 0);
         }
 
-
         /// <summary>
         /// 有効かどうか。
         /// </summary>
         public bool IsEnable { get; private set; }
+
         /// <summary>
         /// 合成モード。
         /// </summary>
         public BlendMode BlendMode { get; set; }
+
         /// <summary>
         /// ファイル名。
         /// </summary>
         public string FileName { get; private set; }
+
         /// <summary>
         /// 不透明度。
         /// </summary>
         public float Opacity { get; set; }
+
         /// <summary>
         /// ID。
         /// </summary>
         public int ID { get; private set; }
+
         /// <summary>
         /// 角度(弧度法)。
         /// </summary>
         public float Rotation { get; set; }
+
         /// <summary>
         /// 描画基準点。
         /// </summary>
         public ReferencePoint ReferencePoint { get; set; }
+
         /// <summary>
         /// 拡大率X。
         /// </summary>
         public float ScaleX { get; set; }
+
         /// <summary>
         /// 拡大率Y。
         /// </summary>
         public float ScaleY { get; set; }
+
         /// <summary>
         /// テクスチャのサイズを返します。
         /// </summary>
@@ -258,6 +275,7 @@ namespace Amaoto
             }
         }
     }
+
     /// <summary>
     /// 合成モード。
     /// </summary>
@@ -268,19 +286,23 @@ namespace Amaoto
         /// なし
         /// </summary>
         None,
+
         /// <summary>
         /// 加算合成
         /// </summary>
         Add,
+
         /// <summary>
         /// 減算合成
         /// </summary>
         Subtract,
+
         /// <summary>
         /// 乗算合成。
         /// </summary>
         Multiply
     }
+
     /// <summary>
     /// 描画基準点。
     /// </summary>
@@ -291,34 +313,42 @@ namespace Amaoto
         /// 左上
         /// </summary>
         TopLeft,
+
         /// <summary>
         /// 中央上
         /// </summary>
         TopCenter,
+
         /// <summary>
         /// 右上
         /// </summary>
         TopRight,
+
         /// <summary>
         /// 左中央
         /// </summary>
         CenterLeft,
+
         /// <summary>
         /// 中央
         /// </summary>
         Center,
+
         /// <summary>
         /// 右中央
         /// </summary>
         CenterRight,
+
         /// <summary>
         /// 左下
         /// </summary>
         BottomLeft,
+
         /// <summary>
         /// 中央下
         /// </summary>
         BottomCenter,
+
         /// <summary>
         /// 右下
         /// </summary>

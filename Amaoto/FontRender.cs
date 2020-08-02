@@ -115,14 +115,17 @@ namespace Amaoto
         /// 文字色。
         /// </summary>
         public Color ForeColor { get; set; }
+
         /// <summary>
         /// 縁色。
         /// </summary>
         public Color BackColor { get; set; }
+
         /// <summary>
         /// 縁取りのサイズ。
         /// </summary>
         public int Edge { get; set; }
+
         private FontFamily FontFamily;
         private FontStyle FontStyle;
         private float FontSize;

@@ -43,7 +43,7 @@ namespace Amaoto.GUI
                 MousePoint.x = pointX.Value - X;
                 MousePoint.y = pointY.Value - Y;
             }
-            
+
             if (mouse.IsPushedButton(MouseButton.Left))
             {
                 // マウス初回クリック処理
@@ -105,7 +105,7 @@ namespace Amaoto.GUI
         public virtual void Draw()
         {
             Screen.ClearScreen();
-            
+
             Screen.Draw(Texture, 0, 0);
 
             foreach (var item in Child)
@@ -149,7 +149,7 @@ namespace Amaoto.GUI
         /// 子アイテム。
         /// </summary>
         public List<DrawPart> Child { get; protected set; }
-        
+
         /// <summary>
         /// 要素がクリックされた。
         /// </summary>

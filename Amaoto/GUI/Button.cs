@@ -72,7 +72,6 @@ namespace Amaoto.GUI
             UpAnimation = new Animation.EaseOut(95, 100, 1000 * 250);
 
             Texture.ReferencePoint = ReferencePoint.Center;
-
         }
 
         public override void Update(Mouse mouse, int? pointX = null, int? pointY = null)

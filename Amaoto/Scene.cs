@@ -85,6 +85,7 @@ namespace Amaoto
         /// 利用可能かどうか。
         /// </summary>
         public bool Enabled { get; private set; }
+
         /// <summary>
         /// 子シーン。
         /// </summary>

@@ -1,5 +1,5 @@
-﻿using DxLibDLL;
-using System;
+﻿using System;
+using DxLibDLL;
 
 namespace Amaoto
 {
@@ -60,19 +60,21 @@ namespace Amaoto
             }
         }
 
-
         /// <summary>
         /// 有効かどうか。
         /// </summary>
         public bool IsEnable { get; private set; }
+
         /// <summary>
         /// ファイル名。
         /// </summary>
         public string FileName { get; private set; }
+
         /// <summary>
         /// ID。
         /// </summary>
         public int ID { get; private set; }
+
         /// <summary>
         /// 再生中かどうか。
         /// </summary>
@@ -83,6 +85,7 @@ namespace Amaoto
                 return DX.CheckSoundMem(ID) == 1;
             }
         }
+
         /// <summary>
         /// パン。
         /// </summary>
@@ -98,6 +101,7 @@ namespace Amaoto
                 DX.ChangePanSoundMem(value, ID);
             }
         }
+
         /// <summary>
         /// 音量。
         /// </summary>
@@ -113,6 +117,7 @@ namespace Amaoto
                 DX.ChangeVolumeSoundMem(value, ID);
             }
         }
+
         /// <summary>
         /// 再生位置。秒が単位。
         /// </summary>
@@ -132,6 +137,7 @@ namespace Amaoto
                 DX.SetCurrentPositionSoundMem((int)(1.0 * pos * freq), ID);
             }
         }
+
         /// <summary>
         /// 再生速度を倍率で変更する。
         /// </summary>
@@ -152,6 +158,7 @@ namespace Amaoto
                 DX.SetFrequencySoundMem((int)speed, ID);
             }
         }
+
         private int _pan;
         private int _volume;
         private double _ratio;

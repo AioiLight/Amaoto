@@ -24,7 +24,7 @@ namespace Amaoto
         {
             NowFPS++;
             var nowTime = DX.GetNowHiPerformanceCount();
-            if(nowTime - Counter >= 1000 * 1000)
+            if (nowTime - Counter >= 1000 * 1000)
             {
                 // 一秒経過
                 FPS = NowFPS;
@@ -37,6 +37,7 @@ namespace Amaoto
         /// 現在のFPS。
         /// </summary>
         public int FPS { get; private set; }
+
         private int NowFPS;
         private long Counter;
     }

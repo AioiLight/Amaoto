@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Amaoto.Animation
+﻿namespace Amaoto.Animation
 {
     /// <summary>
     /// アニメーター抽象クラス、
@@ -26,6 +20,7 @@ namespace Amaoto.Animation
             IsLoop = isLoop;
             Counter = new Counter(StartValue, EndValue, TickInterval, IsLoop);
         }
+
         /// <summary>
         /// アニメーションを開始します。
         /// </summary>
@@ -33,6 +28,7 @@ namespace Amaoto.Animation
         {
             Counter?.Start();
         }
+
         /// <summary>
         /// アニメーションを停止します。
         /// </summary>
@@ -40,6 +36,7 @@ namespace Amaoto.Animation
         {
             Counter?.Stop();
         }
+
         /// <summary>
         /// アニメーターをリセットします。
         /// </summary>
@@ -47,6 +44,7 @@ namespace Amaoto.Animation
         {
             Counter?.Reset();
         }
+
         /// <summary>
         /// アニメーターの更新をします。
         /// </summary>
@@ -54,6 +52,7 @@ namespace Amaoto.Animation
         {
             Counter?.Tick();
         }
+
         /// <summary>
         /// アニメーターの現在の値を返します。
         /// </summary>
@@ -65,18 +64,22 @@ namespace Amaoto.Animation
         /// カウンター。
         /// </summary>
         public Counter Counter { get; private set; }
+
         /// <summary>
         /// 開始値。
         /// </summary>
         public long StartValue { get; private set; }
+
         /// <summary>
         /// 終了値。
         /// </summary>
         public long EndValue { get; private set; }
+
         /// <summary>
         /// 更新間隔。
         /// </summary>
         public long TickInterval { get; private set; }
+
         /// <summary>
         /// ループするかどうか。
         /// </summary>

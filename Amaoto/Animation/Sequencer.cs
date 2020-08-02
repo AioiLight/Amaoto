@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Amaoto.Animation
 {
@@ -58,7 +55,7 @@ namespace Amaoto.Animation
             }
             Animators[Index].Tick();
         }
-        
+
         /// <summary>
         /// シーケンサーを開始する。
         /// </summary>
@@ -128,6 +125,7 @@ namespace Amaoto.Animation
         /// アニメーターのリスト。
         /// </summary>
         public List<Animator> Animators { get; private set; }
+
         /// <summary>
         /// 現在どのアニメーターを再生してるかのインデックス。
         /// </summary>
