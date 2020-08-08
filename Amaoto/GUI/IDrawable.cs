@@ -35,13 +35,11 @@ namespace Amaoto.GUI
         {
             if (!pointX.HasValue || !pointY.HasValue)
             {
-                MousePoint.x = mouse.Point.x - X;
-                MousePoint.y = mouse.Point.y - Y;
+                MousePoint = (mouse.Point.x - X, mouse.Point.y - Y);
             }
             else
             {
-                MousePoint.x = pointX.Value - X;
-                MousePoint.y = pointY.Value - Y;
+                MousePoint = (pointX.Value - X, pointY.Value - Y);
             }
 
             if (mouse.IsPushedButton(MouseButton.Left))
@@ -173,7 +171,7 @@ namespace Amaoto.GUI
         /// <summary>
         /// 相対座標。
         /// </summary>
-        private (int x, int y) MousePoint;
+        public (int x, int y) MousePoint { get; private set; }
 
         private (bool, (int x, int y)) LeftJudge;
 
