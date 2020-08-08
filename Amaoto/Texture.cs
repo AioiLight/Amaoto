@@ -171,19 +171,15 @@ namespace Amaoto
             if (BlendMode == BlendMode.None)
             {
                 // 通常合成(アルファ)。
-                DX.SetDrawBlendMode(DX.DX_BLENDMODE_ALPHA, blendParam);
+                DX.SetDrawBlendMode(DX.DX_BLENDMODE_PMA_ALPHA, blendParam);
             }
             else if (BlendMode == BlendMode.Add)
             {
-                DX.SetDrawBlendMode(DX.DX_BLENDMODE_ADD, blendParam);
+                DX.SetDrawBlendMode(DX.DX_BLENDMODE_PMA_ADD, blendParam);
             }
             else if (BlendMode == BlendMode.Subtract)
             {
-                DX.SetDrawBlendMode(DX.DX_BLENDMODE_SUB, blendParam);
-            }
-            else if (BlendMode == BlendMode.Multiply)
-            {
-                DX.SetDrawBlendMode(DX.DX_BLENDMODE_MULA, blendParam);
+                DX.SetDrawBlendMode(DX.DX_BLENDMODE_PMA_SUB, blendParam);
             }
 
             DX.DrawRectRotaGraph3F(
@@ -295,12 +291,7 @@ namespace Amaoto
         /// <summary>
         /// 減算合成
         /// </summary>
-        Subtract,
-
-        /// <summary>
-        /// 乗算合成。
-        /// </summary>
-        Multiply
+        Subtract
     }
 
     /// <summary>

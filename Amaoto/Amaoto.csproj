@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Amaoto.cs" />
     <Compile Include="Animation\Animator.cs" />
     <Compile Include="Animation\Blank.cs" />
     <Compile Include="Animation\EaseInBack.cs" />
