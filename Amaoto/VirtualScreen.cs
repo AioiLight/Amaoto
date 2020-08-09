@@ -29,6 +29,11 @@ namespace Amaoto
         /// <param name="rectangle">描画範囲。</param>
         public void Draw(Texture texture, float x, float y, Rectangle? rectangle = null)
         {
+            if (texture == null)
+            {
+                return;
+            }
+
             DX.SetDrawScreen(Texture.ID);
 
             texture.Draw(x, y, rectangle);
