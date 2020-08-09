@@ -95,6 +95,7 @@
     <Compile Include="GUI\CheckBox.cs" />
     <Compile Include="GUI\Button.cs" />
     <Compile Include="GUI\IDrawable.cs" />
+    <Compile Include="GUI\Image.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Mouse.cs" />
     <Compile Include="Movie.cs" />
