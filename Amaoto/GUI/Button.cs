@@ -74,7 +74,7 @@ namespace Amaoto.GUI
             Texture.ReferencePoint = ReferencePoint.Center;
         }
 
-        public override void Update(Mouse mouse, int? pointX = null, int? pointY = null)
+        public override void Update(Mouse mouse = null, int? pointX = null, int? pointY = null)
         {
             DownAnimation?.Tick();
             UpAnimation?.Tick();

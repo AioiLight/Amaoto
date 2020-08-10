@@ -31,8 +31,19 @@ namespace Amaoto.GUI
         /// <param name="mouse">マウス。</param>
         /// <param name="pointX">マウスの相対X座標。</param>
         /// <param name="pointY">マウスの相対Y座標。</param>
-        public virtual void Update(Mouse mouse, int? pointX = null, int? pointY = null)
+        public virtual void Update(Mouse mouse = null, int? pointX = null, int? pointY = null)
         {
+            if (mouse == null)
+            {
+                LeftJudge = (false, (0, 0));
+
+                LongClickCounter.Stop();
+                LongClickCounter.Reset();
+
+                Dragging = false;
+                return;
+            }
+
             if (!pointX.HasValue || !pointY.HasValue)
             {
                 MousePoint = (mouse.Point.x - X, mouse.Point.y - Y);
@@ -92,9 +103,14 @@ namespace Amaoto.GUI
                             // ロングタップ
                             LeftJudge = (false, MousePoint);
                             OnMouseUp?.Invoke(this, null);
-                            LongClicked?.Invoke(this, null);
+                            if (!Dragging)
+                            {
+                                LongClicked?.Invoke(this, null);
+                            }
                             LongClickCounter.Stop();
                             LongClickCounter.Reset();
+
+                            Dragging = false;
                         }
                     }
                 }
@@ -104,11 +120,16 @@ namespace Amaoto.GUI
                 // クリック判定
                 if (LeftJudge.Item1)
                 {
-                    Clicked?.Invoke(this, null);
+                    if (!Dragging)
+                    {
+                        Clicked?.Invoke(this, null);
+                    }
                     OnMouseUp?.Invoke(this, null);
                 }
                 LongClickCounter.Stop();
                 LongClickCounter.Reset();
+
+                Dragging = false;
             }
 
             foreach (var item in Child)
@@ -131,6 +152,14 @@ namespace Amaoto.GUI
                 item.Draw();
                 Screen.Draw(item.Screen.Texture, item.X, item.Y);
             }
+        }
+
+        /// <summary>
+        /// ドラッグされたことを通知して、クリックイベントを発生させないようにする。
+        /// </summary>
+        public void StartDragging()
+        {
+            Dragging = true;
         }
 
         private bool IsOutSide()
@@ -216,6 +245,8 @@ namespace Amaoto.GUI
         private (bool, (int x, int y)) LeftJudge;
 
         private bool Hovering;
+
+        private bool Dragging;
 
         /// <summary>
         /// ロングクリックを検知するためのカウンター。
