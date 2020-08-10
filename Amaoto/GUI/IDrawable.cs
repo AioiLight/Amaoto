@@ -42,6 +42,11 @@ namespace Amaoto.GUI
                 MousePoint = (pointX.Value - X, pointY.Value - Y);
             }
 
+            if (!IsOutSide())
+            {
+                OnHovering?.Invoke(this, null);
+            }
+
             if (mouse.IsPushedButton(MouseButton.Left))
             {
                 // マウス初回クリック処理
@@ -172,6 +177,11 @@ namespace Amaoto.GUI
         /// 要素の押下が終わった。
         /// </summary>
         public event EventHandler OnMouseUp;
+
+        /// <summary>
+        /// マウスで要素をホバリングしている。
+        /// </summary>
+        public event EventHandler OnHovering;
 
         /// <summary>
         /// 相対座標。
