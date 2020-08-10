@@ -45,7 +45,7 @@ namespace Amaoto.GUI
             if (mouse.IsPushedButton(MouseButton.Left))
             {
                 // マウス初回クリック処理
-                if (!(MousePoint.x < 0 || MousePoint.y < 0 || MousePoint.x > Width || MousePoint.y > Height))
+                if (!IsOutSide())
                 {
                     LeftJudge = (true, MousePoint);
                     LongClickCounter?.Start();
@@ -57,7 +57,7 @@ namespace Amaoto.GUI
                 // マウスが要素内をクリックしてるかどうかの判定
                 if (LeftJudge.Item1)
                 {
-                    if (MousePoint.x < 0 || MousePoint.y < 0 || MousePoint.x > Width || MousePoint.y > Height)
+                    if (IsOutSide())
                     {
                         LeftJudge = (false, MousePoint);
                         OnMouseUp?.Invoke(this, null);
@@ -111,6 +111,11 @@ namespace Amaoto.GUI
                 item.Draw();
                 Screen.Draw(item.Screen.Texture, item.X, item.Y);
             }
+        }
+
+        private bool IsOutSide()
+        {
+            return MousePoint.x < 0 || MousePoint.y < 0 || MousePoint.x > Width || MousePoint.y > Height;
         }
 
         /// <summary>
@@ -175,6 +180,9 @@ namespace Amaoto.GUI
 
         private (bool, (int x, int y)) LeftJudge;
 
+        /// <summary>
+        /// ロングクリックを検知するためのカウンター。
+        /// </summary>
         protected readonly Counter LongClickCounter;
     }
 }
