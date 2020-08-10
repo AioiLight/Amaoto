@@ -42,15 +42,30 @@ namespace Amaoto.GUI
                 MousePoint = (pointX.Value - X, pointY.Value - Y);
             }
 
-            if (!IsOutSide())
+            var outSide = IsOutSide();
+
+            if (!outSide)
             {
                 OnHovering?.Invoke(this, null);
+                if (!Hovering)
+                {
+                    OnMouseEnter?.Invoke(this, null);
+                    Hovering = true;
+                }
+            }
+            else
+            {
+                if (Hovering)
+                {
+                    OnMouseLeave?.Invoke(this, null);
+                    Hovering = false;
+                }
             }
 
             if (mouse.IsPushedButton(MouseButton.Left))
             {
                 // マウス初回クリック処理
-                if (!IsOutSide())
+                if (!outSide)
                 {
                     LeftJudge = (true, MousePoint);
                     LongClickCounter?.Start();
@@ -62,7 +77,7 @@ namespace Amaoto.GUI
                 // マウスが要素内をクリックしてるかどうかの判定
                 if (LeftJudge.Item1)
                 {
-                    if (IsOutSide())
+                    if (outSide)
                     {
                         LeftJudge = (false, MousePoint);
                         OnMouseUp?.Invoke(this, null);
@@ -184,11 +199,23 @@ namespace Amaoto.GUI
         public event EventHandler OnHovering;
 
         /// <summary>
+        /// マウスが要素内に入ってきた。
+        /// </summary>
+        public event EventHandler OnMouseEnter;
+
+        /// <summary>
+        /// マウスが要素内から出て行った。
+        /// </summary>
+        public event EventHandler OnMouseLeave;
+
+        /// <summary>
         /// 相対座標。
         /// </summary>
         public (int x, int y) MousePoint { get; private set; }
 
         private (bool, (int x, int y)) LeftJudge;
+
+        private bool Hovering;
 
         /// <summary>
         /// ロングクリックを検知するためのカウンター。
