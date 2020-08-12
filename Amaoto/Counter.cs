@@ -63,6 +63,7 @@ namespace Amaoto
                         // 非ループ設定かつ現在の値が終了値より大きかったら、終了値を維持してタイマーを停止する。
                         Value = End;
                         Stop();
+                        Ended?.Invoke(this, null);
                     }
                 }
                 diffTime -= Interval;
@@ -157,6 +158,11 @@ namespace Amaoto
         /// ループした場合、イベントが発生します。
         /// </summary>
         public event EventHandler Looped;
+
+        /// <summary>
+        /// タイマーが止まった。
+        /// </summary>
+        public event EventHandler Ended;
 
         /// <summary>
         /// 現在のコンピュータの時間(マイクロ秒)。
