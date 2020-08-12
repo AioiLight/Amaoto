@@ -54,7 +54,11 @@ namespace Amaoto.Animation
                 }
                 else
                 {
-                    SequenceEnded?.Invoke(this, null);
+                    if (!EndFlag)
+                    { 
+                        SequenceEnded?.Invoke(this, null);
+                        EndFlag = true;
+                    }
                 }
             }
             Animators[Index].Tick();
@@ -87,6 +91,8 @@ namespace Amaoto.Animation
                 item.Stop();
                 item.Reset();
             }
+
+            EndFlag = false;
         }
 
         /// <summary>
@@ -139,5 +145,7 @@ namespace Amaoto.Animation
         /// アニメーションシーケンサーがすべてのアニメーションっを再生し終了した。
         /// </summary>
         public event EventHandler SequenceEnded;
+
+        private bool EndFlag;
     }
 }
