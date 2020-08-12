@@ -20,11 +20,13 @@ namespace Amaoto.GUI
 
             // 左上
             buttonTexture.ReferencePoint = ReferencePoint.TopLeft;
+            buttonTexture.ScaleX = 1.0f;
+            buttonTexture.ScaleX = 1.0f;
             screen.Draw(buttonTexture, 0, 0, new Rectangle(0, 0, oneSize.Item1, oneSize.Item2));
 
             // 中央上
             buttonTexture.ReferencePoint = ReferencePoint.TopCenter;
-            buttonTexture.ScaleX = (Width - oneSize.Item1 * 2) / oneSize.Item1;
+            buttonTexture.ScaleX = (float)(1.0 * (Width - oneSize.Item1 * 2) / oneSize.Item1);
             screen.Draw(buttonTexture, Width / 2, 0, new Rectangle(oneSize.Item1, 0, oneSize.Item1, oneSize.Item2));
 
             // 右上
@@ -34,12 +36,12 @@ namespace Amaoto.GUI
 
             // 左中央
             buttonTexture.ReferencePoint = ReferencePoint.CenterLeft;
-            buttonTexture.ScaleY = (Height - oneSize.Item2 * 2) / oneSize.Item2;
+            buttonTexture.ScaleY = (float)(1.0 * (Height - oneSize.Item2 * 2) / oneSize.Item2);
             screen.Draw(buttonTexture, 0, Height / 2, new Rectangle(0, oneSize.Item2, oneSize.Item1, oneSize.Item2));
 
             // 中央
             buttonTexture.ReferencePoint = ReferencePoint.Center;
-            buttonTexture.ScaleX = (Width - oneSize.Item1 * 2) / oneSize.Item1;
+            buttonTexture.ScaleX = (float)(1.0 * (Width - oneSize.Item1 * 2) / oneSize.Item1);
             screen.Draw(buttonTexture, Width / 2, Height / 2, new Rectangle(oneSize.Item1, oneSize.Item2, oneSize.Item1, oneSize.Item2));
 
             // 右中央
@@ -54,7 +56,7 @@ namespace Amaoto.GUI
 
             // 中央下
             buttonTexture.ReferencePoint = ReferencePoint.BottomCenter;
-            buttonTexture.ScaleX = (Width - oneSize.Item1 * 2) / oneSize.Item1;
+            buttonTexture.ScaleX = (float)(1.0 * (Width - oneSize.Item1 * 2) / oneSize.Item1);
             screen.Draw(buttonTexture, Width / 2, Height, new Rectangle(oneSize.Item1, oneSize.Item2 * 2, oneSize.Item1, oneSize.Item2));
 
             // 右下
