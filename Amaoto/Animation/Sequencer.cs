@@ -52,6 +52,10 @@ namespace Amaoto.Animation
                     Index++;
                     Animators[Index].Start();
                 }
+                else
+                {
+                    SequenceEnded?.Invoke(this, null);
+                }
             }
             Animators[Index].Tick();
         }
@@ -130,5 +134,10 @@ namespace Amaoto.Animation
         /// 現在どのアニメーターを再生してるかのインデックス。
         /// </summary>
         public int Index { get; private set; }
+
+        /// <summary>
+        /// アニメーションシーケンサーがすべてのアニメーションっを再生し終了した。
+        /// </summary>
+        public event EventHandler SequenceEnded;
     }
 }
