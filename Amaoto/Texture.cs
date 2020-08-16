@@ -168,18 +168,26 @@ namespace Amaoto
                     break;
             }
             var blendParam = (int)(Opacity * 255);
-            if (BlendMode == BlendMode.None)
-            {
-                // 通常合成(アルファ)。
-                DX.SetDrawBlendMode(DX.DX_BLENDMODE_PMA_ALPHA, blendParam);
-            }
-            else if (BlendMode == BlendMode.Add)
+            if (BlendMode == BlendMode.Add)
             {
                 DX.SetDrawBlendMode(DX.DX_BLENDMODE_PMA_ADD, blendParam);
             }
             else if (BlendMode == BlendMode.Subtract)
             {
                 DX.SetDrawBlendMode(DX.DX_BLENDMODE_PMA_SUB, blendParam);
+            }
+            else
+            {
+                DX.SetDrawBlendMode(DX.DX_BLENDMODE_PMA_ALPHA, blendParam);
+            }
+
+            if (ScaleX != 1.0f || ScaleY != 1.0f)
+            {
+                DX.SetDrawMode(DX.DX_DRAWMODE_BILINEAR);
+            }
+            else
+            {
+                DX.SetDrawMode(DX.DX_DRAWMODE_NEAREST);
             }
 
             DX.DrawRectRotaGraph3F(
@@ -202,6 +210,7 @@ namespace Amaoto
                 Rotation,
                 ID,
                 DX.TRUE);
+
             DX.SetDrawBlendMode(DX.DX_BLENDMODE_NOBLEND, 0);
         }
 
