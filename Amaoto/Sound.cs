@@ -6,7 +6,7 @@ namespace Amaoto
     /// <summary>
     /// サウンド管理を行うクラス。
     /// </summary>
-    public class Sound : IDisposable
+    public class Sound : IDisposable, IPlayable
     {
         /// <summary>
         /// サウンドを生成します。
@@ -19,6 +19,9 @@ namespace Amaoto
                 IsEnable = true;
             }
             FileName = fileName;
+
+            Time = 0;
+            Volume = 1.0;
         }
 
         ~Sound()
@@ -105,7 +108,7 @@ namespace Amaoto
         /// <summary>
         /// 音量。
         /// </summary>
-        public int Volume
+        public double Volume
         {
             get
             {
@@ -113,8 +116,8 @@ namespace Amaoto
             }
             set
             {
-                _volume = value;
-                DX.ChangeVolumeSoundMem(value, ID);
+                _volume = (int)(value * 255);
+                DX.ChangeVolumeSoundMem(_volume, ID);
             }
         }
 

@@ -5,7 +5,7 @@ namespace Amaoto
     /// <summary>
     /// 動画再生クラス。
     /// </summary>
-    public class Movie : Texture
+    public class Movie : Texture, IPlayable
     {
         /// <summary>
         /// 動画ファイルのオープンを行います。
@@ -14,13 +14,19 @@ namespace Amaoto
         public Movie(string fileName)
             : base(fileName)
         {
+            Time = 0;
+            Volume = 1.0;
         }
 
         /// <summary>
         /// 再生を開始します。
         /// </summary>
-        public void Play()
+        public void Play(bool playFromBegin = true)
         {
+            if (playFromBegin)
+            {
+                Time = 0;
+            }
             DX.PlayMovieToGraph(ID);
         }
 
@@ -33,9 +39,25 @@ namespace Amaoto
         }
 
         /// <summary>
-        /// 時間。
+        /// 動画の音量。
         /// </summary>
-        public int Time
+        public double Volume
+        {
+            get
+            {
+                return _volume;
+            }
+            set
+            {
+                _volume = (int)(value * 255);
+                DX.ChangeMovieVolumeToGraph(_volume, ID);
+            }
+        }
+
+        /// <summary>
+        /// 時間。単位はミリ秒。
+        /// </summary>
+        public double Time
         {
             get
             {
@@ -43,7 +65,7 @@ namespace Amaoto
             }
             set
             {
-                DX.SeekMovieToGraph(ID, value);
+                DX.SeekMovieToGraph(ID, (int)value);
             }
         }
 
@@ -57,5 +79,7 @@ namespace Amaoto
                 return DX.GetMovieStateToGraph(ID) == 1 ? true : false;
             }
         }
+
+        private int _volume;
     }
 }
