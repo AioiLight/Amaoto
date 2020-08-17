@@ -1,6 +1,6 @@
 ﻿namespace Amaoto
 {
-    interface IPlayable
+    public interface IPlayable
     {
         void Play(bool playFromBegin);
         void Stop();
