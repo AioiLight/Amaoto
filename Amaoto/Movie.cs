@@ -14,7 +14,6 @@ namespace Amaoto
         public Movie(string fileName)
             : base(fileName)
         {
-            Time = 0;
             Volume = 1.0;
         }
 

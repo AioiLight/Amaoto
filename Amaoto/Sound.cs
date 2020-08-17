@@ -20,7 +20,6 @@ namespace Amaoto
             }
             FileName = fileName;
 
-            Time = 0;
             Volume = 1.0;
         }
 
