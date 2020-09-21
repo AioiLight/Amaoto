@@ -30,17 +30,18 @@ namespace Amaoto
         /// 文字テクスチャを生成します。
         /// </summary>
         /// <param name="text">文字列。</param>
+        /// <param name="rectangle">文字の範囲。</param>
         /// <returns>テクスチャ。</returns>
-        public Texture GetTexture(string text)
+        public Texture GetTexture(string text, Rectangle? rectangle = null)
         {
             if (FontFamily == null) return new Texture();
-            var size = MeasureText(text);
+            var size = MeasureText(text, rectangle);
             var bitmap = new Bitmap((int)Math.Ceiling(size.Width), (int)Math.Ceiling(size.Height));
             bitmap.MakeTransparent();
             var graphics = Graphics.FromImage(bitmap);
-            var stringFormat = GetStringFormat();
+            var stringFormat = GetStringFormat(rectangle);
             SetGraphicsMode(graphics);
-            var gp = DrawString(text, graphics, stringFormat);
+            var gp = DrawString(text, graphics, stringFormat, rectangle);
 
             var tex = new Texture(bitmap);
 
@@ -51,14 +52,14 @@ namespace Amaoto
             return tex;
         }
 
-        private static StringFormat GetStringFormat()
+        private static StringFormat GetStringFormat(Rectangle? rectangle)
         {
             var stringFormat = new StringFormat(StringFormat.GenericTypographic)
             {
                 // どんなに長くて単語の区切りが良くても改行しない
-                FormatFlags = StringFormatFlags.NoWrap,
+                FormatFlags = !rectangle.HasValue ? StringFormatFlags.NoWrap : StringFormatFlags.NoClip,
                 // どんなに長くてもトリミングしない
-                Trimming = StringTrimming.None
+                Trimming = !rectangle.HasValue ? StringTrimming.None : StringTrimming.EllipsisCharacter
             };
             return stringFormat;
         }
@@ -71,13 +72,20 @@ namespace Amaoto
             graphics.SmoothingMode = SmoothingMode.HighQuality;
         }
 
-        private GraphicsPath DrawString(string text, Graphics graphics, StringFormat stringFormat)
+        private GraphicsPath DrawString(string text, Graphics graphics, StringFormat stringFormat, Rectangle? rectangle)
         {
             var gp = new GraphicsPath();
 
             if (Edge > 0)
             {
-                gp.AddString(text, FontFamily, (int)FontStyle, FontSize, new Point(Edge / 2, Edge / 2), stringFormat);
+                if (rectangle.HasValue)
+                {
+                    gp.AddString(text, FontFamily, (int)FontStyle, FontSize, new Rectangle(Edge / 2, Edge / 2, rectangle.Value.Width, rectangle.Value.Height), stringFormat);
+                }
+                else
+                {
+                    gp.AddString(text, FontFamily, (int)FontStyle, FontSize, new Point(Edge / 2, Edge / 2), stringFormat);
+                }
 
                 // 縁取りをする。
                 graphics.DrawPath(new Pen(BackColor, Edge) { LineJoin = LineJoin.Round }, gp);
@@ -86,21 +94,33 @@ namespace Amaoto
             }
             else
             {
-                gp.AddString(text, FontFamily, (int)FontStyle, FontSize, new Point(0, 0), stringFormat);
+                if (rectangle.HasValue)
+                {
+                    gp.AddString(text, FontFamily, (int)FontStyle, FontSize, new Rectangle(0, 0, rectangle.Value.Width, rectangle.Value.Height), stringFormat);
+                }
+                else
+                {
+                    gp.AddString(text, FontFamily, (int)FontStyle, FontSize, new Point(0, 0), stringFormat);
+                }
                 graphics.FillPath(new SolidBrush(ForeColor), gp);
             }
 
             return gp;
         }
 
-        private SizeF MeasureText(string text)
+        private SizeF MeasureText(string text, Rectangle? rectangle)
         {
+            if (rectangle.HasValue)
+            {
+                return new SizeF(rectangle.Value.Width, rectangle.Value.Height);
+            }
+
             var bitmap = new Bitmap(16, 16);
             // .NETの敗北
             var graphicsSize = Graphics.FromImage(bitmap).
                 MeasureString(text, new Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel));
             var trueGraphicsSize = Graphics.FromImage(bitmap).
-                MeasureString(text, new Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel), (int)graphicsSize.Width, StringFormat.GenericTypographic);
+                MeasureString(text, new Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel), (int)graphicsSize.Width, GetStringFormat(rectangle));
             bitmap.Dispose();
             if (trueGraphicsSize.Width == 0 || trueGraphicsSize.Height == 0)
             {
