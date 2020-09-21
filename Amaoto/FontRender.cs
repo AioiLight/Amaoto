@@ -38,7 +38,8 @@ namespace Amaoto
             var bitmap = new Bitmap((int)Math.Ceiling(size.Width), (int)Math.Ceiling(size.Height));
             bitmap.MakeTransparent();
             var graphics = Graphics.FromImage(bitmap);
-            var stringFormat = GetStringFormat(graphics);
+            var stringFormat = GetStringFormat();
+            SetGraphicsMode(graphics);
             var gp = DrawString(text, graphics, stringFormat);
 
             var tex = new Texture(bitmap);
@@ -50,18 +51,24 @@ namespace Amaoto
             return tex;
         }
 
-        private static StringFormat GetStringFormat(Graphics graphics)
+        private static StringFormat GetStringFormat()
         {
-            var stringFormat = new StringFormat(StringFormat.GenericTypographic);
-            // どんなに長くて単語の区切りが良くても改行しない
-            stringFormat.FormatFlags = StringFormatFlags.NoWrap;
-            // どんなに長くてもトリミングしない
-            stringFormat.Trimming = StringTrimming.None;
+            var stringFormat = new StringFormat(StringFormat.GenericTypographic)
+            {
+                // どんなに長くて単語の区切りが良くても改行しない
+                FormatFlags = StringFormatFlags.NoWrap,
+                // どんなに長くてもトリミングしない
+                Trimming = StringTrimming.None
+            };
+            return stringFormat;
+        }
+
+        private static void SetGraphicsMode(Graphics graphics)
+        {
             // ハイクオリティレンダリング
             graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             // アンチエイリアスをかける
             graphics.SmoothingMode = SmoothingMode.HighQuality;
-            return stringFormat;
         }
 
         private GraphicsPath DrawString(string text, Graphics graphics, StringFormat stringFormat)
@@ -73,7 +80,7 @@ namespace Amaoto
                 gp.AddString(text, FontFamily, (int)FontStyle, FontSize, new Point(Edge / 2, Edge / 2), stringFormat);
 
                 // 縁取りをする。
-                graphics.DrawPath(new Pen(BackColor, Edge) { LineJoin = System.Drawing.Drawing2D.LineJoin.Round }, gp);
+                graphics.DrawPath(new Pen(BackColor, Edge) { LineJoin = LineJoin.Round }, gp);
 
                 graphics.FillPath(new SolidBrush(ForeColor), gp);
             }
