@@ -14,5 +14,19 @@ namespace Amaoto
         {
             DX.SetUsePremulAlphaConvertLoad(DX.TRUE);
         }
+
+        /// <summary>
+        /// GUI で使われる長押し時間を変更する。
+        /// </summary>
+        /// <param name="ms">ミリ秒。</param>
+        public static void SetLongClickNs(int ms)
+        {
+            LongClickMs = ms;
+        }
+
+        /// <summary>
+        /// 長押し時間。
+        /// </summary>
+        public static int LongClickMs { get; private set; } = 400;
     }
 }

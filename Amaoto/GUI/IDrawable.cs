@@ -20,7 +20,7 @@ namespace Amaoto.GUI
 
             Screen = new VirtualScreen(Width, Height);
 
-            LongClickCounter = new Counter(0, 999, 1000, false);
+            LongClickCounter = new Counter(0, Amaoto.LongClickMs - 1, 1000, false);
 
             Child = new List<DrawPart>();
         }
