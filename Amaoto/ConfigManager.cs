@@ -31,7 +31,7 @@ namespace Amaoto
             if (!System.IO.File.Exists(filePath))
             {
                 // ファイルが存在しないので
-                SaveConfig(new T(), filePath);
+                return new T();
             }
             using (var stream = new System.IO.StreamReader(filePath, Encoding.UTF8))
             {
