@@ -33,8 +33,8 @@ namespace Amaoto.Animation
             return Sa * (1 + c3 * Math.Pow(persent - 1, 3) + c1 * Math.Pow(persent - 1, 2)) + StartPoint;
         }
 
-        private readonly int StartPoint;
-        private readonly int EndPoint;
+        public int StartPoint { get; private set; }
+        public int EndPoint { get; private set; }
         private readonly int Sa;
         private readonly int TimeNs;
     }

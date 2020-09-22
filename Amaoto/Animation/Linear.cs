@@ -25,8 +25,8 @@
             return (Sa * persent) + StartPoint;
         }
 
-        private readonly int StartPoint;
-        private readonly int EndPoint;
+        public int StartPoint { get; private set; }
+        public int EndPoint { get; private set; }
         private readonly int Sa;
         private readonly int TimeNs;
     }
