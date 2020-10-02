@@ -9,8 +9,8 @@
         /// 正真正銘、何もしない。
         /// </summary>
         /// <param name="param">維持させたい値</param>
-        /// <param name="timeNs">維持させる時間。</param>
-        public Blank(int param, int timeNs) : base(0, timeNs - 1, 1, false)
+        /// <param name="timeUs">維持させる時間。</param>
+        public Blank(int param, int timeUs) : base(0, timeUs - 1, 1, false)
         {
             Param = param;
         }

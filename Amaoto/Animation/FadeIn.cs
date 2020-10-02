@@ -8,10 +8,10 @@
         /// <summary>
         /// フェードインを初期化します。
         /// </summary>
-        /// <param name="timeNs">フェードインに掛ける秒数(ミリ秒)</param>
-        public FadeIn(int timeNs) : base(0, timeNs - 1, 1, false)
+        /// <param name="timeUs">フェードインに掛ける秒数(マイクロ秒)</param>
+        public FadeIn(int timeUs) : base(0, timeUs - 1, 1, false)
         {
-            TimeNs = timeNs;
+            TimeUs = timeUs;
         }
 
         /// <summary>
@@ -20,10 +20,10 @@
         /// <returns>不透明度。</returns>
         public override double GetAnimation()
         {
-            var opacity = 1.0 * base.Counter.Value / TimeNs;
+            var opacity = 1.0 * base.Counter.Value / TimeUs;
             return opacity;
         }
 
-        private readonly int TimeNs;
+        private readonly int TimeUs;
     }
 }
