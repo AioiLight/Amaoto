@@ -96,6 +96,7 @@
     <Compile Include="GUI\Button.cs" />
     <Compile Include="GUI\IDrawable.cs" />
     <Compile Include="GUI\Image.cs" />
+    <Compile Include="GUI\MouseClickEventArgs.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="IPlayable.cs" />
     <Compile Include="Mouse.cs" />

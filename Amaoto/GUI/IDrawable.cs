@@ -57,10 +57,10 @@ namespace Amaoto.GUI
 
             if (!outSide)
             {
-                OnHovering?.Invoke(this, null);
+                OnHovering?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                 if (!Hovering)
                 {
-                    OnMouseEnter?.Invoke(this, null);
+                    OnMouseEnter?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                     Hovering = true;
                 }
             }
@@ -68,7 +68,7 @@ namespace Amaoto.GUI
             {
                 if (Hovering)
                 {
-                    OnMouseLeave?.Invoke(this, null);
+                    OnMouseLeave?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                     Hovering = false;
                 }
             }
@@ -80,7 +80,7 @@ namespace Amaoto.GUI
                 {
                     LeftJudge = (true, MousePoint);
                     LongClickCounter?.Start();
-                    OnMouseDown?.Invoke(this, null);
+                    OnMouseDown?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                 }
             }
             else if (mouse.IsPushingButton(MouseButton.Left))
@@ -91,7 +91,7 @@ namespace Amaoto.GUI
                     if (outSide)
                     {
                         LeftJudge = (false, MousePoint);
-                        OnMouseUp?.Invoke(this, null);
+                        OnMouseUp?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                         LongClickCounter.Stop();
                         LongClickCounter.Reset();
                     }
@@ -102,10 +102,10 @@ namespace Amaoto.GUI
                         {
                             // ロングタップ
                             LeftJudge = (false, MousePoint);
-                            OnMouseUp?.Invoke(this, null);
+                            OnMouseUp?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                             if (!Dragging)
                             {
-                                LongClicked?.Invoke(this, null);
+                                LongClicked?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                             }
                             LongClickCounter.Stop();
                             LongClickCounter.Reset();
@@ -122,9 +122,9 @@ namespace Amaoto.GUI
                 {
                     if (!Dragging)
                     {
-                        Clicked?.Invoke(this, null);
+                        Clicked?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                     }
-                    OnMouseUp?.Invoke(this, null);
+                    OnMouseUp?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                 }
                 LongClickCounter.Stop();
                 LongClickCounter.Reset();
@@ -205,37 +205,37 @@ namespace Amaoto.GUI
         /// <summary>
         /// 要素がクリックされた。
         /// </summary>
-        public event EventHandler Clicked;
+        public event EventHandler<MouseClickEventArgs> Clicked;
 
         /// <summary>
         /// 要素がロングクリックされた。
         /// </summary>
-        public event EventHandler LongClicked;
+        public event EventHandler<MouseClickEventArgs> LongClicked;
 
         /// <summary>
         /// 要素が押下された。
         /// </summary>
-        public event EventHandler OnMouseDown;
+        public event EventHandler<MouseClickEventArgs> OnMouseDown;
 
         /// <summary>
         /// 要素の押下が終わった。
         /// </summary>
-        public event EventHandler OnMouseUp;
+        public event EventHandler<MouseClickEventArgs> OnMouseUp;
 
         /// <summary>
         /// マウスで要素をホバリングしている。
         /// </summary>
-        public event EventHandler OnHovering;
+        public event EventHandler<MouseClickEventArgs> OnHovering;
 
         /// <summary>
         /// マウスが要素内に入ってきた。
         /// </summary>
-        public event EventHandler OnMouseEnter;
+        public event EventHandler<MouseClickEventArgs> OnMouseEnter;
 
         /// <summary>
         /// マウスが要素内から出て行った。
         /// </summary>
-        public event EventHandler OnMouseLeave;
+        public event EventHandler<MouseClickEventArgs> OnMouseLeave;
 
         /// <summary>
         /// 相対座標。
