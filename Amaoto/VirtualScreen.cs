@@ -16,7 +16,6 @@ namespace Amaoto
         /// <param name="height">縦幅。</param>
         public VirtualScreen(int width, int height)
         {
-            DefaultScreen = DX.GetDrawScreen();
             Texture = new Texture(DX.MakeScreen(width, height, DX.TRUE));
         }
 
@@ -34,11 +33,13 @@ namespace Amaoto
                 return;
             }
 
+            var getDrawScreen = DX.GetDrawScreen();
+
             DX.SetDrawScreen(Texture.ID);
 
             texture.Draw(x, y, rectangle);
 
-            DX.SetDrawScreen(DefaultScreen);
+            DX.SetDrawScreen(getDrawScreen);
         }
 
         /// <summary>
@@ -46,11 +47,13 @@ namespace Amaoto
         /// </summary>
         public void ClearScreen()
         {
+            var getDrawScreen = DX.GetDrawScreen();
+
             DX.SetDrawScreen(Texture.ID);
 
             DX.ClearDrawScreen();
 
-            DX.SetDrawScreen(DefaultScreen);
+            DX.SetDrawScreen(getDrawScreen);
         }
 
         /// <summary>
@@ -61,11 +64,6 @@ namespace Amaoto
             Texture?.Dispose();
             Texture = null;
         }
-
-        /// <summary>
-        /// 仮想スクリーンが生成される前のスクリーン。
-        /// </summary>
-        public int DefaultScreen { get; private set; }
 
         /// <summary>
         /// 仮想スクリーンのハンドル。
