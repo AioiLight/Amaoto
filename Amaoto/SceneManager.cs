@@ -52,8 +52,8 @@ namespace Amaoto
             else
             {
                 Scenes.Insert(index, scene);
+                scene.Enable();
             }
-            scene.Enable();
         }
 
         /// <summary>
