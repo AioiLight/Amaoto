@@ -106,6 +106,7 @@
     <Compile Include="SceneManager.cs" />
     <Compile Include="Sound.cs" />
     <Compile Include="Texture.cs" />
+    <Compile Include="TextureMask.cs" />
     <Compile Include="VirtualScreen.cs" />
   </ItemGroup>
   <ItemGroup>
