@@ -26,11 +26,12 @@ namespace Amaoto
         /// <param name="x">X座標。</param>
         /// <param name="y">Y座標。</param>
         /// <param name="rectangle">描画範囲。</param>
-        public void Draw(Texture texture, float x, float y, Rectangle? rectangle = null)
+        /// <returns>VirtualScreen。</returns>
+        public VirtualScreen Draw(Texture texture, float x, float y, Rectangle? rectangle = null)
         {
             if (texture == null)
             {
-                return;
+                return this;
             }
 
             var getDrawScreen = DX.GetDrawScreen();
@@ -40,6 +41,8 @@ namespace Amaoto
             texture.Draw(x, y, rectangle);
 
             DX.SetDrawScreen(getDrawScreen);
+
+            return this;
         }
 
         /// <summary>
