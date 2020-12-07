@@ -3,7 +3,7 @@
     /// <summary>
     /// 何かのテクスチャを取得できる仕組みを提供します。
     /// </summary>
-    interface ITextureReturnable
+    public interface ITextureReturnable
     {
         /// <summary>
         /// テクスチャを取得する。
