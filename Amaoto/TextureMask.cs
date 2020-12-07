@@ -10,7 +10,7 @@ namespace Amaoto
     /// <summary>
     /// テクスチャを使用したマスクを作成し、描画範囲を切り取ります。
     /// </summary>
-    public class TextureMask
+    public class TextureMask : IDisposable
     {
         /// <summary>
         /// 
@@ -68,6 +68,14 @@ namespace Amaoto
         public void End()
         {
             DX.DeleteMaskScreen();
+        }
+
+        /// <summary>
+        /// マスク画像を破棄する。
+        /// </summary>
+        public void Dispose()
+        {
+            Screen?.Dispose();
         }
 
         private readonly VirtualScreen Screen;
