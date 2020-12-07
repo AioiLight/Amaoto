@@ -7,7 +7,7 @@ namespace Amaoto
     /// <summary>
     /// 仮想スクリーン。
     /// </summary>
-    public class VirtualScreen : IDisposable
+    public class VirtualScreen : IDisposable, ITextureReturnable
     {
         /// <summary>
         /// 仮想スクリーンを作成します。
@@ -85,6 +85,15 @@ namespace Amaoto
         {
             Texture?.Dispose();
             Texture = null;
+        }
+
+        /// <summary>
+        /// 仮想スクリーンのテクスチャを取得する。
+        /// </summary>
+        /// <returns>仮想スクリーンのテクスチャ。</returns>
+        public Texture GetTexture()
+        {
+            return Texture;
         }
 
         /// <summary>

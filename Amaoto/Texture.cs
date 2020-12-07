@@ -11,7 +11,7 @@ namespace Amaoto
     /// <summary>
     /// テクスチャ管理を行うクラス。
     /// </summary>
-    public class Texture : IDisposable
+    public class Texture : IDisposable, ITextureReturnable
     {
         /// <summary>
         /// テクスチャを生成します。
@@ -221,6 +221,15 @@ namespace Amaoto
         public void SaveAsPNG(string path)
         {
             DX.SaveDrawValidGraphToPNG(ID, 0, 0, TextureSize.width, TextureSize.height, path, 0);
+        }
+
+        /// <summary>
+        /// テクスチャを取得する。
+        /// </summary>
+        /// <returns>テクスチャ。</returns>
+        public Texture GetTexture()
+        {
+            return this;
         }
 
         /// <summary>

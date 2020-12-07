@@ -99,6 +99,7 @@
     <Compile Include="GUI\MouseClickEventArgs.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="IPlayable.cs" />
+    <Compile Include="ITextureReturnable.cs" />
     <Compile Include="Mouse.cs" />
     <Compile Include="Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
