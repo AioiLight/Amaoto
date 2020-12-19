@@ -150,7 +150,7 @@ namespace Amaoto.GUI
             foreach (var item in Child)
             {
                 item.Draw();
-                Screen.Draw(item.Screen.Texture, item.X, item.Y);
+                Screen.Draw(item.Screen.Texture, item.X, item.Y);   
             }
         }
 
