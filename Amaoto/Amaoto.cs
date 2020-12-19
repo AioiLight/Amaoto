@@ -13,6 +13,7 @@ namespace Amaoto
         public static void Init()
         {
             DX.SetUsePremulAlphaConvertLoad(DX.TRUE);
+            DX.CreateMaskScreen();
         }
 
         /// <summary>

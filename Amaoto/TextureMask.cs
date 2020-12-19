@@ -29,7 +29,6 @@ namespace Amaoto
         /// <returns>TextureMask。</returns>
         public TextureMask CreateMask(Action mask)
         {
-            DX.CreateMaskScreen();
             Screen.ClearScreen();
             Screen.Draw(mask);
             return this;
@@ -60,14 +59,6 @@ namespace Amaoto
                 DX.SetMaskReverseEffectFlag(DX.FALSE);
             }
             return this;
-        }
-
-        /// <summary>
-        /// マスクの処理を終了する。
-        /// </summary>
-        public void End()
-        {
-            DX.DeleteMaskScreen();
         }
 
         /// <summary>
