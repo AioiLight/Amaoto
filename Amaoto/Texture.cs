@@ -167,19 +167,9 @@ namespace Amaoto
                     origin.Y = 0;
                     break;
             }
+
             var blendParam = (int)(Opacity * 255);
-            if (BlendMode == BlendMode.Add)
-            {
-                DX.SetDrawBlendMode(DX.DX_BLENDMODE_PMA_ADD, blendParam);
-            }
-            else if (BlendMode == BlendMode.Subtract)
-            {
-                DX.SetDrawBlendMode(DX.DX_BLENDMODE_PMA_SUB, blendParam);
-            }
-            else
-            {
-                DX.SetDrawBlendMode(DX.DX_BLENDMODE_PMA_ALPHA, blendParam);
-            }
+            DX.SetDrawBlendMode(DXLibUtil.GetBlendModeConstant(BlendMode), blendParam);
 
             if (ScaleX != 1.0f || ScaleY != 1.0f)
             {
