@@ -3,70 +3,84 @@ using System.Drawing;
 
 namespace Amaoto.GUI
 {
+    /// <summary>
+    /// ボタン。
+    /// </summary>
     public class Button : DrawPart
     {
-        public Button(int width, int height, Texture buttonTexture, FontRender fontRender, string str)
-            : base(width, height)
+        /// <summary>
+        /// GUIのボタンを描画する。
+        /// </summary>
+        /// <param name="background">ボタンの背景として使用する画像。正方形でなければならない。</param>
+        /// <param name="content">ボタンの中身。</param>
+        /// <param name="width">(オプション)横のサイズ。</param>
+        /// <param name="height">(オプション)縦のサイズ。</param>
+        public Button(ITextureReturnable background, ITextureReturnable content, int? width = null, int? height = null)
+            : base(width ?? content.GetTexture().TextureSize.width, height ?? content.GetTexture().TextureSize.height)
         {
             OnMouseDown += Button_OnMouseDown;
             OnMouseUp += Button_OnMouseUp;
 
-            var textTex = fontRender.GetTexture(str);
+            var contentTex = content.GetTexture();
+            var backTex = background.GetTexture();
             // ボタンの土台の描画。
-            var buttonTextureSize = buttonTexture.TextureSize;
+            var buttonTextureSize = backTex.TextureSize;
             var oneSize = (buttonTextureSize.width / 3, buttonTextureSize.height / 3);
 
             var screen = new VirtualScreen(Width, Height);
 
-            // 左上
-            buttonTexture.ReferencePoint = ReferencePoint.TopLeft;
-            buttonTexture.ScaleX = 1.0f;
-            buttonTexture.ScaleX = 1.0f;
-            screen.Draw(buttonTexture, 0, 0, new Rectangle(0, 0, oneSize.Item1, oneSize.Item2));
+            screen.Draw(() =>
+            {
+                // 左上
+                backTex.ReferencePoint = ReferencePoint.TopLeft;
+                backTex.ScaleX = 1.0f;
+                backTex.ScaleX = 1.0f;
+                backTex.Draw(0, 0, new Rectangle(0, 0, oneSize.Item1, oneSize.Item2));
 
-            // 中央上
-            buttonTexture.ReferencePoint = ReferencePoint.TopCenter;
-            buttonTexture.ScaleX = (float)(1.0 * (Width - oneSize.Item1 * 2) / oneSize.Item1);
-            screen.Draw(buttonTexture, Width / 2, 0, new Rectangle(oneSize.Item1, 0, oneSize.Item1, oneSize.Item2));
+                // 中央上
+                backTex.ReferencePoint = ReferencePoint.TopCenter;
+                backTex.ScaleX = (float)(1.0 * (Width - oneSize.Item1 * 2) / oneSize.Item1);
+                backTex.Draw(Width / 2, 0, new Rectangle(oneSize.Item1, 0, oneSize.Item1, oneSize.Item2));
 
-            // 右上
-            buttonTexture.ReferencePoint = ReferencePoint.TopRight;
-            buttonTexture.ScaleX = 1.0f;
-            screen.Draw(buttonTexture, Width, 0, new Rectangle(oneSize.Item1 * 2, 0, oneSize.Item1, oneSize.Item2));
+                // 右上
+                backTex.ReferencePoint = ReferencePoint.TopRight;
+                backTex.ScaleX = 1.0f;
+                backTex.Draw(Width, 0, new Rectangle(oneSize.Item1 * 2, 0, oneSize.Item1, oneSize.Item2));
 
-            // 左中央
-            buttonTexture.ReferencePoint = ReferencePoint.CenterLeft;
-            buttonTexture.ScaleY = (float)(1.0 * (Height - oneSize.Item2 * 2) / oneSize.Item2);
-            screen.Draw(buttonTexture, 0, Height / 2, new Rectangle(0, oneSize.Item2, oneSize.Item1, oneSize.Item2));
+                // 左中央
+                backTex.ReferencePoint = ReferencePoint.CenterLeft;
+                backTex.ScaleY = (float)(1.0 * (Height - oneSize.Item2 * 2) / oneSize.Item2);
+                backTex.Draw(0, Height / 2, new Rectangle(0, oneSize.Item2, oneSize.Item1, oneSize.Item2));
 
-            // 中央
-            buttonTexture.ReferencePoint = ReferencePoint.Center;
-            buttonTexture.ScaleX = (float)(1.0 * (Width - oneSize.Item1 * 2) / oneSize.Item1);
-            screen.Draw(buttonTexture, Width / 2, Height / 2, new Rectangle(oneSize.Item1, oneSize.Item2, oneSize.Item1, oneSize.Item2));
+                // 中央
+                backTex.ReferencePoint = ReferencePoint.Center;
+                backTex.ScaleX = (float)(1.0 * (Width - oneSize.Item1 * 2) / oneSize.Item1);
+                backTex.Draw(Width / 2, Height / 2, new Rectangle(oneSize.Item1, oneSize.Item2, oneSize.Item1, oneSize.Item2));
 
-            // 右中央
-            buttonTexture.ReferencePoint = ReferencePoint.CenterRight;
-            buttonTexture.ScaleX = 1.0f;
-            screen.Draw(buttonTexture, Width, Height / 2, new Rectangle(oneSize.Item1 * 2, oneSize.Item2, oneSize.Item1, oneSize.Item2));
+                // 右中央
+                backTex.ReferencePoint = ReferencePoint.CenterRight;
+                backTex.ScaleX = 1.0f;
+                backTex.Draw(Width, Height / 2, new Rectangle(oneSize.Item1 * 2, oneSize.Item2, oneSize.Item1, oneSize.Item2));
 
-            // 左下
-            buttonTexture.ReferencePoint = ReferencePoint.BottomLeft;
-            buttonTexture.ScaleY = 1.0f;
-            screen.Draw(buttonTexture, 0, Height, new Rectangle(0, oneSize.Item2 * 2, oneSize.Item1, oneSize.Item2));
+                // 左下
+                backTex.ReferencePoint = ReferencePoint.BottomLeft;
+                backTex.ScaleY = 1.0f;
+                backTex.Draw(0, Height, new Rectangle(0, oneSize.Item2 * 2, oneSize.Item1, oneSize.Item2));
 
-            // 中央下
-            buttonTexture.ReferencePoint = ReferencePoint.BottomCenter;
-            buttonTexture.ScaleX = (float)(1.0 * (Width - oneSize.Item1 * 2) / oneSize.Item1);
-            screen.Draw(buttonTexture, Width / 2, Height, new Rectangle(oneSize.Item1, oneSize.Item2 * 2, oneSize.Item1, oneSize.Item2));
+                // 中央下
+                backTex.ReferencePoint = ReferencePoint.BottomCenter;
+                backTex.ScaleX = (float)(1.0 * (Width - oneSize.Item1 * 2) / oneSize.Item1);
+                backTex.Draw(Width / 2, Height, new Rectangle(oneSize.Item1, oneSize.Item2 * 2, oneSize.Item1, oneSize.Item2));
 
-            // 右下
-            buttonTexture.ReferencePoint = ReferencePoint.BottomRight;
-            buttonTexture.ScaleX = 1.0f;
-            screen.Draw(buttonTexture, Width, Height, new Rectangle(oneSize.Item1 * 2, oneSize.Item2 * 2, oneSize.Item1, oneSize.Item2));
+                // 右下
+                backTex.ReferencePoint = ReferencePoint.BottomRight;
+                backTex.ScaleX = 1.0f;
+                backTex.Draw(Width, Height, new Rectangle(oneSize.Item1 * 2, oneSize.Item2 * 2, oneSize.Item1, oneSize.Item2));
 
-            // 文字の描画
-            textTex.ReferencePoint = ReferencePoint.Center;
-            screen.Draw(textTex, width / 2, height / 2);
+                // 文字の描画
+                contentTex.ReferencePoint = ReferencePoint.Center;
+                contentTex.Draw(Width / 2, Height / 2);
+            });
 
             Texture = screen.Texture;
 
