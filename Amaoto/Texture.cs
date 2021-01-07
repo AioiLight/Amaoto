@@ -278,6 +278,18 @@ namespace Amaoto
                 return (width, height);
             }
         }
+
+        /// <summary>
+        /// 拡大率を考慮した、描画されるときのサイズ。
+        /// </summary>
+        public (int width, int height) ActualSize
+        {
+            get
+            {
+                var s = TextureSize;
+                return ((int)(ScaleX * s.width), (int)(ScaleY * s.height));
+            }
+        }
     }
 
     /// <summary>
