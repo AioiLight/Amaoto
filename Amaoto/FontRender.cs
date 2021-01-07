@@ -41,6 +41,12 @@ namespace Amaoto
             var graphics = Graphics.FromImage(bitmap);
             var stringFormat = GetStringFormat(rectangle);
             SetGraphicsMode(graphics);
+
+            if (Amaoto.FontRenderDebug)
+            {
+                graphics.Clear(Color.FromArgb(128, 255, 0, 0));
+            }
+
             var gp = DrawString(text, graphics, stringFormat, rectangle);
 
             var tex = new Texture(bitmap);

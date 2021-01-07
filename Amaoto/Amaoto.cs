@@ -25,9 +25,24 @@ namespace Amaoto
             LongClickMs = ms;
         }
 
+
+        /// <summary>
+        /// FontRenderのデバッグを行うかどうか設定する。
+        /// </summary>
+        /// <param name="debug">デバッグを行う。</param>
+        public static void SetFontRenderDebug(bool debug)
+        {
+            FontRenderDebug = debug;
+        }
+
         /// <summary>
         /// 長押し時間。
         /// </summary>
         public static int LongClickMs { get; private set; } = 400;
+
+        /// <summary>
+        /// FontRenderのデバッグを行うかどうか。
+        /// </summary>
+        public static bool FontRenderDebug { get; private set; } = false;
     }
 }
