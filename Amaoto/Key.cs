@@ -3,23 +3,14 @@
 namespace Amaoto
 {
     /// <summary>
-    /// 入力を管理するクラス。
+    /// キーボードを管理するクラス。
     /// </summary>
-    public class Key
+    public static class Key
     {
         /// <summary>
-        /// 入力を管理するクラス。
+        /// キーボード入力の状態をチェックします。毎フレーム呼び出す必要があります。
         /// </summary>
-        public Key()
-        {
-            Keys = new byte[256];
-            Buffer = new byte[256];
-        }
-
-        /// <summary>
-        /// キー入力の状態をチェックします。毎フレーム呼び出す必要があります。
-        /// </summary>
-        public void Update()
+        public static void Update()
         {
             DX.GetHitKeyStateAll(Buffer);
             for (int i = 0; i < 256; i++)
@@ -41,7 +32,7 @@ namespace Amaoto
         /// </summary>
         /// <param name="key">キーコード。</param>
         /// <returns>入力されたかどうか。</returns>
-        public bool IsPushedKey(int key)
+        public static bool IsPushedKey(int key)
         {
             return Keys[key] == 1;
         }
@@ -51,12 +42,12 @@ namespace Amaoto
         /// </summary>
         /// <param name="key">キーコード。</param>
         /// <returns>入力されているかどうか。</returns>
-        public bool IsPushingKey(int key)
+        public static bool IsPushingKey(int key)
         {
             return Keys[key] > 0;
         }
 
-        private readonly byte[] Keys;
-        private readonly byte[] Buffer;
+        private static readonly byte[] Keys = new byte[256];
+        private static readonly byte[] Buffer = new byte[256];
     }
 }
