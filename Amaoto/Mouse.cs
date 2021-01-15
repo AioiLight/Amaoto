@@ -1,4 +1,5 @@
 ﻿using DxLibDLL;
+using System.Drawing;
 
 namespace Amaoto
 {
@@ -15,7 +16,8 @@ namespace Amaoto
             Wheel = DX.GetMouseWheelRotVolF();
 
             DX.GetMousePoint(out var x, out var y);
-            Point = (x, y);
+            X = x;
+            Y = y;
 
             var mouse = DX.GetMouseInput();
 
@@ -139,9 +141,13 @@ namespace Amaoto
         public static float Wheel { get; private set; }
 
         /// <summary>
-        /// マウス座標。
+        /// マウスX座標。
         /// </summary>
-        public static (int x, int y) Point { get; private set; }
+        public static int X { get; private set; }
+        /// <summary>
+        /// マウスY座標。
+        /// </summary>
+        public static int Y { get; private set; }
     }
 
     /// <summary>
