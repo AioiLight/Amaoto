@@ -159,8 +159,8 @@ namespace Amaoto
         /// </summary>
         public int Edge { get; set; }
 
-        private FontFamily FontFamily;
-        private FontStyle FontStyle;
-        private float FontSize;
+        private FontFamily FontFamily { get; set; }
+        private FontStyle FontStyle { get; set; }
+        private float FontSize { get; set; }
     }
 }
