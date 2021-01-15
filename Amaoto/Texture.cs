@@ -210,7 +210,7 @@ namespace Amaoto
         /// <param name="path">保存先。</param>
         public void SaveAsPNG(string path)
         {
-            DX.SaveDrawValidGraphToPNG(ID, 0, 0, TextureSize.width, TextureSize.height, path, 0);
+            DX.SaveDrawValidGraphToPNG(ID, 0, 0, TextureSize.Width, TextureSize.Height, path, 0);
         }
 
         /// <summary>
@@ -270,24 +270,24 @@ namespace Amaoto
         /// <summary>
         /// テクスチャのサイズを返します。
         /// </summary>
-        public (int width, int height) TextureSize
+        public Size TextureSize
         {
             get
             {
                 DX.GetGraphSize(ID, out var width, out var height);
-                return (width, height);
+                return new Size(width, height);
             }
         }
 
         /// <summary>
         /// 拡大率を考慮した、描画されるときのサイズ。
         /// </summary>
-        public (int width, int height) ActualSize
+        public Size ActualSize
         {
             get
             {
                 var s = TextureSize;
-                return ((int)(ScaleX * s.width), (int)(ScaleY * s.height));
+                return new Size((int)(ScaleX * s.Width), (int)(ScaleY * s.Height));
             }
         }
     }

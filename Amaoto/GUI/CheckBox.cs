@@ -17,7 +17,7 @@ namespace Amaoto.GUI
 
             // 文字の描画
             textTex.ReferencePoint = ReferencePoint.CenterLeft;
-            screen.Draw(textTex, boxTextureSize.width, height / 2);
+            screen.Draw(textTex, boxTextureSize.Width, height / 2);
 
             Texture = screen.Texture;
             Texture.ReferencePoint = ReferencePoint.CenterLeft;

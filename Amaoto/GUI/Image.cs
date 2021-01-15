@@ -6,16 +6,16 @@
     public class Image : DrawPart
     {
         public Image(Texture texture, int? width = null, int? height = null)
-            : base(width.HasValue ? width.Value : texture.TextureSize.width, height.HasValue ? height.Value : texture.TextureSize.height)
+            : base(width.HasValue ? width.Value : texture.TextureSize.Width, height.HasValue ? height.Value : texture.TextureSize.Height)
         {
             if (width.HasValue)
             {
-                texture.ScaleX = (float)(1.0 * width.Value / texture.TextureSize.width);
+                texture.ScaleX = (float)(1.0 * width.Value / texture.TextureSize.Width);
             }
 
             if (height.HasValue)
             {
-                texture.ScaleY = (float)(1.0 * height.Value / texture.TextureSize.height);
+                texture.ScaleY = (float)(1.0 * height.Value / texture.TextureSize.Height);
             }
 
             Texture = texture;

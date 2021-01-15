@@ -16,7 +16,7 @@ namespace Amaoto.GUI
         /// <param name="width">(オプション)横のサイズ。</param>
         /// <param name="height">(オプション)縦のサイズ。</param>
         public Button(ITextureReturnable background, ITextureReturnable content, int? width = null, int? height = null)
-            : base(width ?? content.GetTexture().TextureSize.width, height ?? content.GetTexture().TextureSize.height)
+            : base(width ?? content.GetTexture().TextureSize.Width, height ?? content.GetTexture().TextureSize.Height)
         {
             OnMouseDown += Button_OnMouseDown;
             OnMouseUp += Button_OnMouseUp;
@@ -25,7 +25,7 @@ namespace Amaoto.GUI
             var backTex = background.GetTexture();
             // ボタンの土台の描画。
             var buttonTextureSize = backTex.TextureSize;
-            var oneSize = (buttonTextureSize.width / 3, buttonTextureSize.height / 3);
+            var oneSize = (buttonTextureSize.Width / 3, buttonTextureSize.Height / 3);
 
             var screen = new VirtualScreen(Width, Height);
 
