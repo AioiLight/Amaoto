@@ -1,5 +1,4 @@
 ﻿using DxLibDLL;
-using System.Drawing;
 
 namespace Amaoto
 {
