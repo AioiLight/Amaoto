@@ -1,4 +1,5 @@
 ﻿using DxLibDLL;
+using System;
 
 namespace Amaoto
 {
@@ -8,12 +9,34 @@ namespace Amaoto
     public static class Amaoto
     {
         /// <summary>
-        /// Amaoto の初期化をする。必ず Amaoto の使用前に呼び出す必要がある。
+        /// Amaoto と DXライブラリの初期化をする。必ず Amaoto の使用前に呼び出す必要がある。
         /// </summary>
-        public static void Init()
+        /// <param name="beforeInit">DxLib_Initの前に設定するメソッド。</param>
+        /// <param name="afterInit">DxLib_Initの後に設定するメソッド。</param>
+        public static void Init(Action beforeInit, Action afterInit)
         {
+            beforeInit?.Invoke();
+
+            if (DX.DxLib_Init() == -1)
+            {
+                throw new Exception("DXLib initialize failed.");
+            }
+
             DX.SetUsePremulAlphaConvertLoad(DX.TRUE);
             DX.CreateMaskScreen();
+
+            afterInit?.Invoke();
+        }
+
+        /// <summary>
+        /// Amaoto と DXライブラリの終了処理をする。
+        /// </summary>
+        public static void End()
+        {
+            if (DX.DxLib_End() == -1)
+            {
+                throw new Exception("DXLib ending failed.");
+            }
         }
 
         /// <summary>
