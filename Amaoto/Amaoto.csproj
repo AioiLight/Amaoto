@@ -99,9 +99,9 @@
     <Compile Include="GUI\IDrawable.cs" />
     <Compile Include="GUI\Image.cs" />
     <Compile Include="GUI\MouseClickEventArgs.cs" />
-    <Compile Include="Input.cs" />
     <Compile Include="IPlayable.cs" />
     <Compile Include="ITextureReturnable.cs" />
+    <Compile Include="Key.cs" />
     <Compile Include="Mouse.cs" />
     <Compile Include="Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

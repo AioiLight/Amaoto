@@ -5,12 +5,12 @@ namespace Amaoto
     /// <summary>
     /// 入力を管理するクラス。
     /// </summary>
-    public class Input
+    public class Key
     {
         /// <summary>
         /// 入力を管理するクラス。
         /// </summary>
-        public Input()
+        public Key()
         {
             Keys = new byte[256];
             Buffer = new byte[256];
