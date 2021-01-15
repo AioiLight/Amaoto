@@ -39,7 +39,7 @@ namespace Amaoto.GUI
 
                 // 中央上
                 backTex.ReferencePoint = ReferencePoint.TopCenter;
-                backTex.ScaleX = (float)(1.0 * (Width - oneSize.Item1 * 2) / oneSize.Item1);
+                backTex.ScaleX = (float)(1.0 * (Width - (oneSize.Item1 * 2)) / oneSize.Item1);
                 backTex.Draw(Width / 2, 0, new Rectangle(oneSize.Item1, 0, oneSize.Item1, oneSize.Item2));
 
                 // 右上
@@ -49,12 +49,12 @@ namespace Amaoto.GUI
 
                 // 左中央
                 backTex.ReferencePoint = ReferencePoint.CenterLeft;
-                backTex.ScaleY = (float)(1.0 * (Height - oneSize.Item2 * 2) / oneSize.Item2);
+                backTex.ScaleY = (float)(1.0 * (Height - (oneSize.Item2 * 2)) / oneSize.Item2);
                 backTex.Draw(0, Height / 2, new Rectangle(0, oneSize.Item2, oneSize.Item1, oneSize.Item2));
 
                 // 中央
                 backTex.ReferencePoint = ReferencePoint.Center;
-                backTex.ScaleX = (float)(1.0 * (Width - oneSize.Item1 * 2) / oneSize.Item1);
+                backTex.ScaleX = (float)(1.0 * (Width - (oneSize.Item1 * 2)) / oneSize.Item1);
                 backTex.Draw(Width / 2, Height / 2, new Rectangle(oneSize.Item1, oneSize.Item2, oneSize.Item1, oneSize.Item2));
 
                 // 右中央
@@ -69,7 +69,7 @@ namespace Amaoto.GUI
 
                 // 中央下
                 backTex.ReferencePoint = ReferencePoint.BottomCenter;
-                backTex.ScaleX = (float)(1.0 * (Width - oneSize.Item1 * 2) / oneSize.Item1);
+                backTex.ScaleX = (float)(1.0 * (Width - (oneSize.Item1 * 2)) / oneSize.Item1);
                 backTex.Draw(Width / 2, Height, new Rectangle(oneSize.Item1, oneSize.Item2 * 2, oneSize.Item1, oneSize.Item2));
 
                 // 右下
