@@ -220,7 +220,7 @@ namespace Amaoto
         /// </summary>
         public TimerState State { get; private set; }
 
-        private long _value { get; set; }
+        private long _value;
     }
 
     /// <summary>
