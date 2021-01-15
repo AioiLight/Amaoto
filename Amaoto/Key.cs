@@ -28,26 +28,26 @@ namespace Amaoto
         }
 
         /// <summary>
-        /// そのキーが入力されたかどうかチェックします。
+        /// そのキーを押したかどうかチェックします。
         /// </summary>
         /// <param name="key">キーコード。</param>
         /// <returns>入力されたかどうか。</returns>
-        public static bool IsPushedKey(int key)
+        public static bool IsPushed(int key)
         {
             return Keys[key] == 1;
         }
 
         /// <summary>
-        /// そのキーが入力されているかどうかチェックします。
+        /// そのキーを押しているかどうかチェックします。
         /// </summary>
         /// <param name="key">キーコード。</param>
         /// <returns>入力されているかどうか。</returns>
-        public static bool IsPushingKey(int key)
+        public static bool IsPushing(int key)
         {
             return Keys[key] > 0;
         }
 
-        private static readonly byte[] Keys = new byte[256];
+        private static readonly int[] Keys = new int[256];
         private static readonly byte[] Buffer = new byte[256];
     }
 }
