@@ -18,10 +18,10 @@ namespace Amaoto
         /// </summary>
         public Texture()
         {
-            Rotation = 0.0f;
-            ScaleX = 1.0f;
-            ScaleY = 1.0f;
-            Opacity = 1.0f;
+            Rotation = 0.0;
+            ScaleX = 1.0;
+            ScaleY = 1.0;
+            Opacity = 1.0;
             ReferencePoint = ReferencePoint.TopLeft;
         }
 
@@ -105,7 +105,7 @@ namespace Amaoto
         /// <param name="x">X座標。</param>
         /// <param name="y">Y座標。</param>
         /// <param name="rectangle">描画範囲。</param>
-        public void Draw(float x, float y, Rectangle? rectangle = null)
+        public void Draw(double x, double y, Rectangle? rectangle = null)
         {
             var origin = new Point();
             DX.GetGraphSize(ID, out var width, out var height);
@@ -171,7 +171,7 @@ namespace Amaoto
             var blendParam = (int)(Opacity * 255);
             DX.SetDrawBlendMode(DXLibUtil.GetBlendModeConstant(BlendMode), blendParam);
 
-            if (ScaleX != 1.0f || ScaleY != 1.0f)
+            if (ScaleX != 1.0 || ScaleY != 1.0)
             {
                 DX.SetDrawMode(DX.DX_DRAWMODE_BILINEAR);
             }
@@ -182,8 +182,8 @@ namespace Amaoto
 
             DX.DrawRectRotaGraph3F(
                 // 座標
-                x,
-                y,
+                (float)x,
+                (float)y,
                 // 元画像座標
                 rectangle.Value.X,
                 rectangle.Value.Y,
@@ -240,7 +240,7 @@ namespace Amaoto
         /// <summary>
         /// 不透明度。
         /// </summary>
-        public float Opacity { get; set; }
+        public double Opacity { get; set; }
 
         /// <summary>
         /// ID。
@@ -250,7 +250,7 @@ namespace Amaoto
         /// <summary>
         /// 角度(弧度法)。
         /// </summary>
-        public float Rotation { get; set; }
+        public double Rotation { get; set; }
 
         /// <summary>
         /// 描画基準点。
@@ -260,12 +260,12 @@ namespace Amaoto
         /// <summary>
         /// 拡大率X。
         /// </summary>
-        public float ScaleX { get; set; }
+        public double ScaleX { get; set; }
 
         /// <summary>
         /// 拡大率Y。
         /// </summary>
-        public float ScaleY { get; set; }
+        public double ScaleY { get; set; }
 
         /// <summary>
         /// テクスチャのサイズを返します。
