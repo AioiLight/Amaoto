@@ -45,6 +45,14 @@ namespace Amaoto
 
             // 現在時間から以前Tick()したまでの時間の差
             var diffTime = nowTime - NowTime;
+
+            if (diffTime < 0)
+            {
+                // diffTimeが0未満、つまり、カウンターがループしてしまった
+                // diffTime を nowTime + 差分にする。
+                diffTime = nowTime + (long.MaxValue - NowTime);
+            }
+
             while (diffTime >= Interval)
             {
                 // 時間の差が間隔未満になるまで進める
