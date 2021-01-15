@@ -17,12 +17,31 @@ namespace Amaoto
             {
                 if (Buffer[i] == 1)
                 {
-                    if (Keys[i] == 0) Keys[i] = 1;
-                    else if (Keys[i] == 1) Keys[i] = 2;
+                    // 今押している
+                    if (Keys[i] <= 0)
+                    {
+                        // 押していない状態から押している状態になった
+                        Keys[i] = 1;
+                    }
+                    else
+                    {
+                        // 押している状態から押している状態になった。
+                        Keys[i] = 2;
+                    }
                 }
                 else
                 {
-                    Keys[i] = 0;
+                    // 今押していない
+                    if (IsPushing(i))
+                    {
+                        // 押している状態から押していない状態になった
+                        Keys[i] = -1;
+                    }
+                    else
+                    {
+                        // 押していない状態から押していない状態になった。
+                        Keys[i] = 0;
+                    }
                 }
             }
         }
@@ -31,7 +50,7 @@ namespace Amaoto
         /// そのキーを押したかどうかチェックします。
         /// </summary>
         /// <param name="key">キーコード。</param>
-        /// <returns>入力されたかどうか。</returns>
+        /// <returns>押したかどうか。</returns>
         public static bool IsPushed(int key)
         {
             return Keys[key] == 1;
@@ -41,10 +60,20 @@ namespace Amaoto
         /// そのキーを押しているかどうかチェックします。
         /// </summary>
         /// <param name="key">キーコード。</param>
-        /// <returns>入力されているかどうか。</returns>
+        /// <returns>押しているかどうか。</returns>
         public static bool IsPushing(int key)
         {
             return Keys[key] > 0;
+        }
+
+        /// <summary>
+        /// そのキーを離したかどうかチェックします。
+        /// </summary>
+        /// <param name="key">キーコード。</param>
+        /// <returns>離したかどうか。</returns>
+        public static bool IsLeft(int key)
+        {
+            return Keys[key] == -1;
         }
 
         private static readonly int[] Keys = new int[256];
