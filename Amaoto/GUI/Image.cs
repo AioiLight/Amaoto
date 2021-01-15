@@ -6,7 +6,7 @@
     public class Image : DrawPart
     {
         public Image(Texture texture, int? width = null, int? height = null)
-            : base(width.HasValue ? width.Value : texture.TextureSize.Width, height.HasValue ? height.Value : texture.TextureSize.Height)
+            : base(width ?? texture.TextureSize.Width, height ?? texture.TextureSize.Height)
         {
             if (width.HasValue)
             {
