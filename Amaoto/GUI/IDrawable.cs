@@ -72,7 +72,7 @@ namespace Amaoto.GUI
                 }
             }
 
-            if (Mouse.IsPushedButton(MouseButton.Left))
+            if (Mouse.IsPushed(MouseButton.Left))
             {
                 // マウス初回クリック処理
                 if (!outSide)
@@ -82,7 +82,7 @@ namespace Amaoto.GUI
                     OnMouseDown?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                 }
             }
-            else if (Mouse.IsPushingButton(MouseButton.Left))
+            else if (Mouse.IsPushing(MouseButton.Left))
             {
                 // マウスが要素内をクリックしてるかどうかの判定
                 if (LeftJudge.Item1)
@@ -114,7 +114,7 @@ namespace Amaoto.GUI
                     }
                 }
             }
-            else if (Mouse.IsLeftButton(MouseButton.Left))
+            else if (Mouse.IsLeft(MouseButton.Left))
             {
                 // クリック判定
                 if (LeftJudge.Item1)

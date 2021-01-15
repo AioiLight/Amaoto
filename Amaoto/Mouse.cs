@@ -57,7 +57,7 @@ namespace Amaoto
         /// </summary>
         /// <param name="mouseButton">ボタン。</param>
         /// <returns>押されたかどうか。</returns>
-        public static bool IsPushedButton(MouseButton mouseButton)
+        public static bool IsPushed(MouseButton mouseButton)
         {
             return Buttons[GetIndexFromMouseButton(mouseButton)] == 1;
         }
@@ -67,7 +67,7 @@ namespace Amaoto
         /// </summary>
         /// <param name="mouseButton">ボタン。</param>
         /// <returns>押されているかどうか。</returns>
-        public static bool IsPushingButton(MouseButton mouseButton)
+        public static bool IsPushing(MouseButton mouseButton)
         {
             return Buttons[GetIndexFromMouseButton(mouseButton)] > 0;
         }
@@ -77,7 +77,7 @@ namespace Amaoto
         /// </summary>
         /// <param name="mouseButton">ボタン。</param>
         /// <returns>離されたかどうか。</returns>
-        public static bool IsLeftButton(MouseButton mouseButton)
+        public static bool IsLeft(MouseButton mouseButton)
         {
             return Buttons[GetIndexFromMouseButton(mouseButton)] == -1;
         }
