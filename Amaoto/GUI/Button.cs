@@ -90,7 +90,7 @@ namespace Amaoto.GUI
             Texture.ReferencePoint = ReferencePoint.Center;
         }
 
-        public override void Update(Mouse mouse = null, int? pointX = null, int? pointY = null)
+        public override void Update(int? pointX = null, int? pointY = null)
         {
             DownAnimation?.Tick();
             UpAnimation?.Tick();
@@ -114,7 +114,7 @@ namespace Amaoto.GUI
                     Texture.ScaleX = Texture.ScaleY = 1.0f;
                 }
             }
-            base.Update(mouse, pointX, pointY);
+            base.Update(pointX, pointY);
         }
 
         /// <summary>

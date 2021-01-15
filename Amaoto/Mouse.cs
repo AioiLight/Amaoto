@@ -3,22 +3,14 @@
 namespace Amaoto
 {
     /// <summary>
-    /// マウス操作。
+    /// マウス操作を管理するクラス。
     /// </summary>
-    public class Mouse
+    public static class Mouse
     {
         /// <summary>
-        /// マウス操作。
+        /// マウスの入力を処理する。必ず毎フレーム呼ぶ必要がある。
         /// </summary>
-        public Mouse()
-        {
-            Buttons = new int[5];
-        }
-
-        /// <summary>
-        /// マウスの入力を処理する。
-        /// </summary>
-        public void Update()
+        public static void Update()
         {
             Wheel = DX.GetMouseWheelRotVolF();
 
@@ -65,7 +57,7 @@ namespace Amaoto
         /// </summary>
         /// <param name="mouseButton">ボタン。</param>
         /// <returns>押されたかどうか。</returns>
-        public bool IsPushedButton(MouseButton mouseButton)
+        public static bool IsPushedButton(MouseButton mouseButton)
         {
             return Buttons[GetIndexFromMouseButton(mouseButton)] == 1;
         }
@@ -75,7 +67,7 @@ namespace Amaoto
         /// </summary>
         /// <param name="mouseButton">ボタン。</param>
         /// <returns>押されているかどうか。</returns>
-        public bool IsPushingButton(MouseButton mouseButton)
+        public static bool IsPushingButton(MouseButton mouseButton)
         {
             return Buttons[GetIndexFromMouseButton(mouseButton)] > 0;
         }
@@ -85,12 +77,12 @@ namespace Amaoto
         /// </summary>
         /// <param name="mouseButton">ボタン。</param>
         /// <returns>離されたかどうか。</returns>
-        public bool IsLeftButton(MouseButton mouseButton)
+        public static bool IsLeftButton(MouseButton mouseButton)
         {
             return Buttons[GetIndexFromMouseButton(mouseButton)] == -1;
         }
 
-        private int GetIndexFromMouseButton(MouseButton mouseButton)
+        private static int GetIndexFromMouseButton(MouseButton mouseButton)
         {
             switch (mouseButton)
             {
@@ -114,7 +106,7 @@ namespace Amaoto
             }
         }
 
-        private MouseButton GetMouseButtonFromIndex(int index)
+        private static MouseButton GetMouseButtonFromIndex(int index)
         {
             switch (index)
             {
@@ -138,18 +130,18 @@ namespace Amaoto
             }
         }
 
-        private readonly int[] Buttons;
+        private static readonly int[] Buttons = new int[5];
 
         /// <summary>
         /// マウスホイール回転量。
         /// 奥に回すと正の数になる。
         /// </summary>
-        public float Wheel { get; private set; }
+        public static float Wheel { get; private set; }
 
         /// <summary>
         /// マウス座標。
         /// </summary>
-        public (int x, int y) Point { get; private set; }
+        public static (int x, int y) Point { get; private set; }
     }
 
     /// <summary>

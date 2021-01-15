@@ -28,12 +28,11 @@ namespace Amaoto.GUI
         /// <summary>
         /// GUI部品を更新する。
         /// </summary>
-        /// <param name="mouse">マウス。</param>
         /// <param name="pointX">マウスの相対X座標。</param>
         /// <param name="pointY">マウスの相対Y座標。</param>
-        public virtual void Update(Mouse mouse = null, int? pointX = null, int? pointY = null)
+        public virtual void Update(int? pointX = null, int? pointY = null)
         {
-            if (mouse == null)
+            //if (mouse == null)
             {
                 LeftJudge = (false, (0, 0));
 
@@ -46,7 +45,7 @@ namespace Amaoto.GUI
 
             if (!pointX.HasValue || !pointY.HasValue)
             {
-                MousePoint = (mouse.Point.x - X, mouse.Point.y - Y);
+                MousePoint = (Mouse.Point.x - X, Mouse.Point.y - Y);
             }
             else
             {
@@ -73,7 +72,7 @@ namespace Amaoto.GUI
                 }
             }
 
-            if (mouse.IsPushedButton(MouseButton.Left))
+            if (Mouse.IsPushedButton(MouseButton.Left))
             {
                 // マウス初回クリック処理
                 if (!outSide)
@@ -83,7 +82,7 @@ namespace Amaoto.GUI
                     OnMouseDown?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                 }
             }
-            else if (mouse.IsPushingButton(MouseButton.Left))
+            else if (Mouse.IsPushingButton(MouseButton.Left))
             {
                 // マウスが要素内をクリックしてるかどうかの判定
                 if (LeftJudge.Item1)
@@ -115,7 +114,7 @@ namespace Amaoto.GUI
                     }
                 }
             }
-            else if (mouse.IsLeftButton(MouseButton.Left))
+            else if (Mouse.IsLeftButton(MouseButton.Left))
             {
                 // クリック判定
                 if (LeftJudge.Item1)
@@ -134,7 +133,7 @@ namespace Amaoto.GUI
 
             foreach (var item in Child)
             {
-                item.Update(mouse, MousePoint.x, MousePoint.y);
+                item.Update(MousePoint.x, MousePoint.y);
             }
         }
 
