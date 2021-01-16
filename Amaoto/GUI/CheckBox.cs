@@ -17,7 +17,7 @@ namespace Amaoto.GUI
 
             // 文字の描画
             textTex.ReferencePoint = ReferencePoint.CenterLeft;
-            screen.Draw(textTex, boxTextureSize.Width, height / 2);
+            screen.Draw(() => textTex.Draw(boxTextureSize.Width, height / 2));
 
             Texture = screen.Texture;
             Texture.ReferencePoint = ReferencePoint.CenterLeft;
@@ -39,18 +39,21 @@ namespace Amaoto.GUI
         {
             Screen.ClearScreen();
 
-            Screen.Draw(Texture, 0, Height / 2);
-
-            if (Checked)
+            Screen.Draw(() =>
             {
-                Screen.Draw(CheckTex, 0, Height / 2);
-            }
+                Texture.Draw(0, Height / 2);
 
-            foreach (var item in Child)
-            {
-                item.Draw();
-                Screen.Draw(item.Screen.Texture, item.X, item.Y);
-            }
+                if (Checked)
+                {
+                    CheckTex.Draw(0, Height / 2);
+                }
+
+                foreach (var item in Child)
+                {
+                    item.Draw();
+                    item.Screen.GetTexture().Draw(item.X, item.Y);
+                }
+            });
         }
 
         private bool Checked;

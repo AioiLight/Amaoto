@@ -145,13 +145,16 @@ namespace Amaoto.GUI
         {
             Screen.ClearScreen();
 
-            Screen.Draw(Texture, 0, 0);
-
-            foreach (var item in Child)
+            Screen.Draw(() =>
             {
-                item.Draw();
-                Screen.Draw(item.Screen.Texture, item.X, item.Y);   
-            }
+                Texture.Draw(0, 0);
+
+                foreach (var item in Child)
+                {
+                    item.Draw();
+                    item.Screen.GetTexture().Draw(item.X, item.Y);   
+                }
+            });
         }
 
         /// <summary>

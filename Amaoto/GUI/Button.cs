@@ -124,13 +124,16 @@ namespace Amaoto.GUI
         {
             Screen.ClearScreen();
 
-            Screen.Draw(Texture, Width / 2, Height / 2);
-
-            foreach (var item in Child)
+            Screen.Draw(() =>
             {
-                item.Draw();
-                Screen.Draw(item.Screen.Texture, item.X, item.Y);
-            }
+                Texture.Draw(Width / 2, Height / 2);
+
+                foreach (var item in Child)
+                {
+                    item.Draw();
+                    item.Screen.GetTexture().Draw(item.X, item.Y);
+                }
+            });
         }
 
         private void Button_OnMouseDown(object sender, EventArgs e)
