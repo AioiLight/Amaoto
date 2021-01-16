@@ -10,12 +10,12 @@
         {
             if (width.HasValue)
             {
-                texture.ScaleX = (float)(1.0 * width.Value / texture.TextureSize.Width);
+                texture.ScaleX = (1.0 * width.Value / texture.TextureSize.Width);
             }
 
             if (height.HasValue)
             {
-                texture.ScaleY = (float)(1.0 * height.Value / texture.TextureSize.Height);
+                texture.ScaleY = (1.0 * height.Value / texture.TextureSize.Height);
             }
 
             Texture = texture;

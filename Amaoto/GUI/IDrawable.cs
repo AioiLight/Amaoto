@@ -30,19 +30,19 @@ namespace Amaoto.GUI
         /// </summary>
         /// <param name="pointX">マウスの相対X座標。</param>
         /// <param name="pointY">マウスの相対Y座標。</param>
-        public virtual void Update(int? pointX = null, int? pointY = null)
+        public virtual void Update(bool canHandle, int? pointX = null, int? pointY = null)
         {
             // TODO:マウスの2重反応抑制機能を実装したら条件を追加してコメントアウトする
-            //if (mouse == null)
-            //{
-            //    LeftJudge = (false, (0, 0));
+            if (!canHandle || Amaoto.MouseHandled)
+            {
+                LeftJudge = (false, (0, 0));
 
-            //    LongClickCounter.Stop();
-            //    LongClickCounter.Reset();
+                LongClickCounter.Stop();
+                LongClickCounter.Reset();
 
-            //    Dragging = false;
-            //    return;
-            //}
+                Dragging = false;
+                return;
+            }
 
             if (!pointX.HasValue || !pointY.HasValue)
             {
@@ -134,7 +134,7 @@ namespace Amaoto.GUI
 
             foreach (var item in Child)
             {
-                item.Update(MousePoint.x, MousePoint.y);
+                item.Update(canHandle, MousePoint.x, MousePoint.y);
             }
         }
 

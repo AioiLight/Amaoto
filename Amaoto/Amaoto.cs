@@ -40,6 +40,14 @@ namespace Amaoto
         }
 
         /// <summary>
+        /// ループ直後に呼び出すメソッド。
+        /// </summary>
+        public static void Loop()
+        {
+            MouseHandled = false;
+        }
+
+        /// <summary>
         /// GUI で使われる長押し時間を変更する。
         /// </summary>
         /// <param name="ms">ミリ秒。</param>
@@ -59,6 +67,14 @@ namespace Amaoto
         }
 
         /// <summary>
+        /// 現在のフレームでマウス操作したと言うことにする。
+        /// </summary>
+        public static void HandleMouse()
+        {
+            MouseHandled = true;
+        }
+
+        /// <summary>
         /// 長押し時間。
         /// </summary>
         public static int LongClickMs { get; private set; } = 400;
@@ -67,5 +83,10 @@ namespace Amaoto
         /// FontRenderのデバッグを行うかどうか。
         /// </summary>
         public static bool FontRenderDebug { get; private set; } = false;
+
+        /// <summary>
+        /// 現在のフレームでマウス操作が行われたかどうか。
+        /// </summary>
+        public static bool MouseHandled { get; private set; } = false;
     }
 }

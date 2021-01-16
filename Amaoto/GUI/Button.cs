@@ -25,7 +25,7 @@ namespace Amaoto.GUI
             var backTex = background.GetTexture();
             // ボタンの土台の描画。
             var buttonTextureSize = backTex.TextureSize;
-            var oneSize = (buttonTextureSize.Width / 3, buttonTextureSize.Height / 3);
+            var oneSize = ((int)Math.Ceiling(1.0 * buttonTextureSize.Width / 3), (int)Math.Ceiling(1.0 * buttonTextureSize.Height / 3));
 
             var screen = new VirtualScreen(Width, Height);
 
@@ -33,53 +33,53 @@ namespace Amaoto.GUI
             {
                 // 左上
                 backTex.ReferencePoint = ReferencePoint.TopLeft;
-                backTex.ScaleX = 1.0f;
-                backTex.ScaleX = 1.0f;
+                backTex.ScaleX = 1.0;
+                backTex.ScaleX = 1.0;
                 backTex.Draw(0, 0, new Rectangle(0, 0, oneSize.Item1, oneSize.Item2));
 
                 // 中央上
                 backTex.ReferencePoint = ReferencePoint.TopCenter;
-                backTex.ScaleX = (float)(1.0 * (Width - (oneSize.Item1 * 2)) / oneSize.Item1);
-                backTex.Draw(Width / 2, 0, new Rectangle(oneSize.Item1, 0, oneSize.Item1, oneSize.Item2));
+                backTex.ScaleX = 1.0 * (Width - (oneSize.Item1 * 2)) / oneSize.Item1;
+                backTex.Draw(Width / 2.0, 0, new Rectangle(oneSize.Item1, 0, oneSize.Item1, oneSize.Item2));
 
                 // 右上
                 backTex.ReferencePoint = ReferencePoint.TopRight;
-                backTex.ScaleX = 1.0f;
+                backTex.ScaleX = 1.0;
                 backTex.Draw(Width, 0, new Rectangle(oneSize.Item1 * 2, 0, oneSize.Item1, oneSize.Item2));
 
                 // 左中央
                 backTex.ReferencePoint = ReferencePoint.CenterLeft;
-                backTex.ScaleY = (float)(1.0 * (Height - (oneSize.Item2 * 2)) / oneSize.Item2);
-                backTex.Draw(0, Height / 2, new Rectangle(0, oneSize.Item2, oneSize.Item1, oneSize.Item2));
+                backTex.ScaleY = 1.0 * (Height - (oneSize.Item2 * 2)) / oneSize.Item2;
+                backTex.Draw(0, Height / 2.0, new Rectangle(0, oneSize.Item2, oneSize.Item1, oneSize.Item2));
 
                 // 中央
                 backTex.ReferencePoint = ReferencePoint.Center;
-                backTex.ScaleX = (float)(1.0 * (Width - (oneSize.Item1 * 2)) / oneSize.Item1);
-                backTex.Draw(Width / 2, Height / 2, new Rectangle(oneSize.Item1, oneSize.Item2, oneSize.Item1, oneSize.Item2));
+                backTex.ScaleX = 1.0 * (Width - (oneSize.Item1 * 2)) / oneSize.Item1;
+                backTex.Draw(Width / 2.0, Height / 2.0, new Rectangle(oneSize.Item1, oneSize.Item2, oneSize.Item1, oneSize.Item2));
 
                 // 右中央
                 backTex.ReferencePoint = ReferencePoint.CenterRight;
-                backTex.ScaleX = 1.0f;
-                backTex.Draw(Width, Height / 2, new Rectangle(oneSize.Item1 * 2, oneSize.Item2, oneSize.Item1, oneSize.Item2));
+                backTex.ScaleX = 1.0;
+                backTex.Draw(Width, Height / 2.0, new Rectangle(oneSize.Item1 * 2, oneSize.Item2, oneSize.Item1, oneSize.Item2));
 
                 // 左下
                 backTex.ReferencePoint = ReferencePoint.BottomLeft;
-                backTex.ScaleY = 1.0f;
+                backTex.ScaleY = 1.0;
                 backTex.Draw(0, Height, new Rectangle(0, oneSize.Item2 * 2, oneSize.Item1, oneSize.Item2));
 
                 // 中央下
                 backTex.ReferencePoint = ReferencePoint.BottomCenter;
-                backTex.ScaleX = (float)(1.0 * (Width - (oneSize.Item1 * 2)) / oneSize.Item1);
-                backTex.Draw(Width / 2, Height, new Rectangle(oneSize.Item1, oneSize.Item2 * 2, oneSize.Item1, oneSize.Item2));
+                backTex.ScaleX = 1.0 * (Width - (oneSize.Item1 * 2)) / oneSize.Item1;
+                backTex.Draw(Width / 2.0, Height, new Rectangle(oneSize.Item1, oneSize.Item2 * 2, oneSize.Item1, oneSize.Item2));
 
                 // 右下
                 backTex.ReferencePoint = ReferencePoint.BottomRight;
-                backTex.ScaleX = 1.0f;
+                backTex.ScaleX = 1.0;
                 backTex.Draw(Width, Height, new Rectangle(oneSize.Item1 * 2, oneSize.Item2 * 2, oneSize.Item1, oneSize.Item2));
 
                 // 文字の描画
                 contentTex.ReferencePoint = ReferencePoint.Center;
-                contentTex.Draw(Width / 2, Height / 2);
+                contentTex.Draw(Width / 2.0, Height / 2.0);
             });
 
             Texture = screen.Texture;
@@ -90,18 +90,18 @@ namespace Amaoto.GUI
             Texture.ReferencePoint = ReferencePoint.Center;
         }
 
-        public override void Update(int? pointX = null, int? pointY = null)
+        public override void Update(bool canHandle, int? pointX = null, int? pointY = null)
         {
             DownAnimation?.Tick();
             UpAnimation?.Tick();
 
             if (DownAnimation.Counter.State == TimerState.Started)
             {
-                Texture.ScaleX = Texture.ScaleY = (float)(DownAnimation.GetAnimation() / 100);
+                Texture.ScaleX = Texture.ScaleY = DownAnimation.GetAnimation() / 100;
             }
             else if (UpAnimation.Counter.State == TimerState.Started)
             {
-                Texture.ScaleX = Texture.ScaleY = (float)(UpAnimation.GetAnimation() / 100);
+                Texture.ScaleX = Texture.ScaleY = UpAnimation.GetAnimation() / 100;
             }
             else
             {
@@ -111,10 +111,10 @@ namespace Amaoto.GUI
                 }
                 else
                 {
-                    Texture.ScaleX = Texture.ScaleY = 1.0f;
+                    Texture.ScaleX = Texture.ScaleY = 1.0;
                 }
             }
-            base.Update(pointX, pointY);
+            base.Update(canHandle, pointX, pointY);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Amaoto.GUI
 
             Screen.Draw(() =>
             {
-                Texture.Draw(Width / 2, Height / 2);
+                Texture.Draw(Width / 2.0, Height / 2.0);
 
                 foreach (var item in Child)
                 {
