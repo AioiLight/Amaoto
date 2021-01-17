@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Amaoto.GUI
 {
@@ -147,7 +148,7 @@ namespace Amaoto.GUI
 
             Screen.Draw(() =>
             {
-                Texture.Draw(0, 0);
+                Texture?.Draw(0, 0);
 
                 foreach (var item in Child)
                 {
@@ -167,7 +168,7 @@ namespace Amaoto.GUI
 
         private bool IsOutSide()
         {
-            return MousePoint.x < 0 || MousePoint.y < 0 || MousePoint.x > Width || MousePoint.y > Height;
+            return !new Rectangle(0, 0, Width, Height).Contains(MousePoint.x, MousePoint.y);
         }
 
         /// <summary>
