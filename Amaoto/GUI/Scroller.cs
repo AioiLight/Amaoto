@@ -26,6 +26,70 @@ namespace Amaoto.GUI
             FrictionCounter = new Counter(0, 999, 1, true);
             FrictionCounter.Looped += FrictionCounter_Looped;
             FrictionCounter.Start();
+
+            Scrolled += Scroller_Scrolled;
+        }
+
+        protected virtual void Scroller_Scrolled(object sender, EventArgs e)
+        {
+            if (DuringScrollTo)
+            {
+                return;
+            }
+
+            var x = Position.x;
+            var y = Position.y;
+
+            // 最大の子アイテムの座標
+            var mX = Child.Max(gui => gui.X + gui.Width);
+            var maxGUIX = Child.Last(c => c.X + c.Width == mX);
+            var mY = Child.Max(gui => gui.Y + gui.Height);
+            var maxGUIY = Child.Last(c => c.Y + c.Height == mY);
+
+            // 水平・垂直スクロールが可能であるかチェック
+            var canScrollH = mX > Width;
+            var canScrollV = mY > Height;
+
+            // 左、上のバウンス
+            if (Position.x > 0 || Position.y > 0)
+            {
+                if (Position.x > 0 && Position.y > 0 && canScrollH && canScrollV)
+                {
+                    x = 0;
+                    y = 0;
+                }
+                else if (Position.x > 0 && canScrollH)
+                {
+                    x = 0;
+                }
+                else if (Position.y > 0 && canScrollV)
+                {
+                    y = 0;
+                }
+            }
+
+            if (Child.Count > 0)
+            {
+                if (Position.x < Width - mX && Position.y < Height - mY && canScrollH && canScrollV)
+                {
+                    x = Width - mX;
+                    y = Height - mY;
+                }
+                else if (Position.x < Width - mX && canScrollH)
+                {
+                    x = Width - mX;
+                }
+                else if (Position.y < Height - mY && canScrollV)
+                {
+                    y = Height - mY;
+                }
+            }
+            
+
+            if ((x, y) != Position)
+            {
+                ScrollTo((x, y), 1000 * 1000);
+            }
         }
 
         /// <summary>
