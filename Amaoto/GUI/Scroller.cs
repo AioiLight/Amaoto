@@ -16,80 +16,25 @@ namespace Amaoto.GUI
         /// </summary>
         /// <param name="width">表示可能な横幅。。</param>
         /// <param name="height">表示可能な縦幅。</param>
-        public Scroller(int width, int height)
+        /// <param name="sensitivity">マウスホイールの感度。</param>
+        /// <param name="friction">スクロール摩擦度。</param>
+        /// <param name="bounceDuration">終端のバウンスのスクロール時間。</param>
+        /// <param name="wheelscrollDuration">ホイールのスクロール時間。</param>
+        public Scroller(int width, int height, double sensitivity = 60, double friction = 1.025, int bounceDuration = 600 * 1000, int wheelscrollDuration = 200 * 1000)
             : base(width, height)
         {
             var scrollLine = SystemInformation.MouseWheelScrollLines;
-            Sensitivity = 100 * (scrollLine != -1 ? scrollLine : 3);
-            Friction = 1.025;
+            Sensitivity = sensitivity * (scrollLine != -1 ? scrollLine : 3);
+            Friction = friction;
 
             FrictionCounter = new Counter(0, 999, 1, true);
             FrictionCounter.Looped += FrictionCounter_Looped;
             FrictionCounter.Start();
 
             Scrolled += Scroller_Scrolled;
-        }
 
-        protected virtual void Scroller_Scrolled(object sender, EventArgs e)
-        {
-            if (DuringScrollTo)
-            {
-                return;
-            }
-
-            var x = Position.x;
-            var y = Position.y;
-
-            // 最大の子アイテムの座標
-            var mX = Child.Max(gui => gui.X + gui.Width);
-            var maxGUIX = Child.Last(c => c.X + c.Width == mX);
-            var mY = Child.Max(gui => gui.Y + gui.Height);
-            var maxGUIY = Child.Last(c => c.Y + c.Height == mY);
-
-            // 水平・垂直スクロールが可能であるかチェック
-            var canScrollH = mX > Width;
-            var canScrollV = mY > Height;
-
-            // 左、上のバウンス
-            if (Position.x > 0 || Position.y > 0)
-            {
-                if (Position.x > 0 && Position.y > 0 && canScrollH && canScrollV)
-                {
-                    x = 0;
-                    y = 0;
-                }
-                else if (Position.x > 0 && canScrollH)
-                {
-                    x = 0;
-                }
-                else if (Position.y > 0 && canScrollV)
-                {
-                    y = 0;
-                }
-            }
-
-            if (Child.Count > 0)
-            {
-                if (Position.x < Width - mX && Position.y < Height - mY && canScrollH && canScrollV)
-                {
-                    x = Width - mX;
-                    y = Height - mY;
-                }
-                else if (Position.x < Width - mX && canScrollH)
-                {
-                    x = Width - mX;
-                }
-                else if (Position.y < Height - mY && canScrollV)
-                {
-                    y = Height - mY;
-                }
-            }
-            
-
-            if ((x, y) != Position)
-            {
-                ScrollTo((x, y), 1000 * 1000);
-            }
+            BounceDuration = bounceDuration;
+            WheelScrollDuration = wheelscrollDuration;
         }
 
         /// <summary>
@@ -132,11 +77,11 @@ namespace Amaoto.GUI
 
                         if (ScrollToAnimator.y != null)
                         {
-                            ScrollTo((Position.x, ScrollToAnimator.y.EndPoint + wheel * Sensitivity), 200 * 1000);
+                            ScrollTo((Position.x, ScrollToAnimator.y.EndPoint + wheel * Sensitivity), WheelScrollDuration);
                         }
                         else
                         {
-                            ScrollTo((Position.x, Position.y + wheel * Sensitivity), 200 * 1000);
+                            ScrollTo((Position.x, Position.y + wheel * Sensitivity), WheelScrollDuration);
                         }
                     }
                     else if (Mouse.IsPushed(MouseButton.Left))
@@ -220,7 +165,7 @@ namespace Amaoto.GUI
         /// 指定位置にスクロールするアニメーションを開始する。
         /// </summary>
         /// <param name="pos">位置。</param>
-        public void ScrollTo((double x, double y) pos, int timeUs)
+        public virtual void ScrollTo((double x, double y) pos, int timeUs)
         {
             DuringScrollTo = true;
             ScrollToAnimator.x = new EaseOut((int)Position.x, (int)pos.x, timeUs);
@@ -232,17 +177,10 @@ namespace Amaoto.GUI
             ScrollToAnimator.y.Start();
         }
 
-        private void FrictionCounter_Looped(object sender, EventArgs e)
-        {
-            CalcPosition();
-        }
-
-        private void Counter_Ended(object sender, EventArgs e)
-        {
-            DuringScrollTo = false;
-        }
-
-        private void CalcPosition()
+        /// <summary>
+        /// スクロール位置の計算をする。
+        /// </summary>
+        protected virtual void CalcPosition()
         {
             var px = Position.x + Velocity.x;
             var vx = Velocity.x / Friction;
@@ -252,6 +190,96 @@ namespace Amaoto.GUI
             Position = (px, py);
             Velocity = (vx, vy);
         }
+
+        /// <summary>
+        /// 摩擦カウンターが更新されループした。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void FrictionCounter_Looped(object sender, EventArgs e)
+        {
+            CalcPosition();
+        }
+
+        /// <summary>
+        /// ScrollToカウンターが終了した。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void Counter_Ended(object sender, EventArgs e)
+        {
+            DuringScrollTo = false;
+        }
+
+        /// <summary>
+        /// スクロールが終わった。ここでは、バウンスの処理を行っています。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void Scroller_Scrolled(object sender, EventArgs e)
+        {
+            if (DuringScrollTo)
+            {
+                return;
+            }
+
+            var x = Position.x;
+            var y = Position.y;
+
+            // 最大の子アイテムの座標
+            var mX = Child.Max(gui => gui.X + gui.Width);
+            var maxGUIX = Child.Last(c => c.X + c.Width == mX);
+            var mY = Child.Max(gui => gui.Y + gui.Height);
+            var maxGUIY = Child.Last(c => c.Y + c.Height == mY);
+
+            // 水平・垂直スクロールが可能であるかチェック
+            var canScrollH = mX > Width;
+            var canScrollV = mY > Height;
+
+            // 左、上のバウンス
+            if (Position.x > 0 || Position.y > 0)
+            {
+                if (Position.x > 0 && Position.y > 0 && canScrollH && canScrollV)
+                {
+                    x = 0;
+                    y = 0;
+                }
+                else if (Position.x > 0 && canScrollH)
+                {
+                    x = 0;
+                }
+                else if (Position.y > 0 && canScrollV)
+                {
+                    y = 0;
+                }
+            }
+
+            // 右、下のバウンス
+            if (Child.Count > 0)
+            {
+                if (Position.x < Width - mX && Position.y < Height - mY && canScrollH && canScrollV)
+                {
+                    x = Width - mX;
+                    y = Height - mY;
+                }
+                else if (Position.x < Width - mX && canScrollH)
+                {
+                    x = Width - mX;
+                }
+                else if (Position.y < Height - mY && canScrollV)
+                {
+                    y = Height - mY;
+                }
+            }
+            
+
+            if ((x, y) != Position)
+            {
+                ScrollTo((x, y), BounceDuration);
+            }
+        }
+
+        // プロパティ
 
         /// <summary>
         /// スクロール速度。
@@ -294,6 +322,10 @@ namespace Amaoto.GUI
         public bool DuringScrollTo { get; private set; }
 
         private readonly Counter FrictionCounter;
+
+        private readonly int BounceDuration;
+
+        private readonly int WheelScrollDuration;
 
         private (EaseOut x, EaseOut y) ScrollToAnimator;
 
