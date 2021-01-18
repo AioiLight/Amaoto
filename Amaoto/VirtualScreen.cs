@@ -100,5 +100,16 @@ namespace Amaoto
         /// 仮想スクリーンのハンドル。
         /// </summary>
         public Texture Texture { get; private set; }
+
+        /// <summary>
+        /// 仮想スクリーンのサイズ。
+        /// </summary>
+        public Size ScreenSize
+        {
+            get
+            {
+                return GetTexture().TextureSize;
+            }
+        }
     }
 }
