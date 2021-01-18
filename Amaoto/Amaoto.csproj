@@ -97,7 +97,7 @@
     <Compile Include="FPSCounter.cs" />
     <Compile Include="GUI\CheckBox.cs" />
     <Compile Include="GUI\Button.cs" />
-    <Compile Include="GUI\IDrawable.cs" />
+    <Compile Include="GUI\DrawPart.cs" />
     <Compile Include="GUI\Image.cs" />
     <Compile Include="GUI\MouseClickEventArgs.cs" />
     <Compile Include="GUI\Scroller.cs" />
