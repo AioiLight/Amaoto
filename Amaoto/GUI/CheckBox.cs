@@ -4,12 +4,13 @@ namespace Amaoto.GUI
 {
     public class CheckBox : DrawPart
     {
-        public CheckBox(int width, int height, Texture boxTexture, Texture checkTexture, bool check, FontRender fontRender, string str)
+        public CheckBox(int width, int height, ITextureReturnable boxTexture, ITextureReturnable checkTexture, ITextureReturnable description, bool check)
             : base(width, height)
         {
-            var textTex = fontRender.GetTexture(str);
+            var textTex = description.GetTexture();
             // 土台の描画。
-            var boxTextureSize = boxTexture.TextureSize;
+            var boxTex = boxTexture.GetTexture();
+            var boxTextureSize = boxTex.TextureSize;
 
             var screen = new VirtualScreen(Width, Height);
 
@@ -21,7 +22,7 @@ namespace Amaoto.GUI
 
             Texture = screen.Texture;
             Texture.ReferencePoint = ReferencePoint.CenterLeft;
-            CheckTex = checkTexture;
+            CheckTex = checkTexture.GetTexture();
             CheckTex.ReferencePoint = ReferencePoint.CenterLeft;
 
             Clicked += CheckBox_Clicked;
