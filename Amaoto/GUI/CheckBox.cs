@@ -7,23 +7,30 @@ namespace Amaoto.GUI
         public CheckBox(int width, int height, ITextureReturnable boxTexture, ITextureReturnable checkTexture, ITextureReturnable description, bool check)
             : base(width, height)
         {
-            var textTex = description.GetTexture();
-            // 土台の描画。
-            var boxTex = boxTexture.GetTexture();
-            var boxTextureSize = boxTex.TextureSize;
+            //var textTex = description.GetTexture();
+            //// 土台の描画。
+            //var boxTex = boxTexture.GetTexture();
+            //var boxTextureSize = boxTex.TextureSize;
 
-            var screen = new VirtualScreen(Width, Height);
+            //var screen = new VirtualScreen(Width, Height);
+
+            //Checked = check;
+
+            //// 文字の描画
+            //textTex.ReferencePoint = ReferencePoint.CenterLeft;
+            //screen.Draw(() => textTex.Draw(boxTextureSize.Width, height / 2));
+
+            //Texture = screen.Texture;
+            //Texture.ReferencePoint = ReferencePoint.CenterLeft;
+            //CheckTex = checkTexture.GetTexture();
+            //CheckTex.ReferencePoint = ReferencePoint.CenterLeft;
+
+            VirtualScreen = new VirtualScreen(width, height);
+            BoxTex = boxTexture;
+            CheckTex = checkTexture;
+            Description = description;
 
             Checked = check;
-
-            // 文字の描画
-            textTex.ReferencePoint = ReferencePoint.CenterLeft;
-            screen.Draw(() => textTex.Draw(boxTextureSize.Width, height / 2));
-
-            Texture = screen.Texture;
-            Texture.ReferencePoint = ReferencePoint.CenterLeft;
-            CheckTex = checkTexture.GetTexture();
-            CheckTex.ReferencePoint = ReferencePoint.CenterLeft;
 
             Clicked += CheckBox_Clicked;
         }
@@ -38,26 +45,36 @@ namespace Amaoto.GUI
         /// </summary>
         public override void Draw()
         {
-            Screen.ClearScreen();
+            VirtualScreen.ClearScreen();
 
-            Screen.Draw(() =>
+            VirtualScreen.Draw(() =>
             {
-                Texture.Draw(0, Height / 2);
+                var size = VirtualScreen.ScreenSize;
+                // 文字
+                var d = Description.GetTexture();
+                d.ReferencePoint = ReferencePoint.CenterLeft;
+                d.Draw(0, size.Height / 2);
 
-                if (Checked)
-                {
-                    CheckTex.Draw(0, Height / 2);
-                }
+                // チェックボックス
+                var b = BoxTex.GetTexture();
+                b.ReferencePoint = ReferencePoint.CenterRight;
+                b.Draw(size.Width, size.Height / 2);
 
-                foreach (var item in Child)
-                {
-                    item.Draw();
-                    item.Screen.GetTexture().Draw(item.X, item.Y);
-                }
+                // チェック
+                var c = CheckTex.GetTexture();
+                c.ReferencePoint = ReferencePoint.CenterRight;
+                c.Draw(size.Width, size.Height / 2);
             });
+
+            Texture = VirtualScreen.GetTexture();
+
+            base.Draw();
         }
 
         private bool Checked;
-        private Texture CheckTex;
+        private readonly ITextureReturnable CheckTex;
+        private readonly ITextureReturnable Description;
+        private readonly ITextureReturnable BoxTex;
+        private readonly VirtualScreen VirtualScreen;
     }
 }
