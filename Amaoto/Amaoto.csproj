@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Amaoto.cs" />
+    <Compile Include="AmaotoUtil.cs" />
     <Compile Include="AnimateTexture.cs" />
     <Compile Include="Animation\Animator.cs" />
     <Compile Include="Animation\Blank.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="GUI\DrawPart.cs" />
     <Compile Include="GUI\GUINormalize.cs" />
     <Compile Include="GUI\Image.cs" />
+    <Compile Include="GUI\LayoutBuilder.cs" />
     <Compile Include="GUI\MouseClickEventArgs.cs" />
     <Compile Include="GUI\Scroller.cs" />
     <Compile Include="IPlayable.cs" />
