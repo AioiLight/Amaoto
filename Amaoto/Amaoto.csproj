@@ -101,12 +101,12 @@
     <Compile Include="GUI\DrawPart.cs" />
     <Compile Include="GUI\GUINormalize.cs" />
     <Compile Include="GUI\Image.cs" />
-    <Compile Include="GUI\LayoutBuilder.cs" />
     <Compile Include="GUI\MouseClickEventArgs.cs" />
     <Compile Include="GUI\Scroller.cs" />
     <Compile Include="IPlayable.cs" />
     <Compile Include="ITextureReturnable.cs" />
     <Compile Include="Key.cs" />
+    <Compile Include="LayoutBuilder.cs" />
     <Compile Include="Mouse.cs" />
     <Compile Include="Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
