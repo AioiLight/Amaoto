@@ -44,6 +44,9 @@ namespace Amaoto
         /// </summary>
         public static void Loop()
         {
+            Key.Update();
+            Mouse.Update();
+
             MouseHandled = false;
         }
 
