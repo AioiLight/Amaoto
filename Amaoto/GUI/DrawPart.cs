@@ -68,6 +68,11 @@ namespace Amaoto.GUI
                     OnMouseEnter?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                     Hovering = true;
                 }
+
+                if (Mouse.IsPushing(MouseButton.Left))
+                {
+                    Amaoto.HandleMouse();
+                }
             }
             else
             {
@@ -76,11 +81,6 @@ namespace Amaoto.GUI
                     OnMouseLeave?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                     Hovering = false;
                 }
-            }
-
-            if (Mouse.IsPushing(MouseButton.Left))
-            {
-                Amaoto.HandleMouse();
             }
 
             if (Mouse.IsPushed(MouseButton.Left))
