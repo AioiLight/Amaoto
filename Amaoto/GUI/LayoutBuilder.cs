@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Amaoto.GUI
+namespace Amaoto
 {
     /// <summary>
     /// 簡易的に複数テクスチャのレイアウトを組む静的クラス。
