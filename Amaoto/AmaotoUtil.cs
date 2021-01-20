@@ -1,11 +1,24 @@
-﻿namespace Amaoto
+﻿using Amaoto.GUI;
+using System.Drawing;
+
+namespace Amaoto
 {
     /// <summary>
     /// Amaoto 関係のユーティリティクラス。
     /// </summary>
     public static class AmaotoUtil
     {
-                /// <summary>
+        /// <summary>
+        /// GUI部品から、そのGUIの矩形範囲を求める。
+        /// </summary>
+        /// <param name="gui">GUI部品。</param>
+        /// <returns>GUIの矩形範囲。</returns>
+        public static Rectangle GetRectangleGUI(DrawPart gui)
+        {
+            return new Rectangle(gui.X, gui.Y, gui.Width, gui.Height);
+        }
+
+        /// <summary>
         /// テクスチャのX軸の適切なスケール率を横幅から求める。
         /// </summary>
         /// <param name="texture">テクスチャ。</param>
