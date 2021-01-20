@@ -95,6 +95,8 @@ namespace Amaoto.GUI
             DownAnimation?.Tick();
             UpAnimation?.Tick();
 
+            base.Update(canHandle, pointX, pointY);
+
             if (DownAnimation.Counter.State == TimerState.Started)
             {
                 Texture.ScaleX = Texture.ScaleY = DownAnimation.GetAnimation() / 100;
@@ -114,7 +116,6 @@ namespace Amaoto.GUI
                     Texture.ScaleX = Texture.ScaleY = 1.0;
                 }
             }
-            base.Update(canHandle, pointX, pointY);
         }
 
         /// <summary>
