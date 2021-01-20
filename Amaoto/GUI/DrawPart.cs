@@ -249,7 +249,7 @@ namespace Amaoto.GUI
         /// <summary>
         /// 相対座標。
         /// </summary>
-        public (int x, int y) MousePoint { get; private set; }
+        public (int x, int y) MousePoint { get; protected set; }
 
         private (bool, (int x, int y)) LeftJudge;
 

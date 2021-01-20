@@ -47,9 +47,19 @@ namespace Amaoto.GUI
         {
             // 子GUIの更新。
             //base.Update(canHandle, X, Y);
+
+            if (!pointX.HasValue || !pointY.HasValue)
+            {
+                MousePoint = (Mouse.X - X, Mouse.Y - Y);
+            }
+            else
+            {
+                MousePoint = (pointX.Value - X, pointY.Value - Y);
+            }
+
             foreach (var item in Child)
             {
-                item.Update(canHandle, Mouse.X - (int)Position.x, Mouse.Y - (int)Position.y);
+                item.Update(canHandle, MousePoint.x - (int)Position.x, MousePoint.y - (int)Position.y);
             }
 
             // 最大の子アイテムの座標
