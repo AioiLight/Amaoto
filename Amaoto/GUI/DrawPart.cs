@@ -50,11 +50,6 @@ namespace Amaoto.GUI
 
             if (!canHandle || Amaoto.MouseHandled)
             {
-                if (LeftJudge.Item1)
-                {
-                    OnMouseUp?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
-                }
-
                 LeftJudge = (false, (0, 0));
 
                 LongClickCounter.Stop();
