@@ -158,6 +158,10 @@ namespace Amaoto.GUI
         /// </summary>
         public void StartDragging()
         {
+            foreach (var item in Child)
+            {
+                item.StartDragging();
+            }
             Dragging = true;
         }
 
