@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace Amaoto.GUI
 {
@@ -69,7 +70,7 @@ namespace Amaoto.GUI
                     Hovering = true;
                 }
 
-                if (Mouse.IsPushing(MouseButton.Left))
+                if (Mouse.IsPushing(MouseButton.Left) && HasDelegate)
                 {
                     Amaoto.HandleMouse();
                 }
@@ -231,6 +232,32 @@ namespace Amaoto.GUI
         /// 子アイテム。
         /// </summary>
         public List<DrawPart> Child { get; protected set; }
+
+        /// <summary>
+        /// イベントのどれかにデリゲートが紐付けされている。
+        /// </summary>
+        public bool HasDelegate
+        {
+            get
+            {
+                int GetDelegateLength(MulticastDelegate d)
+                {
+                    if (d == null || d.GetInvocationList() == null)
+                    {
+                        return 0;
+                    }
+                    return d.GetInvocationList().Length;
+                }
+
+                return GetDelegateLength(Clicked) > 0
+                    || GetDelegateLength(LongClicked) > 0
+                    || GetDelegateLength(OnMouseDown) > 0
+                    || GetDelegateLength(OnMouseUp) > 0
+                    || GetDelegateLength(OnHovering) > 0
+                    || GetDelegateLength(OnMouseEnter) > 0
+                    || GetDelegateLength(OnMouseLeave) > 0;
+            }
+        }
 
         /// <summary>
         /// 要素がクリックされた。
