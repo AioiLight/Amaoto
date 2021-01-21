@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 
 namespace Amaoto.GUI
 {
@@ -30,7 +29,11 @@ namespace Amaoto.GUI
 
         /// <summary>
         /// GUI部品を更新する。
+        /// 更新の優先順位は子アイテムが先。
+        /// イベントにひとつでもデリゲートが追加されていれば、自動的にHandleMouseが呼び出される。
+        /// 子アイテムでHandleMouseが呼び出されたときは、他の子アイテム及び親アイテムのクリック判定は行われない。
         /// </summary>
+        /// <param name="canHandle">クリック判定を行うかどうか。これにかかわらず、MouseHandledがtrueであれば常にクリック判定を行いません。</param>
         /// <param name="pointX">マウスの相対X座標。</param>
         /// <param name="pointY">マウスの相対Y座標。</param>
         public virtual void Update(bool canHandle, int? pointX = null, int? pointY = null)
@@ -242,11 +245,7 @@ namespace Amaoto.GUI
             {
                 int GetDelegateLength(MulticastDelegate d)
                 {
-                    if (d == null || d.GetInvocationList() == null)
-                    {
-                        return 0;
-                    }
-                    return d.GetInvocationList().Length;
+                    return d == null || d.GetInvocationList() == null ? 0 : d.GetInvocationList().Length;
                 }
 
                 return GetDelegateLength(Clicked) > 0
