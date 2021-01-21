@@ -81,7 +81,7 @@ namespace Amaoto.GUI
 
 
                 if (ClickedMousePos.HasValue
-                    || new Rectangle(X, Y, Width, Height).Contains(MousePoint.x, MousePoint.y))
+                    || !IsOutSide())
                 {
                     if (Mouse.Wheel != 0)
                     {

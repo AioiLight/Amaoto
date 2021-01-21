@@ -170,7 +170,11 @@ namespace Amaoto.GUI
             Dragging = true;
         }
 
-        private bool IsOutSide()
+        /// <summary>
+        /// GUI部品の中にマウスがあるかどうか。
+        /// </summary>
+        /// <returns>マウスがあるかどうか。</returns>
+        protected bool IsOutSide()
         {
             return !new Rectangle(0, 0, Width, Height).Contains(MousePoint.x, MousePoint.y);
         }
