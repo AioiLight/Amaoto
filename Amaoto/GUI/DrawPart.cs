@@ -33,6 +33,15 @@ namespace Amaoto.GUI
         /// <param name="pointY">マウスの相対Y座標。</param>
         public virtual void Update(bool canHandle, int? pointX = null, int? pointY = null)
         {
+            if (!pointX.HasValue || !pointY.HasValue)
+            {
+                MousePoint = (Mouse.X - X, Mouse.Y - Y);
+            }
+            else
+            {
+                MousePoint = (pointX.Value - X, pointY.Value - Y);
+            }
+
             foreach (var item in Child)
             {
                 item.Update(canHandle, MousePoint.x, MousePoint.y);
@@ -47,15 +56,6 @@ namespace Amaoto.GUI
 
                 Dragging = false;
                 return;
-            }
-
-            if (!pointX.HasValue || !pointY.HasValue)
-            {
-                MousePoint = (Mouse.X - X, Mouse.Y - Y);
-            }
-            else
-            {
-                MousePoint = (pointX.Value - X, pointY.Value - Y);
             }
 
             var outSide = IsOutSide();
