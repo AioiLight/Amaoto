@@ -61,9 +61,12 @@ namespace Amaoto.GUI
                 b.Draw(size.Width, size.Height / 2);
 
                 // チェック
-                var c = CheckTex.GetTexture();
-                c.ReferencePoint = ReferencePoint.CenterRight;
-                c.Draw(size.Width, size.Height / 2);
+                if (Checked)
+                {
+                    var c = CheckTex.GetTexture();
+                    c.ReferencePoint = ReferencePoint.CenterRight;
+                    c.Draw(size.Width, size.Height / 2);
+                }
             });
 
             Texture = VirtualScreen.GetTexture();
