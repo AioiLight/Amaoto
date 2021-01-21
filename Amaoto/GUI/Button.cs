@@ -141,6 +141,7 @@ namespace Amaoto.GUI
         {
             UpAnimation.Stop();
             UpAnimation.Reset();
+            DownAnimation.Reset();
             DownAnimation.Start();
         }
 
@@ -148,6 +149,7 @@ namespace Amaoto.GUI
         {
             DownAnimation.Stop();
             DownAnimation.Reset();
+            UpAnimation.Reset();
             UpAnimation.Start();
         }
 
