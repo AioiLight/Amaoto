@@ -55,7 +55,6 @@ namespace Amaoto.GUI
                 LongClickCounter.Stop();
                 LongClickCounter.Reset();
 
-                Dragging = false;
                 return;
             }
 
@@ -92,6 +91,7 @@ namespace Amaoto.GUI
                     LeftJudge = (true, MousePoint);
                     LongClickCounter?.Start();
                     OnMouseDown?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
+                    Dragging = false;
                 }
                 else
                 {
@@ -126,11 +126,11 @@ namespace Amaoto.GUI
                         Clicked?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                     }
                     OnMouseUp?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
+                    Dragging = false;
                 }
                 LongClickCounter.Stop();
                 LongClickCounter.Reset();
 
-                Dragging = false;
             }
         }
 
@@ -188,10 +188,9 @@ namespace Amaoto.GUI
             {
                 LongClicked?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
             }
+
             LongClickCounter.Stop();
             LongClickCounter.Reset();
-
-            Dragging = false;
         }
 
         /// <summary>
