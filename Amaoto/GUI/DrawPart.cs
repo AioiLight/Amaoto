@@ -22,6 +22,7 @@ namespace Amaoto.GUI
             Screen = new VirtualScreen(Width, Height);
 
             LongClickCounter = new Counter(0, Amaoto.LongClickMs - 1, 1000, false);
+            LongClickCounter.Ended += LongClickCounter_Ended;
 
             Child = new List<DrawPart>();
         }
@@ -97,6 +98,10 @@ namespace Amaoto.GUI
                     LongClickCounter?.Start();
                     OnMouseDown?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                 }
+                else
+                {
+                    LeftJudge = (false, MousePoint);
+                }
             }
             else if (Mouse.IsPushing(MouseButton.Left))
             {
@@ -113,20 +118,6 @@ namespace Amaoto.GUI
                     else
                     {
                         LongClickCounter?.Tick();
-                        if (LongClickCounter.State == TimerState.Stopped)
-                        {
-                            // ロングタップ
-                            LeftJudge = (false, MousePoint);
-                            OnMouseUp?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
-                            if (!Dragging)
-                            {
-                                LongClicked?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
-                            }
-                            LongClickCounter.Stop();
-                            LongClickCounter.Reset();
-
-                            Dragging = false;
-                        }
                     }
                 }
             }
@@ -176,12 +167,36 @@ namespace Amaoto.GUI
         }
 
         /// <summary>
+        /// GUIの範囲を取得する。
+        /// </summary>
+        /// <returns>GUIの範囲。</returns>
+        public Rectangle GetRectangle()
+        {
+            return new Rectangle(0, 0, Width, Height);
+        }
+
+        /// <summary>
         /// GUI部品の中にマウスがあるかどうか。
         /// </summary>
         /// <returns>マウスがあるかどうか。</returns>
         protected bool IsOutSide()
         {
-            return !new Rectangle(0, 0, Width, Height).Contains(MousePoint.x, MousePoint.y);
+            return !GetRectangle().Contains(MousePoint.x, MousePoint.y);
+        }
+
+        private void LongClickCounter_Ended(object sender, EventArgs e)
+        {
+            // ロングタップ
+            LeftJudge = (false, MousePoint);
+            OnMouseUp?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
+            if (!Dragging)
+            {
+                LongClicked?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
+            }
+            LongClickCounter.Stop();
+            LongClickCounter.Reset();
+
+            Dragging = false;
         }
 
         /// <summary>
