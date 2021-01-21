@@ -20,6 +20,7 @@ namespace Amaoto.GUI
         private void CheckBox_Clicked(object sender, EventArgs e)
         {
             Checked = !Checked;
+            Switched?.Invoke(this, Checked);
         }
 
         /// <summary>
@@ -55,6 +56,8 @@ namespace Amaoto.GUI
 
             base.Draw();
         }
+
+        public event EventHandler<bool> Switched;
 
         private bool Checked;
         private readonly ITextureReturnable CheckTex;
