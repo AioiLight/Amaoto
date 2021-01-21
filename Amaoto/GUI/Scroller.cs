@@ -59,7 +59,10 @@ namespace Amaoto.GUI
 
             foreach (var item in Child)
             {
-                item.Update(canHandle, MousePoint.x - (int)Position.x, MousePoint.y - (int)Position.y);
+                item.Update(canHandle
+                    && new Rectangle(item.X, item.Y, item.Width, item.Height).Contains(MousePoint.x, MousePoint.y),
+                    MousePoint.x - (int)Position.x,
+                    MousePoint.y - (int)Position.y);
             }
 
             // 最大の子アイテムの座標
@@ -78,7 +81,7 @@ namespace Amaoto.GUI
 
 
                 if (ClickedMousePos.HasValue
-                    || new Rectangle(X, Y, Width, Height).Contains(Mouse.X, Mouse.Y))
+                    || new Rectangle(X, Y, Width, Height).Contains(MousePoint.x, MousePoint.y))
                 {
                     if (Mouse.Wheel != 0)
                     {
