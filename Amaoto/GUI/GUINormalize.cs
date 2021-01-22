@@ -31,8 +31,8 @@
             Screen.ClearScreen();
             Screen.Draw(() =>
             {
-                GUI.Texture.ReferencePoint = ReferencePoint.Center;
-                GUI.Texture.Draw(GUI.Width / 2, GUI.Height / 2);
+                GUI.Screen.GetTexture().ReferencePoint = ReferencePoint.Center;
+                GUI.Screen.GetTexture().Draw(GUI.Width / 2, GUI.Height / 2);
             });
 
             return Screen.GetTexture();
