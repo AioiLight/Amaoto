@@ -23,6 +23,7 @@ namespace Amaoto.GUI
             {
                 item.X = 0;
                 item.Y = y;
+                y += item.Height;
                 y += spacing;
             }
         }
