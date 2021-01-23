@@ -94,6 +94,7 @@
     <Compile Include="ConfigManager.cs" />
     <Compile Include="Counter.cs" />
     <Compile Include="DXLibUtil.cs" />
+    <Compile Include="Filter.cs" />
     <Compile Include="FontRender.cs" />
     <Compile Include="FPSCounter.cs" />
     <Compile Include="GUI\CheckBox.cs" />
