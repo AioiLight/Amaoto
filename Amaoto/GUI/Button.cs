@@ -139,6 +139,11 @@ namespace Amaoto.GUI
                 }
             });
 
+            if (!Enabled)
+            {
+                VirtualScreen.GetTexture().Saturation(-255);
+            }
+
             Screen.ClearScreen();
 
             Screen.Draw(() => VirtualScreen.GetTexture().Draw(Width / 2.0, Height / 2.0));

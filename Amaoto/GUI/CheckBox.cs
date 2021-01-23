@@ -52,11 +52,19 @@ namespace Amaoto.GUI
                 }
             });
 
+            if (!Enabled)
+            {
+                VirtualScreen.GetTexture().Saturation(-255);
+            }
+
             Texture = VirtualScreen.GetTexture();
 
             base.Draw();
         }
 
+        /// <summary>
+        /// チェックボックスが切り替わった。
+        /// </summary>
         public event EventHandler<bool> Switched;
 
         private bool Checked;

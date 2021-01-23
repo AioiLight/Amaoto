@@ -25,6 +25,8 @@ namespace Amaoto.GUI
             LongClickCounter.Ended += LongClickCounter_Ended;
 
             Child = new List<DrawPart>();
+
+            Enabled = true;
         }
 
         /// <summary>
@@ -52,7 +54,7 @@ namespace Amaoto.GUI
                 item.Update(canHandle, MousePoint.x, MousePoint.y);
             }
 
-            if (!canHandle || Amaoto.MouseHandled)
+            if (!canHandle || Amaoto.MouseHandled || !Enabled)
             {
                 LeftJudge = (false, (0, 0));
 
@@ -237,6 +239,11 @@ namespace Amaoto.GUI
         public List<DrawPart> Child { get; protected set; }
 
         /// <summary>
+        /// 相対座標。
+        /// </summary>
+        public (int x, int y) MousePoint { get; protected set; }
+
+        /// <summary>
         /// イベントのどれかにデリゲートが紐付けされている。
         /// </summary>
         public bool HasDelegate
@@ -257,6 +264,37 @@ namespace Amaoto.GUI
                     || GetDelegateLength(OnMouseLeave) > 0;
             }
         }
+
+        /// <summary>
+        /// GUI 部品が有効かどうか。
+        /// </summary>
+        public bool Enabled
+        {
+            get
+            {
+                return _Enabled;
+            }
+            set
+            {
+                if (value != _Enabled)
+                {
+                    if (value)
+                    {
+                        OnEnabled?.Invoke(this, null);
+                    }
+                    else
+                    {
+                        OnDisabled?.Invoke(this, null);
+                    }
+                    _Enabled = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// ロングクリックを検知するためのカウンター。
+        /// </summary>
+        protected readonly Counter LongClickCounter;
 
         /// <summary>
         /// 要素がクリックされた。
@@ -294,9 +332,14 @@ namespace Amaoto.GUI
         public event EventHandler<MouseClickEventArgs> OnMouseLeave;
 
         /// <summary>
-        /// 相対座標。
+        /// 有効になった。
         /// </summary>
-        public (int x, int y) MousePoint { get; protected set; }
+        public event EventHandler OnEnabled;
+
+        /// <summary>
+        /// 無効になった。
+        /// </summary>
+        public event EventHandler OnDisabled;
 
         private (bool, (int x, int y)) LeftJudge;
 
@@ -304,9 +347,6 @@ namespace Amaoto.GUI
 
         private bool Dragging;
 
-        /// <summary>
-        /// ロングクリックを検知するためのカウンター。
-        /// </summary>
-        protected readonly Counter LongClickCounter;
+        private bool _Enabled;
     }
 }

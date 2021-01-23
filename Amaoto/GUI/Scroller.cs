@@ -73,7 +73,7 @@ namespace Amaoto.GUI
             var canScrollH = maxGUIX > Width;
             var canScrollV = maxGUIY > Height;
 
-            if (canHandle)
+            if (canHandle && Enabled)
             {
                 NowMousePos = (Mouse.X, Mouse.Y);
                 var vx = canScrollH ? NowMousePos.x - OldMousePos.x : 0;
