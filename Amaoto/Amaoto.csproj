@@ -97,6 +97,7 @@
     <Compile Include="Filter.cs" />
     <Compile Include="FontRender.cs" />
     <Compile Include="FPSCounter.cs" />
+    <Compile Include="GUI\Center.cs" />
     <Compile Include="GUI\CheckBox.cs" />
     <Compile Include="GUI\Button.cs" />
     <Compile Include="GUI\Column.cs" />
