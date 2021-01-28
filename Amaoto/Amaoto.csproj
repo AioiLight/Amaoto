@@ -109,6 +109,7 @@
     <Compile Include="GUI\MouseClickEventArgs.cs" />
     <Compile Include="GUI\NumericUpDown.cs" />
     <Compile Include="GUI\Right.cs" />
+    <Compile Include="GUI\Row.cs" />
     <Compile Include="GUI\Scroller.cs" />
     <Compile Include="IPlayable.cs" />
     <Compile Include="ITextureReturnable.cs" />
