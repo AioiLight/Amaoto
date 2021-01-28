@@ -14,7 +14,7 @@ namespace Amaoto.GUI
         /// <param name="padding">パディング。</param>
         /// <param name="spacing">GUIとGUIの間。</param>
         public Row(DrawPart[] children, int padding = 0, int spacing = 0)
-            : base(children.Max(gui => gui.Height) + (padding * 2), CalcWidth(children, padding, spacing))
+            : base(CalcWidth(children, padding, spacing), children.Max(gui => gui.Height) + (padding * 2))
         {
             Child = children.ToList();
             var x = 0;
