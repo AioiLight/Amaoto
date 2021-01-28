@@ -107,6 +107,7 @@
     <Compile Include="GUI\Image.cs" />
     <Compile Include="GUI\Left.cs" />
     <Compile Include="GUI\MouseClickEventArgs.cs" />
+    <Compile Include="GUI\NumericUpDown.cs" />
     <Compile Include="GUI\Right.cs" />
     <Compile Include="GUI\Scroller.cs" />
     <Compile Include="IPlayable.cs" />
