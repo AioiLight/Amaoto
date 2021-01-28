@@ -60,7 +60,7 @@ namespace Amaoto.GUI
             // レイアウトの更新。
 
             NowValue = new Center(new Image(FontRender.GetTexture(e.ToString())), 0, Width / 4 * 2, Height);
-            Row = new Row(new DrawPart[] { Decrease, NowValue, Increase });
+            // TODO: ステート更新
         }
 
         private void Decrease_Clicked(object sender, MouseClickEventArgs e)
@@ -70,6 +70,7 @@ namespace Amaoto.GUI
 
             // イベント発火。
             ButtonClicked?.Invoke(this, null);
+            Decreased?.Invoke(this, Value);
         }
 
         private void Increase_Clicked(object sender, MouseClickEventArgs e)
@@ -79,6 +80,7 @@ namespace Amaoto.GUI
 
             // イベント発火。
             ButtonClicked?.Invoke(this, null);
+            Increased?.Invoke(this, Value);
         }
 
         private void RoundValue()
