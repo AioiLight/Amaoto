@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Amaoto.GUI
 {
@@ -17,14 +18,16 @@ namespace Amaoto.GUI
         public NumericUpDown(FontRender fontRender, ITextureReturnable buttonTexture, int width, int height)
             : base(width, height)
         {
-            var plus = fontRender.GetTexture("+");
-            var minus = fontRender.GetTexture("-");
+            FontRender = fontRender;
+
+            var plus = FontRender.GetTexture("+");
+            var minus = FontRender.GetTexture("-");
 
             var op = width / 4;
 
             Increase = new Button(buttonTexture, plus, op, height);
             Decrease = new Button(buttonTexture, minus, op, height);
-            NowValue = new Center(new Image(fontRender.GetTexture(Value.ToString())), 0, op * 2, height);
+            NowValue = new Center(new Image(FontRender.GetTexture(Value.ToString())), 0, op * 2, height);
 
             Row = new Row(new DrawPart[] { Decrease, NowValue, Increase });
 
@@ -38,12 +41,12 @@ namespace Amaoto.GUI
 
         private void NumericUpDown_ValueChanged(object sender, decimal e)
         {
-            if (Value >= Maximum)
+            if (e >= Maximum)
             {
                 // 最大値なので、増加ボタンを押せないようにする。
                 Increase.Enabled = false;
             }
-            else if (Value <= Minimum)
+            else if (e <= Minimum)
             {
                 // 最小値なので、減少ボタンを押せないようにする。
                 Decrease.Enabled = false;
@@ -54,6 +57,11 @@ namespace Amaoto.GUI
                 Increase.Enabled = true;
                 Decrease.Enabled = true;
             }
+
+            // レイアウトの更新。
+
+            NowValue = new Center(new Image(FontRender.GetTexture(e.ToString())), 0, Width / 4 * 2, Height);
+            Row = new Row(new DrawPart[] { Decrease, NowValue, Increase });
         }
 
         private void Decrease_Clicked(object sender, MouseClickEventArgs e)
@@ -177,8 +185,9 @@ namespace Amaoto.GUI
         private decimal _Maximum;
         private decimal _Value;
 
-        private Button Increase;
-        private Button Decrease;
+        private readonly FontRender FontRender;
+        private readonly Button Increase;
+        private readonly Button Decrease;
         private Center NowValue;
         private Row Row;
     }
