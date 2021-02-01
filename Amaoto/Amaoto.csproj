@@ -111,6 +111,7 @@
     <Compile Include="GUI\Right.cs" />
     <Compile Include="GUI\Row.cs" />
     <Compile Include="GUI\Scroller.cs" />
+    <Compile Include="GUI\Tab.cs" />
     <Compile Include="IPlayable.cs" />
     <Compile Include="ITextureReturnable.cs" />
     <Compile Include="Key.cs" />
