@@ -74,10 +74,10 @@ namespace Amaoto.GUI
 
             if (!outSide)
             {
-                OnHovering?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
+                InvokeOnHovering(new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                 if (!Hovering)
                 {
-                    OnMouseEnter?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
+                    InvokeOnMouseEnter(new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                     Hovering = true;
                 }
 
@@ -89,8 +89,8 @@ namespace Amaoto.GUI
             else
             {
                 if (Hovering)
-                {
-                    OnMouseLeave?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
+                {                    
+                    InvokeOnMouseLeave(new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                     Hovering = false;
                 }
             }
@@ -102,7 +102,7 @@ namespace Amaoto.GUI
                 {
                     LeftJudge = (true, MousePoint);
                     LongClickCounter?.Start();
-                    OnMouseDown?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
+                    InvokeOnMouseDown(new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                     Dragging = false;
                 }
                 else
@@ -118,7 +118,7 @@ namespace Amaoto.GUI
                     if (outSide)
                     {
                         LeftJudge = (false, MousePoint);
-                        OnMouseUp?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
+                        InvokeOnMouseUp(new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                         LongClickCounter.Stop();
                         LongClickCounter.Reset();
                     }
@@ -135,9 +135,9 @@ namespace Amaoto.GUI
                 {
                     if (!Dragging)
                     {
-                        Clicked?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
+                        InvokeClicked(new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                     }
-                    OnMouseUp?.Invoke(this, new MouseClickEventArgs(MousePoint.x, MousePoint.y));
+                    InvokeOnMouseUp(new MouseClickEventArgs(MousePoint.x, MousePoint.y));
                     Dragging = false;
                 }
                 LongClickCounter.Stop();
@@ -214,6 +214,69 @@ namespace Amaoto.GUI
         protected bool IsOutSide()
         {
             return !GetRectangle().Contains(MousePoint.x, MousePoint.y);
+        }
+
+        /// <summary>
+        /// クリックイベントを発火させる。
+        /// </summary>
+        /// <param name="e">イベント引数。</param>
+        protected void InvokeClicked(MouseClickEventArgs e)
+        {
+            Clicked?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// ロングクリックイベントを発火させる。
+        /// </summary>
+        /// <param name="e">イベント引数。</param>
+        protected void InvokeLongClicked(MouseClickEventArgs e)
+        {
+            LongClicked?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// マウスダウンイベントを発火させる。
+        /// </summary>
+        /// <param name="e">イベント引数。</param>
+        protected void InvokeOnMouseDown(MouseClickEventArgs e)
+        {
+            OnMouseDown?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// マウスアップイベントを発火させる。
+        /// </summary>
+        /// <param name="e">イベント引数。</param>
+        protected void InvokeOnMouseUp(MouseClickEventArgs e)
+        {
+            OnMouseUp?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// マウスホバリングイベントを発火させる。
+        /// </summary>
+        /// <param name="e">イベント引数。</param>
+        protected void InvokeOnHovering(MouseClickEventArgs e)
+        {
+            OnHovering?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// マウスエンターイベントを発火させる。
+        /// </summary>
+        /// <param name="e">イベント引数。</param>
+        protected void InvokeOnMouseEnter(MouseClickEventArgs e)
+        {
+            OnMouseEnter?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// マウスリーブイベントを発火させる。
+        /// </summary>
+        /// <param name="e">イベント引数。</param>
+        protected void InvokeOnMouseLeave(MouseClickEventArgs e)
+        {
+            OnMouseLeave?.Invoke(this, e);
         }
 
         private void LongClickCounter_Ended(object sender, EventArgs e)
@@ -378,13 +441,13 @@ namespace Amaoto.GUI
         /// </summary>
         public event EventHandler OnBuilt;
 
-        private (bool, (int x, int y)) LeftJudge;
+        protected (bool, (int x, int y)) LeftJudge;
 
-        private bool Hovering;
+        protected bool Hovering;
 
-        private bool Dragging;
+        protected bool Dragging;
 
-        private bool _Enabled;
+        protected bool _Enabled;
 
     }
 }
