@@ -83,7 +83,7 @@ namespace Amaoto.GUI
                 if (ClickedMousePos.HasValue
                     || !IsOutSide())
                 {
-                    if (Mouse.Wheel != 0)
+                    if (Mouse.Wheel != 0 && canScrollV)
                     {
                         // 垂直方向に回転した
                         var wheel = Mouse.Wheel;
