@@ -16,10 +16,20 @@
             : base(width ?? child.Width + (padding * 2), height ?? child.Height + (padding * 2))
         {
             Child.Add(child);
+        }
 
+        public override void Build()
+        {
+            SetToCenter();
+            base.Build();
+        }
+
+        private void SetToCenter()
+        {
             // 真ん中を求める。
-            Child[0].X = (Screen.ScreenSize.Width / 2) - (child.Width / 2);
-            Child[0].Y = (Screen.ScreenSize.Height / 2) - (child.Height / 2);
+            var gui = Child[0];
+            gui.X = (Screen.ScreenSize.Width / 2) - (gui.Width / 2);
+            gui.Y = (Screen.ScreenSize.Height / 2) - (gui.Height / 2);
         }
     }
 }

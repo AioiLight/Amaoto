@@ -17,14 +17,39 @@ namespace Amaoto.GUI
             : base(CalcWidth(children, padding, spacing), children.Max(gui => gui.Height) + (padding * 2))
         {
             Child = children.ToList();
+            Padding = padding;
+            Spacing = spacing;
+        }
+
+        public override void Build()
+        {
+            SetPosition();
+            base.Build();
+        }
+
+        /// <summary>
+        /// パディング、間隔を変更する。
+        /// </summary>
+        /// <param name="padding">パディング。nullだと前の設定を引き継ぐ。</param>
+        /// <param name="spacing">GUIとGUIの間。nullだと前の設定を引き継ぐ。</param>
+        public void ChangePadding(int? padding = null, int? spacing = null)
+        {
+            Padding = padding ?? Padding;
+            Spacing = spacing ?? Spacing;
+            // 再生成。
+            ShouldBuild = true;
+        }
+
+        private void SetPosition()
+        {
             var x = 0;
-            x += padding;
+            x += Padding;
             foreach (var item in Child)
             {
                 item.X = x;
                 item.Y = 0;
                 x += item.Width;
-                x += spacing;
+                x += Spacing;
             }
         }
 
@@ -43,5 +68,8 @@ namespace Amaoto.GUI
             width += padding;
             return width;
         }
+
+        private int Padding;
+        private int Spacing;
     }
 }

@@ -21,6 +21,102 @@ namespace Amaoto.GUI
             OnMouseDown += Button_OnMouseDown;
             OnMouseUp += Button_OnMouseUp;
 
+            Background = background;
+            Content = content;
+
+            DownAnimation = new Animation.EaseOut(100, 95, 1000 * 250);
+            UpAnimation = new Animation.EaseOut(95, 100, 1000 * 250);
+        }
+
+        public override void Update(bool canHandle, int? pointX = null, int? pointY = null)
+        {
+            DownAnimation?.Tick();
+            UpAnimation?.Tick();
+
+            base.Update(canHandle, pointX, pointY);
+
+            var v = VirtualScreen.GetTexture();
+            if (DownAnimation.Counter.State == TimerState.Started)
+            {
+                v.ScaleX = v.ScaleY = DownAnimation.GetAnimation() / 100;
+            }
+            else if (UpAnimation.Counter.State == TimerState.Started)
+            {
+                v.ScaleX = v.ScaleY = UpAnimation.GetAnimation() / 100;
+            }
+            else
+            {
+                if (LongClickCounter.State == TimerState.Started)
+                {
+                    v.ScaleX = v.ScaleY = 0.95f;
+                }
+                else
+                {
+                    v.ScaleX = v.ScaleY = 1.0;
+                }
+            }
+        }
+
+        /// <summary>
+        /// GUI部品を描画する。
+        /// </summary>
+        public override void Draw()
+        {
+            VirtualScreen.ClearScreen();
+
+            VirtualScreen.Draw(() =>
+            {
+                Texture.Draw(Width / 2.0, Height / 2.0);
+
+                foreach (var item in Child)
+                {
+                    item.Draw();
+                    item.Screen.GetTexture().Draw(item.X, item.Y);
+                }
+            });
+
+            if (!Enabled)
+            {
+                VirtualScreen.GetTexture().Saturation(-255);
+            }
+
+            Screen.ClearScreen();
+
+            Screen.Draw(() => VirtualScreen.GetTexture().Draw(Width / 2.0, Height / 2.0));
+        }
+
+        public override void Build()
+        {
+            SetTexture(Background, Content);
+            base.Build();
+        }
+
+        /// <summary>
+        /// ボタンの中身を変更する。
+        /// </summary>
+        /// <param name="content">ボタンの中身。</param>
+        public void ChangeContent(ITextureReturnable content)
+        {
+            Content = content;
+            // 再生成
+            ShouldBuild = true;
+        }
+
+        /// <summary>
+        /// ボタンのサイズを変更する。
+        /// </summary>
+        /// <param name="width">横幅。</param>
+        /// <param name="height">縦幅。</param>
+        public void ChangeSize(int? width = null, int? height = null)
+        {
+            Width = width ?? Screen.ScreenSize.Width;
+            Height = height ?? Screen.ScreenSize.Height;
+            // 再生成
+            ShouldBuild = true;
+        }
+
+        private void SetTexture(ITextureReturnable background, ITextureReturnable content)
+        {
             var contentTex = content.GetTexture();
             var backTex = background.GetTexture();
             // ボタンの土台の描画。
@@ -84,69 +180,8 @@ namespace Amaoto.GUI
             });
 
             Texture = screen.GetTexture();
-
-            DownAnimation = new Animation.EaseOut(100, 95, 1000 * 250);
-            UpAnimation = new Animation.EaseOut(95, 100, 1000 * 250);
-
             Texture.ReferencePoint = ReferencePoint.Center;
             VirtualScreen.GetTexture().ReferencePoint = ReferencePoint.Center;
-        }
-
-        public override void Update(bool canHandle, int? pointX = null, int? pointY = null)
-        {
-            DownAnimation?.Tick();
-            UpAnimation?.Tick();
-
-            base.Update(canHandle, pointX, pointY);
-
-            var v = VirtualScreen.GetTexture();
-            if (DownAnimation.Counter.State == TimerState.Started)
-            {
-                v.ScaleX = v.ScaleY = DownAnimation.GetAnimation() / 100;
-            }
-            else if (UpAnimation.Counter.State == TimerState.Started)
-            {
-                v.ScaleX = v.ScaleY = UpAnimation.GetAnimation() / 100;
-            }
-            else
-            {
-                if (LongClickCounter.State == TimerState.Started)
-                {
-                    v.ScaleX = v.ScaleY = 0.95f;
-                }
-                else
-                {
-                    v.ScaleX = v.ScaleY = 1.0;
-                }
-            }
-        }
-
-        /// <summary>
-        /// GUI部品を描画する。
-        /// </summary>
-        public override void Draw()
-        {
-            VirtualScreen.ClearScreen();
-
-            VirtualScreen.Draw(() =>
-            {
-                Texture.Draw(Width / 2.0, Height / 2.0);
-
-                foreach (var item in Child)
-                {
-                    item.Draw();
-                    item.Screen.GetTexture().Draw(item.X, item.Y);
-                }
-            });
-
-            if (!Enabled)
-            {
-                VirtualScreen.GetTexture().Saturation(-255);
-            }
-
-            Screen.ClearScreen();
-
-            Screen.Draw(() => VirtualScreen.GetTexture().Draw(Width / 2.0, Height / 2.0));
         }
 
         private void Button_OnMouseDown(object sender, EventArgs e)
@@ -167,6 +202,9 @@ namespace Amaoto.GUI
 
         private readonly Animation.EaseOut DownAnimation;
         private readonly Animation.EaseOut UpAnimation;
-        private readonly VirtualScreen VirtualScreen;
+
+        private VirtualScreen VirtualScreen;
+        private ITextureReturnable Background;
+        private ITextureReturnable Content;
     }
 }

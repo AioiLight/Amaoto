@@ -19,14 +19,15 @@ namespace Amaoto.GUI
             Width = width;
             Height = height;
 
-            Screen = new VirtualScreen(Width, Height);
-
             LongClickCounter = new Counter(0, Amaoto.LongClickMs - 1, 1000, false);
             LongClickCounter.Ended += LongClickCounter_Ended;
 
             Child = new List<DrawPart>();
 
             Enabled = true;
+
+            Screen = new VirtualScreen(Width, Height);
+            ShouldBuild = true;
         }
 
         /// <summary>
@@ -40,6 +41,11 @@ namespace Amaoto.GUI
         /// <param name="pointY">マウスの相対Y座標。</param>
         public virtual void Update(bool canHandle, int? pointX = null, int? pointY = null)
         {
+            if (ShouldBuild)
+            {
+                Build();
+            }
+
             if (!pointX.HasValue || !pointY.HasValue)
             {
                 MousePoint = (Mouse.X - X, Mouse.Y - Y);
@@ -160,6 +166,27 @@ namespace Amaoto.GUI
         }
 
         /// <summary>
+        /// 現在のプロパティで、GUI部品を再生成する。
+        /// 子アイテムも再生成される。
+        /// </summary>
+        public virtual void Build()
+        {
+            // 現在の横幅、縦幅から、仮想スクリーンを再生成。
+            Screen = new VirtualScreen(Width, Height);
+
+            if (Child != null)
+            {
+                foreach (var item in Child)
+                {
+                    item.Build();
+                }
+            }
+
+            OnBuilt?.Invoke(this, null);
+            ShouldBuild = false;
+        }
+
+        /// <summary>
         /// ドラッグされたことを通知して、クリックイベントを発生させないようにする。
         /// </summary>
         public void StartDragging()
@@ -242,6 +269,11 @@ namespace Amaoto.GUI
         /// 相対座標。
         /// </summary>
         public (int x, int y) MousePoint { get; protected set; }
+
+        /// <summary>
+        /// ビルドするべきか。
+        /// </summary>
+        public bool ShouldBuild { get; protected set; }
 
         /// <summary>
         /// イベントのどれかにデリゲートが紐付けされている。
@@ -341,6 +373,11 @@ namespace Amaoto.GUI
         /// </summary>
         public event EventHandler OnDisabled;
 
+        /// <summary>
+        /// Build();が呼び出された。
+        /// </summary>
+        public event EventHandler OnBuilt;
+
         private (bool, (int x, int y)) LeftJudge;
 
         private bool Hovering;
@@ -348,5 +385,6 @@ namespace Amaoto.GUI
         private bool Dragging;
 
         private bool _Enabled;
+
     }
 }

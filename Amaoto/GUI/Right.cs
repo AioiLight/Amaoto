@@ -16,10 +16,23 @@
             : base(width ?? child.Width + (padding * 2), height ?? child.Height + (padding * 2))
         {
             Child.Add(child);
-
-            // 座標を求める。
-            Child[0].X = Screen.ScreenSize.Width - padding - child.Width;
-            Child[0].Y = (Screen.ScreenSize.Height / 2) - (child.Height / 2);
+            Padding = padding;
         }
+
+        public override void Build()
+        {
+            SetToRight();
+            base.Build();
+        }
+
+        private void SetToRight()
+        {
+            // 座標を求める。
+            var gui = Child[0];
+            gui.X = Screen.ScreenSize.Width - Padding - gui.Width;
+            gui.Y = (Screen.ScreenSize.Height / 2) - (gui.Height / 2);
+        }
+
+        private int Padding;
     }
 }

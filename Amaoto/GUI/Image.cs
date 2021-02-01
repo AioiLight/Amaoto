@@ -17,8 +17,6 @@
             SetScale(texture, width, height);
 
             Texture = texture;
-            ImageWidth = width ?? texture.TextureSize.Width;
-            ImageHeight = height ?? texture.TextureSize.Height;
         }
 
         /// <summary>
@@ -26,10 +24,26 @@
         /// GUIのサイズは初期化時のサイズがそのまま使用される。
         /// </summary>
         /// <param name="texture">テクスチャ。</param>
-        public void ReplaceImage(Texture texture)
+        public void ChangeImage(Texture texture)
         {
-            SetScale(texture, ImageWidth, ImageHeight);
+            SetScale(texture, Width, Height);
             Texture = texture;
+            // 再生成。
+            ShouldBuild = true;
+        }
+
+        /// <summary>
+        /// 画像のサイズを変更する。
+        /// </summary>
+        /// <param name="width">横幅。nullだと前の設定を引き継ぐ。</param>
+        /// <param name="height">縦幅。nullだと前の設定を引き継ぐ。</param>
+        public void ChangeSize(int? width = null, int? height = null)
+        {
+            Width = width ?? Width;
+            Height = height ?? Height;
+            SetScale(Texture, Width, Height);
+            // 再生成。
+            ShouldBuild = true;
         }
 
         private void SetScale(Texture texture, int? width = null, int? height = null)
@@ -44,8 +58,5 @@
                 texture.ScaleY = 1.0 * height.Value / texture.TextureSize.Height;
             }
         }
-
-        private readonly int ImageWidth;
-        private readonly int ImageHeight;
     }
 }

@@ -38,6 +38,18 @@ namespace Amaoto.GUI
             ValueChanged += NumericUpDown_ValueChanged;
         }
 
+        private void UpdateGUIFromValue(decimal value)
+        {
+            if (NowValue.Child[0] is Image img)
+            {
+                var t = FontRender.GetTexture(value.ToString());
+                img.ChangeSize(t.TextureSize.Width, t.TextureSize.Height);
+                img.ChangeImage(t);
+                // 再生成。
+                ShouldBuild = true;
+            }
+        }
+
         private void NumericUpDown_ValueChanged(object sender, decimal e)
         {
             if (e >= Maximum)
@@ -57,10 +69,7 @@ namespace Amaoto.GUI
                 Decrease.Enabled = true;
             }
 
-            // レイアウトの更新。
-
-            NowValue = new Center(new Image(FontRender.GetTexture(e.ToString())), 0, Width / 4 * 2, Height);
-            // TODO: ステート更新
+            UpdateGUIFromValue(e);
         }
 
         private void Decrease_Clicked(object sender, MouseClickEventArgs e)
