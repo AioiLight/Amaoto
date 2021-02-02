@@ -47,7 +47,7 @@ namespace Amaoto.GUI
             foreach (var item in Child)
             {
                 item.X = x;
-                item.Y = 0;
+                item.Y = Padding;
                 x += item.Width;
                 x += Spacing;
             }
