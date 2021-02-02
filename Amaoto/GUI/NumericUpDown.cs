@@ -14,9 +14,16 @@ namespace Amaoto.GUI
         /// <param name="buttonTexture">ボタンに使われる背景。</param>
         /// <param name="width">横幅。</param>
         /// <param name="height">縦幅。</param>
-        public NumericUpDown(FontRender fontRender, ITextureReturnable buttonTexture, int width, int height)
+        public NumericUpDown(FontRender fontRender, ITextureReturnable buttonTexture, int width, int height, decimal value = 1, decimal min = 1m, decimal max = 100m, decimal step = 1m)
             : base(width, height)
         {
+            _Value = value;
+            _Minimum = min;
+            _Maximum = max;
+            Step = step;
+
+            RoundValue();
+
             FontRender = fontRender;
 
             var plus = FontRender.GetTexture("+");
