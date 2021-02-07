@@ -62,6 +62,11 @@ namespace Amaoto.GUI
         /// </summary>
         public override void Draw()
         {
+            if (ShouldBuild)
+            {
+                Build();
+            }
+
             VirtualScreen.ClearScreen();
 
             VirtualScreen.Draw(() =>
