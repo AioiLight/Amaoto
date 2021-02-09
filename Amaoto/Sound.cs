@@ -50,6 +50,38 @@ namespace Amaoto
                 DX.PlaySoundMem(ID, DX.DX_PLAYTYPE_BACK, playFromBegin ? 1 : 0);
             }
         }
+        
+        /// <summary>
+        /// 次再生されるときの音量を設定します。プロパティは変更されません。
+        /// </summary>
+        /// <param name="volume"></param>
+        public void SetNextVolue(double volume)
+        {
+            DX.ChangeNextPlayVolumeSoundMem((int)(volume * 255), ID);
+        }
+
+        /// <summary>
+        /// 次再生されるときのパンを設定します。プロパティは変更されません。
+        /// </summary>
+        /// <param name="pan"></param>
+        public void SetNextPan(double pan)
+        {
+            DX.ChangeNextPlayPanSoundMem((int)(pan * 255), ID);
+        }
+
+        /// <summary>
+        /// 次再生されるときの再生速度を変更します。プロパティは変更されません。
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetNextSpeed(double value)
+        {
+            DX.ResetFrequencySoundMem(ID);
+            var freq = DX.GetFrequencySoundMem(ID);
+            // 倍率変更
+            var speed = value * freq;
+            // 1秒間に再生すべきサンプル数を上げ下げすると速度が変化する。
+            DX.SetNextPlayFrequencySoundMem((int)speed, ID);
+        }
 
         /// <summary>
         /// サウンドを停止します。
