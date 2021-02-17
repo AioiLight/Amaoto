@@ -17,7 +17,7 @@ namespace Amaoto
         /// <param name="isLoop">ループするか否か。</param>
         public Counter(long begin, long end, long interval, bool isLoop)
         {
-            NowTime = DX.GetNowHiPerformanceCount();
+            NowTime = Amaoto.HiPerformanceCounter;
             Begin = begin;
             End = end;
             Interval = interval;
@@ -34,7 +34,7 @@ namespace Amaoto
         {
             // 何Tickしたかのカウント
             var tickCount = 0;
-            var nowTime = DX.GetNowHiPerformanceCount();
+            var nowTime = Amaoto.HiPerformanceCounter;
 
             // 停止状態の場合、現在時間をそのままプロパティに代入して、終わる。
             if (State == TimerState.Stopped)
@@ -117,7 +117,7 @@ namespace Amaoto
         public void Reset()
         {
             // 現在時間を入れる。
-            NowTime = DX.GetNowHiPerformanceCount();
+            NowTime = Amaoto.HiPerformanceCounter;
             // カウンターを最小値に戻す。
             Value = Begin;
         }
