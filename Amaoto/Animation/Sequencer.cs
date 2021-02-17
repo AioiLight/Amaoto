@@ -44,13 +44,13 @@ namespace Amaoto.Animation
         /// </summary>
         public void Update()
         {
-            GetCurrentAnimator().Tick();
-            if (GetCurrentAnimator().Counter.Value >= GetCurrentAnimator().Counter.End && GetCurrentAnimator().Counter.State == TimerState.Stopped)
+            Animators[Index].Tick();
+            if (Animators[Index].Counter.Value >= Animators[Index].Counter.End && Animators[Index].Counter.State == TimerState.Stopped)
             {
                 if (Animators.Count - 1 > Index)
                 {
                     Index++;
-                    GetCurrentAnimator().Start();
+                    Animators[Index].Start();
                 }
                 else
                 {
@@ -61,6 +61,7 @@ namespace Amaoto.Animation
                     }
                 }
             }
+            Animators[Index].Tick();
         }
 
         /// <summary>
@@ -68,7 +69,7 @@ namespace Amaoto.Animation
         /// </summary>
         public void Start()
         {
-            GetCurrentAnimator().Start();
+            Animators[Index].Start();
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace Amaoto.Animation
         /// </summary>
         public void Stop()
         {
-            GetCurrentAnimator().Stop();
+            Animators[Index].Stop();
         }
 
         /// <summary>
@@ -122,21 +123,12 @@ namespace Amaoto.Animation
         }
 
         /// <summary>
-        /// アニメーション中であるかどうか。
-        /// </summary>
-        /// <returns></returns>
-        public bool IsAnimating()
-        {
-            return GetCurrentAnimator().Counter.State == TimerState.Started;
-        }
-
-        /// <summary>
         /// 現在のアニメーターからアニメーション結果を得る。
         /// </summary>
         /// <returns>アニメーション結果。</returns>
         public double GetAnimation()
         {
-            return GetCurrentAnimator().GetAnimation();
+            return Animators[Index].GetAnimation();
         }
 
         /// <summary>

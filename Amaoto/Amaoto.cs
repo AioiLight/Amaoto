@@ -24,7 +24,6 @@ namespace Amaoto
 
             DX.SetUsePremulAlphaConvertLoad(DX.TRUE);
             DX.CreateMaskScreen();
-            HiPerformanceCounter = DX.GetNowHiPerformanceCount();
 
             afterInit?.Invoke();
         }
@@ -45,8 +44,6 @@ namespace Amaoto
         /// </summary>
         public static void Loop()
         {
-            HiPerformanceCounter = DX.GetNowHiPerformanceCount();
-
             Key.Update();
             Mouse.Update();
 
@@ -94,11 +91,5 @@ namespace Amaoto
         /// 現在のフレームでマウス操作が行われたかどうか。
         /// </summary>
         public static bool MouseHandled { get; private set; } = false;
-
-        /// <summary>
-        /// ハイパフォーマンスカウンターの値。
-        /// Amaoto.Loop()で更新されるため、毎フレーム呼び出す必要がある。
-        /// </summary>
-        public static long HiPerformanceCounter { get; private set; }
     }
 }
