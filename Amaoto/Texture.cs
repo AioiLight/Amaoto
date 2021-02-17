@@ -108,6 +108,7 @@ namespace Amaoto
         public void Draw(double x, double y, Rectangle? rectangle = null)
         {
             var origin = new Point();
+            var isDefinedRect = rectangle.HasValue;
             DX.GetGraphSize(ID, out var width, out var height);
             if (rectangle == null)
             {
@@ -180,26 +181,89 @@ namespace Amaoto
                 DX.SetDrawMode(DX.DX_DRAWMODE_NEAREST);
             }
 
-            DX.DrawRectRotaGraph3F(
-                // 座標
-                (float)x,
-                (float)y,
-                // 元画像座標
-                rectangle.Value.X,
-                rectangle.Value.Y,
-                // 元画像幅・高さ
-                rectangle.Value.Width,
-                rectangle.Value.Height,
-                // 描画基準点
-                origin.X,
-                origin.Y,
-                // 拡大率
-                ScaleX,
-                ScaleY,
-                // 回転角度
-                Rotation,
-                ID,
-                DX.TRUE);
+            if (!isDefinedRect)
+            {
+                if (ScaleX == 1.0 && ScaleY == 1.0)
+                {
+                    DX.DrawRotaGraph2F(
+                        // 座標
+                        (float)x,
+                        (float)y,
+                        // 描画基準点
+                        origin.X,
+                        origin.Y,
+                        1.0f,
+                        // 回転角度
+                        Rotation,
+                        ID,
+                        DX.TRUE);
+                }
+                else
+                {
+                    DX.DrawRotaGraph3F(
+                        // 座標
+                        (float)x,
+                        (float)y,
+                        // 描画基準点
+                        origin.X,
+                        origin.Y,
+                        // 拡大率
+                        ScaleX,
+                        ScaleY,
+                        // 回転角度
+                        Rotation,
+                        ID,
+                        DX.TRUE);
+                }
+            }
+            else
+            {
+                if (ScaleX == 1.0 && ScaleY == 1.0)
+                {
+                    DX.DrawRectRotaGraph2F(
+                        // 座標
+                        (float)x,
+                        (float)y,
+                        // 元画像座標
+                        rectangle.Value.X,
+                        rectangle.Value.Y,
+                        // 元画像幅・高さ
+                        rectangle.Value.Width,
+                        rectangle.Value.Height,
+                        // 描画基準点
+                        origin.X,
+                        origin.Y,
+                        // 拡大率
+                        1.0f,
+                        // 回転角度
+                        Rotation,
+                        ID,
+                        DX.TRUE);
+                }
+                else
+                {
+                    DX.DrawRectRotaGraph3F(
+                        // 座標
+                        (float)x,
+                        (float)y,
+                        // 元画像座標
+                        rectangle.Value.X,
+                        rectangle.Value.Y,
+                        // 元画像幅・高さ
+                        rectangle.Value.Width,
+                        rectangle.Value.Height,
+                        // 描画基準点
+                        origin.X,
+                        origin.Y,
+                        // 拡大率
+                        ScaleX,
+                        ScaleY,
+                        // 回転角度
+                        Rotation,
+                        ID,
+                        DX.TRUE);
+                }
+            }
 
             DX.SetDrawBlendMode(DX.DX_BLENDMODE_NOBLEND, 0);
         }
