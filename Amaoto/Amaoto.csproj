@@ -91,6 +91,7 @@
     <Compile Include="Animation\FadeOut.cs" />
     <Compile Include="Animation\Linear.cs" />
     <Compile Include="Animation\Sequencer.cs" />
+    <Compile Include="AtlasTexture.cs" />
     <Compile Include="ConfigManager.cs" />
     <Compile Include="Counter.cs" />
     <Compile Include="DXLibUtil.cs" />
