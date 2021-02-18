@@ -28,6 +28,12 @@
         /// </summary>
         public void Update()
         {
+            if (Counter.State == TimerState.Stopped)
+            {
+                Counter.Start();
+            }
+
+            Counter.Tick();
             NowFPS++;
         }
 
