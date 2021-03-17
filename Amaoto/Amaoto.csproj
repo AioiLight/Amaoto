@@ -7,9 +7,6 @@
 
     <RootNamespace>Amaoto</RootNamespace>
     <AssemblyName>Amaoto</AssemblyName>
-
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
