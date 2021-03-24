@@ -54,7 +54,7 @@ namespace Amaoto.GUI
 
             if (!Enabled)
             {
-                VirtualScreen.GetTexture().Saturation(-255);
+                VirtualScreen.GetTexture().Brightness(-128);
             }
 
             Texture = VirtualScreen.GetTexture();
