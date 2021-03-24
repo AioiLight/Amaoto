@@ -105,7 +105,9 @@ namespace Amaoto
         /// <param name="x">X座標。</param>
         /// <param name="y">Y座標。</param>
         /// <param name="rectangle">描画範囲。</param>
-        public void Draw(double x, double y, Rectangle? rectangle = null)
+        /// <param name="reverseX">横方向に反転描画するか。</param>
+        /// <param name="reverseY">縦方向に反転描画するか。</param>
+        public void Draw(double x, double y, Rectangle? rectangle = null, bool reverseX = false, bool reverseY = false)
         {
             var origin = new Point();
             var isDefinedRect = rectangle.HasValue;
@@ -196,7 +198,9 @@ namespace Amaoto
                         // 回転角度
                         Rotation,
                         ID,
-                        DX.TRUE);
+                        DX.TRUE,
+                        reverseX ? DX.TRUE : DX.FALSE,
+                        reverseY ? DX.TRUE : DX.FALSE);
                 }
                 else
                 {
@@ -213,7 +217,9 @@ namespace Amaoto
                         // 回転角度
                         Rotation,
                         ID,
-                        DX.TRUE);
+                        DX.TRUE,
+                        reverseX ? DX.TRUE : DX.FALSE,
+                        reverseY ? DX.TRUE : DX.FALSE);
                 }
             }
             else
@@ -238,7 +244,9 @@ namespace Amaoto
                         // 回転角度
                         Rotation,
                         ID,
-                        DX.TRUE);
+                        DX.TRUE,
+                        reverseX ? DX.TRUE : DX.FALSE,
+                        reverseY ? DX.TRUE : DX.FALSE);
                 }
                 else
                 {
@@ -261,7 +269,9 @@ namespace Amaoto
                         // 回転角度
                         Rotation,
                         ID,
-                        DX.TRUE);
+                        DX.TRUE,
+                        reverseX ? DX.TRUE : DX.FALSE,
+                        reverseY ? DX.TRUE : DX.FALSE);
                 }
             }
 
