@@ -12,25 +12,41 @@ namespace Amaoto.GUI
         /// タブを提供する。
         /// </summary>
         /// <param name="children">タブ要素。</param>
-        /// <param name="tabBackground">タブの背景。</param>
+        /// <param name="activeTabTexture">アクティブなタブの背景。</param>
+        /// <param name="inactiveTabTexture">非アクティブなタブの背景。</param>
+        /// <param name="activeTabFont">アクティブなタブのFontRender。</param>
+        /// <param name="inactiveTabFont">非アクティブなタブのFontRender。</param>
         /// <param name="tabNames">タブ名。</param>
         /// <param name="tabWidth">タブの横幅。はみ出す場合は、スクロールできるようになる。</param>
         /// <param name="tabHeight">タブの縦幅。</param>
         /// <param name="width">横幅。</param>
         /// <param name="height">縦幅。タブの高さを含む。</param>
-        public Tab(DrawPart[] children, ITextureReturnable tabBackground, ITextureReturnable[] tabNames, int tabWidth, int tabHeight, int width, int height)
+        public Tab(DrawPart[] children,
+            ITextureReturnable activeTabTexture, ITextureReturnable inactiveTabTexture,
+            FontRender activeTabFont, FontRender inactiveTabFont,
+            string[] tabNames, int tabWidth, int tabHeight, int width, int height)
             : base(width, height)
         {
             Child = children.ToList();
 
-            TabNames = new DrawPart[children.Length];
+            ActiveTabBackground = activeTabTexture;
+            InactiveTabBackground = inactiveTabTexture;
+
+            ActiveTabFont = activeTabFont;
+            InactiveTabFont = inactiveTabFont;
+
+            TabNameStrings = tabNames;
+
+            TabNames = new Button[children.Length];
             for (int i = 0; i < TabNames.Length; i++)
             {
                 // ボタンを生成
-                TabNames[i] = new Button(tabBackground, tabNames.Length > i ? tabNames[i] : null, tabWidth, tabHeight);
+                var bg = GetTabBackground(i);
+                var t = GetTabFontRender(i).GetTexture(tabNames[i]);
+                TabNames[i] = new Button(bg, t, tabWidth, tabHeight);
                 TabNames[i].Clicked += (sender, e) =>
                 {
-                    var indx = TabNames.ToList().IndexOf((DrawPart)sender);
+                    var indx = TabNames.ToList().IndexOf((Button)sender);
                     TabClicked?.Invoke(this, indx);
                     ShowingTabIndex = indx;
                 };
@@ -183,8 +199,8 @@ namespace Amaoto.GUI
         {
             for (int i = 0; i < TabNames.Length; i++)
             {
-                // タブの押せるかどうかを変更
-                TabNames[i].Enabled = e != i;
+                TabNames[i].ChangeContent(GetTabFontRender(i).GetTexture(TabNameStrings[i]));
+                TabNames[i].ChangeBackground(GetTabBackground(i));
             }
         }
 
@@ -217,10 +233,27 @@ namespace Amaoto.GUI
             }
         }
 
-        private DrawPart[] TabNames;
+        private ITextureReturnable GetTabBackground(int index)
+        {
+            return index == ShowingTabIndex ? ActiveTabBackground : InactiveTabBackground;
+        }
+
+        private FontRender GetTabFontRender(int index)
+        {
+            return index == ShowingTabIndex ? ActiveTabFont : InactiveTabFont;
+        }
+
+        private Button[] TabNames;
+        private string[] TabNameStrings;
         private Row TabHeader;
         private Scroller TabHeaderScroller;
 
         private int _ShowingTabIndex;
+
+        private ITextureReturnable ActiveTabBackground;
+        private ITextureReturnable InactiveTabBackground;
+
+        private FontRender ActiveTabFont;
+        private FontRender InactiveTabFont;
     }
 }
