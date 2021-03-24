@@ -108,6 +108,17 @@ namespace Amaoto.GUI
         }
 
         /// <summary>
+        /// ボタンの背景を変更する。
+        /// </summary>
+        /// <param name="background">ボタンの背景。</param>
+        public void ChangeBackground(ITextureReturnable background)
+        {
+            Background = background;
+            // 再生成
+            ShouldBuild = true;
+        }
+
+        /// <summary>
         /// ボタンのサイズを変更する。
         /// </summary>
         /// <param name="width">横幅。</param>
