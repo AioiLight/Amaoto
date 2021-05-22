@@ -17,7 +17,7 @@ namespace Amaoto
             {
                 if (Buffer[i] == 1)
                 {
-                    // 前のフレームでは押していなかった
+                    // 現在押している
                     if (!IsPushing(i))
                     {
                         // 押していない状態から押している状態になった
@@ -31,7 +31,7 @@ namespace Amaoto
                 }
                 else
                 {
-                    // 前のフレームでは押していた
+                    // 現在押していない
                     if (IsPushing(i))
                     {
                         // 押している状態から押していない状態になった
