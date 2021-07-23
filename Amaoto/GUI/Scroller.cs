@@ -60,7 +60,7 @@ namespace Amaoto.GUI
             foreach (var item in Child)
             {
                 item.Update(canHandle
-                    && new Rectangle(item.X, item.Y, item.Width, item.Height).Contains(MousePoint.x, MousePoint.y),
+                    && !IsOutSide() && new Rectangle(item.X, item.Y, item.Width, item.Height).Contains(MousePoint.x, MousePoint.y),
                     MousePoint.x - (int)Position.x,
                     MousePoint.y - (int)Position.y);
             }
