@@ -105,9 +105,10 @@ namespace Amaoto
         /// <param name="x">X座標。</param>
         /// <param name="y">Y座標。</param>
         /// <param name="rectangle">描画範囲。</param>
+        /// <param name="drawOrigin">描画基準点。指定するとReferencerPointを無視する。</param>
         /// <param name="reverseX">横方向に反転描画するか。</param>
         /// <param name="reverseY">縦方向に反転描画するか。</param>
-        public void Draw(double x, double y, Rectangle? rectangle = null, bool reverseX = false, bool reverseY = false)
+        public void Draw(double x, double y, Rectangle? rectangle = null, Point? drawOrigin = null, bool reverseX = false, bool reverseY = false)
         {
             var origin = new Point();
             var isDefinedRect = rectangle.HasValue;
@@ -169,6 +170,11 @@ namespace Amaoto
                     origin.X = 0;
                     origin.Y = 0;
                     break;
+            }
+
+            if (drawOrigin.HasValue)
+            {
+                origin = drawOrigin.Value;
             }
 
             var blendParam = (int)(Opacity * 255);
