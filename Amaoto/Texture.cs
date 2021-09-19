@@ -9,7 +9,7 @@ using Newtonsoft.Json.Converters;
 namespace Amaoto
 {
     /// <summary>
-    /// テクスチャ管理を行うクラス。
+    /// テクスチャ。
     /// </summary>
     public class Texture : IDisposable, ITextureReturnable
     {
@@ -26,7 +26,7 @@ namespace Amaoto
         }
 
         /// <summary>
-        /// テクスチャを生成します。
+        /// 画像ファイルからテクスチャを生成します。
         /// </summary>
         /// <param name="fileName">ファイル名。</param>
         public Texture(string fileName)

@@ -13,10 +13,10 @@ namespace Amaoto
     public class TextureMask : IDisposable
     {
         /// <summary>
-        /// 
+        /// テクスチャを使用したマウス区を作成します。
         /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
+        /// <param name="width">マスクの横解像度。</param>
+        /// <param name="height">マスクの縦解像度。</param>
         public TextureMask(int width, int height)
         {
             Screen = new VirtualScreen(width, height);
@@ -39,7 +39,7 @@ namespace Amaoto
         /// </summary>
         /// <param name="masking">マスクする内容。</param>
         /// <param name="reverse">マスクを反転するかどうか。</param>
-        /// <returns></returns>
+        /// <returns>TextureMask。</returns>
         public TextureMask Masking(Action masking, bool reverse = false)
         {
             if (reverse)

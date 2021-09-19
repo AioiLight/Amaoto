@@ -5,13 +5,14 @@ using System.Drawing;
 namespace Amaoto
 {
     /// <summary>
-    /// アトラスを生成する。
-    /// 単一の画像から複数のテクスチャを切り出すことで、描画の高速化を実現する。
+    /// アトラスを生成します。
+    /// 単一の画像から複数のテクスチャを切り出すことで、描画の高速化を実現します。
     /// </summary>
     public class AtlasTexture : IDisposable
     {
         /// <summary>
-        /// アトラスを生成する。
+        /// アトラスを生成します。
+        /// 単一の画像から複数のテクスチャを切り出すことで、描画の高速化を実現します。
         /// </summary>
         /// <param name="fileName">アトラスのファイル名。</param>
         public AtlasTexture(string fileName)
@@ -25,9 +26,9 @@ namespace Amaoto
         }
 
         /// <summary>
-        /// アトラスからテクスチャを取得する。
+        /// 読み込まれた画像の一部を切り出して、新たにテクスチャを生成します。
         /// </summary>
-        /// <param name="rectangle">矩形。</param>
+        /// <param name="rectangle">切り出す範囲。</param>
         /// <returns>テクスチャ。</returns>
         public Texture GetTexture(Rectangle rectangle)
         {

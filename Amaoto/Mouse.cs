@@ -8,7 +8,7 @@ namespace Amaoto
     public static class Mouse
     {
         /// <summary>
-        /// マウスの入力を処理する。必ず毎フレーム呼ぶ必要がある。
+        /// マウスの入力を処理する。必ず毎フレーム呼ぶ必要があります。
         /// </summary>
         public static void Update()
         {
@@ -54,7 +54,7 @@ namespace Amaoto
         }
 
         /// <summary>
-        /// マウスが押されたかどうかチェックする。
+        /// マウスが押されたかどうかチェックします。。
         /// </summary>
         /// <param name="mouseButton">ボタン。</param>
         /// <returns>押されたかどうか。</returns>
@@ -64,7 +64,7 @@ namespace Amaoto
         }
 
         /// <summary>
-        /// マウスが押されているかどうかチェックする。
+        /// マウスが押されているかどうかチェックします。
         /// </summary>
         /// <param name="mouseButton">ボタン。</param>
         /// <returns>押されているかどうか。</returns>
@@ -74,7 +74,7 @@ namespace Amaoto
         }
 
         /// <summary>
-        /// マウスのボタンが離されたかどうかチェックする。
+        /// マウスのボタンが離されたかどうかチェックします。
         /// </summary>
         /// <param name="mouseButton">ボタン。</param>
         /// <returns>離されたかどうか。</returns>

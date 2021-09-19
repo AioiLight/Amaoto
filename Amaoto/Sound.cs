@@ -58,7 +58,7 @@ namespace Amaoto
         /// <summary>
         /// 次再生されるときの音量を設定します。プロパティは変更されません。
         /// </summary>
-        /// <param name="volume"></param>
+        /// <param name="volume">音量。</param>
         public void SetNextVolue(double volume)
         {
             DX.ChangeNextPlayVolumeSoundMem((int)(volume * 255), ID);
@@ -67,7 +67,7 @@ namespace Amaoto
         /// <summary>
         /// 次再生されるときのパンを設定します。プロパティは変更されません。
         /// </summary>
-        /// <param name="pan"></param>
+        /// <param name="pan">パン。-1～1の範囲。</param>
         public void SetNextPan(double pan)
         {
             DX.ChangeNextPlayPanSoundMem((int)(pan * 255), ID);
@@ -76,7 +76,7 @@ namespace Amaoto
         /// <summary>
         /// 次再生されるときの再生速度を変更します。プロパティは変更されません。
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">再生速度。</param>
         public void SetNextSpeed(double value)
         {
             SetFreq();
