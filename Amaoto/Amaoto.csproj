@@ -61,13 +61,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\DxLibWDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -77,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Amaoto.cs" />
+    <Compile Include="AmaotoUtil.cs" />
     <Compile Include="AnimateTexture.cs" />
     <Compile Include="Animation\Animator.cs" />
     <Compile Include="Animation\Blank.cs" />
@@ -89,19 +92,33 @@
     <Compile Include="Animation\FadeOut.cs" />
     <Compile Include="Animation\Linear.cs" />
     <Compile Include="Animation\Sequencer.cs" />
+    <Compile Include="AtlasTexture.cs" />
     <Compile Include="ConfigManager.cs" />
     <Compile Include="Counter.cs" />
     <Compile Include="DXLibUtil.cs" />
+    <Compile Include="Filter.cs" />
     <Compile Include="FontRender.cs" />
     <Compile Include="FPSCounter.cs" />
+    <Compile Include="GUI\Center.cs" />
     <Compile Include="GUI\CheckBox.cs" />
     <Compile Include="GUI\Button.cs" />
-    <Compile Include="GUI\IDrawable.cs" />
+    <Compile Include="GUI\Column.cs" />
+    <Compile Include="GUI\Container.cs" />
+    <Compile Include="GUI\DrawPart.cs" />
+    <Compile Include="GUI\GUINormalize.cs" />
     <Compile Include="GUI\Image.cs" />
+    <Compile Include="GUI\Left.cs" />
     <Compile Include="GUI\MouseClickEventArgs.cs" />
+    <Compile Include="GUI\NumericUpDown.cs" />
+    <Compile Include="GUI\Right.cs" />
+    <Compile Include="GUI\Row.cs" />
+    <Compile Include="GUI\Scroller.cs" />
+    <Compile Include="GUI\Tab.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="IPlayable.cs" />
     <Compile Include="ITextureReturnable.cs" />
+    <Compile Include="Key.cs" />
+    <Compile Include="LayoutBuilder.cs" />
     <Compile Include="Mouse.cs" />
     <Compile Include="Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -118,6 +135,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

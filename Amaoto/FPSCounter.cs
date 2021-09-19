@@ -1,6 +1,4 @@
-﻿using DxLibDLL;
-
-namespace Amaoto
+﻿namespace Amaoto
 {
     /// <summary>
     /// FPSを計測するクラス。
@@ -14,7 +12,15 @@ namespace Amaoto
         {
             NowFPS = 0;
             FPS = 0;
-            Counter = DX.GetNowHiPerformanceCount();
+            Counter = new Counter(0, 999, 1000, true);
+            Counter.Looped += Counter_Looped;
+        }
+
+        private void Counter_Looped(object sender, System.EventArgs e)
+        {
+            // 一秒経過
+            FPS = NowFPS;
+            NowFPS = 0;
         }
 
         /// <summary>
@@ -22,15 +28,13 @@ namespace Amaoto
         /// </summary>
         public void Update()
         {
-            NowFPS++;
-            var nowTime = DX.GetNowHiPerformanceCount();
-            if (nowTime - Counter >= 1000 * 1000)
+            if (Counter.State == TimerState.Stopped)
             {
-                // 一秒経過
-                FPS = NowFPS;
-                NowFPS = 0;
-                Counter = nowTime;
+                Counter.Start();
             }
+
+            Counter.Tick();
+            NowFPS++;
         }
 
         /// <summary>
@@ -39,6 +43,6 @@ namespace Amaoto
         public int FPS { get; private set; }
 
         private int NowFPS;
-        private long Counter;
+        private readonly Counter Counter;
     }
 }

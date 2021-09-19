@@ -9,7 +9,7 @@ using Newtonsoft.Json.Converters;
 namespace Amaoto
 {
     /// <summary>
-    /// テクスチャ管理を行うクラス。
+    /// テクスチャ。
     /// </summary>
     public class Texture : IDisposable, ITextureReturnable
     {
@@ -18,15 +18,15 @@ namespace Amaoto
         /// </summary>
         public Texture()
         {
-            Rotation = 0.0f;
-            ScaleX = 1.0f;
-            ScaleY = 1.0f;
-            Opacity = 1.0f;
+            Rotation = 0.0;
+            ScaleX = 1.0;
+            ScaleY = 1.0;
+            Opacity = 1.0;
             ReferencePoint = ReferencePoint.TopLeft;
         }
 
         /// <summary>
-        /// テクスチャを生成します。
+        /// 画像ファイルからテクスチャを生成します。
         /// </summary>
         /// <param name="fileName">ファイル名。</param>
         public Texture(string fileName)
@@ -105,9 +105,13 @@ namespace Amaoto
         /// <param name="x">X座標。</param>
         /// <param name="y">Y座標。</param>
         /// <param name="rectangle">描画範囲。</param>
-        public void Draw(float x, float y, Rectangle? rectangle = null)
+        /// <param name="drawOrigin">描画基準点。指定するとReferencerPointを無視する。</param>
+        /// <param name="reverseX">横方向に反転描画するか。</param>
+        /// <param name="reverseY">縦方向に反転描画するか。</param>
+        public void Draw(double x, double y, Rectangle? rectangle = null, Point? drawOrigin = null, bool reverseX = false, bool reverseY = false)
         {
             var origin = new Point();
+            var isDefinedRect = rectangle.HasValue;
             DX.GetGraphSize(ID, out var width, out var height);
             if (rectangle == null)
             {
@@ -168,10 +172,15 @@ namespace Amaoto
                     break;
             }
 
+            if (drawOrigin.HasValue)
+            {
+                origin = drawOrigin.Value;
+            }
+
             var blendParam = (int)(Opacity * 255);
             DX.SetDrawBlendMode(DXLibUtil.GetBlendModeConstant(BlendMode), blendParam);
 
-            if (ScaleX != 1.0f || ScaleY != 1.0f)
+            if (ScaleX != 1.0 || ScaleY != 1.0)
             {
                 DX.SetDrawMode(DX.DX_DRAWMODE_BILINEAR);
             }
@@ -180,26 +189,97 @@ namespace Amaoto
                 DX.SetDrawMode(DX.DX_DRAWMODE_NEAREST);
             }
 
-            DX.DrawRectRotaGraph3F(
-                // 座標
-                x,
-                y,
-                // 元画像座標
-                rectangle.Value.X,
-                rectangle.Value.Y,
-                // 元画像幅・高さ
-                rectangle.Value.Width,
-                rectangle.Value.Height,
-                // 描画基準点
-                origin.X,
-                origin.Y,
-                // 拡大率
-                ScaleX,
-                ScaleY,
-                // 回転角度
-                Rotation,
-                ID,
-                DX.TRUE);
+            if (!isDefinedRect)
+            {
+                if (ScaleX == 1.0 && ScaleY == 1.0)
+                {
+                    DX.DrawRotaGraph2F(
+                        // 座標
+                        (float)x,
+                        (float)y,
+                        // 描画基準点
+                        origin.X,
+                        origin.Y,
+                        1.0f,
+                        // 回転角度
+                        Rotation,
+                        ID,
+                        DX.TRUE,
+                        reverseX ? DX.TRUE : DX.FALSE,
+                        reverseY ? DX.TRUE : DX.FALSE);
+                }
+                else
+                {
+                    DX.DrawRotaGraph3F(
+                        // 座標
+                        (float)x,
+                        (float)y,
+                        // 描画基準点
+                        origin.X,
+                        origin.Y,
+                        // 拡大率
+                        ScaleX,
+                        ScaleY,
+                        // 回転角度
+                        Rotation,
+                        ID,
+                        DX.TRUE,
+                        reverseX ? DX.TRUE : DX.FALSE,
+                        reverseY ? DX.TRUE : DX.FALSE);
+                }
+            }
+            else
+            {
+                if (ScaleX == 1.0 && ScaleY == 1.0)
+                {
+                    DX.DrawRectRotaGraph2F(
+                        // 座標
+                        (float)x,
+                        (float)y,
+                        // 元画像座標
+                        rectangle.Value.X,
+                        rectangle.Value.Y,
+                        // 元画像幅・高さ
+                        rectangle.Value.Width,
+                        rectangle.Value.Height,
+                        // 描画基準点
+                        origin.X,
+                        origin.Y,
+                        // 拡大率
+                        1.0f,
+                        // 回転角度
+                        Rotation,
+                        ID,
+                        DX.TRUE,
+                        reverseX ? DX.TRUE : DX.FALSE,
+                        reverseY ? DX.TRUE : DX.FALSE);
+                }
+                else
+                {
+                    DX.DrawRectRotaGraph3F(
+                        // 座標
+                        (float)x,
+                        (float)y,
+                        // 元画像座標
+                        rectangle.Value.X,
+                        rectangle.Value.Y,
+                        // 元画像幅・高さ
+                        rectangle.Value.Width,
+                        rectangle.Value.Height,
+                        // 描画基準点
+                        origin.X,
+                        origin.Y,
+                        // 拡大率
+                        ScaleX,
+                        ScaleY,
+                        // 回転角度
+                        Rotation,
+                        ID,
+                        DX.TRUE,
+                        reverseX ? DX.TRUE : DX.FALSE,
+                        reverseY ? DX.TRUE : DX.FALSE);
+                }
+            }
 
             DX.SetDrawBlendMode(DX.DX_BLENDMODE_NOBLEND, 0);
         }
@@ -210,7 +290,7 @@ namespace Amaoto
         /// <param name="path">保存先。</param>
         public void SaveAsPNG(string path)
         {
-            DX.SaveDrawValidGraphToPNG(ID, 0, 0, TextureSize.width, TextureSize.height, path, 0);
+            DX.SaveDrawValidGraphToPNG(ID, 0, 0, TextureSize.Width, TextureSize.Height, path, 0);
         }
 
         /// <summary>
@@ -240,7 +320,7 @@ namespace Amaoto
         /// <summary>
         /// 不透明度。
         /// </summary>
-        public float Opacity { get; set; }
+        public double Opacity { get; set; }
 
         /// <summary>
         /// ID。
@@ -250,7 +330,7 @@ namespace Amaoto
         /// <summary>
         /// 角度(弧度法)。
         /// </summary>
-        public float Rotation { get; set; }
+        public double Rotation { get; set; }
 
         /// <summary>
         /// 描画基準点。
@@ -260,34 +340,34 @@ namespace Amaoto
         /// <summary>
         /// 拡大率X。
         /// </summary>
-        public float ScaleX { get; set; }
+        public double ScaleX { get; set; }
 
         /// <summary>
         /// 拡大率Y。
         /// </summary>
-        public float ScaleY { get; set; }
+        public double ScaleY { get; set; }
 
         /// <summary>
         /// テクスチャのサイズを返します。
         /// </summary>
-        public (int width, int height) TextureSize
+        public Size TextureSize
         {
             get
             {
                 DX.GetGraphSize(ID, out var width, out var height);
-                return (width, height);
+                return new Size(width, height);
             }
         }
 
         /// <summary>
         /// 拡大率を考慮した、描画されるときのサイズ。
         /// </summary>
-        public (int width, int height) ActualSize
+        public Size ActualSize
         {
             get
             {
                 var s = TextureSize;
-                return ((int)(ScaleX * s.width), (int)(ScaleY * s.height));
+                return new Size((int)(ScaleX * s.Width), (int)(ScaleY * s.Height));
             }
         }
     }

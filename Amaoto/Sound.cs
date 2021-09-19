@@ -17,6 +17,10 @@ namespace Amaoto
             if (ID != -1)
             {
                 IsEnable = true;
+                if (DX.GetUseASyncLoadFlag() != DX.TRUE)
+                {
+                    Frequency = DX.GetFrequencySoundMem(ID);
+                }
             }
             FileName = fileName;
 
@@ -50,6 +54,43 @@ namespace Amaoto
                 DX.PlaySoundMem(ID, DX.DX_PLAYTYPE_BACK, playFromBegin ? 1 : 0);
             }
         }
+        
+        /// <summary>
+        /// 次再生されるときの音量を設定します。プロパティは変更されません。
+        /// </summary>
+        /// <param name="volume">音量。</param>
+        public void SetNextVolue(double volume)
+        {
+            DX.ChangeNextPlayVolumeSoundMem((int)(volume * 255), ID);
+        }
+
+        /// <summary>
+        /// 次再生されるときのパンを設定します。プロパティは変更されません。
+        /// </summary>
+        /// <param name="pan">パン。-1～1の範囲。</param>
+        public void SetNextPan(double pan)
+        {
+            DX.ChangeNextPlayPanSoundMem((int)(pan * 255), ID);
+        }
+
+        /// <summary>
+        /// 次再生されるときの再生速度を変更します。プロパティは変更されません。
+        /// </summary>
+        /// <param name="value">再生速度。</param>
+        public void SetNextSpeed(double value)
+        {
+            SetFreq();
+            if (!Frequency.HasValue)
+            {
+                throw new Exception("Sound file is not loaded yet.");
+            }
+
+            var freq = Frequency.Value;
+            // 倍率変更
+            var speed = value * freq;
+            // 1秒間に再生すべきサンプル数を上げ下げすると速度が変化する。
+            DX.SetNextPlayFrequencySoundMem((int)speed, ID);
+        }
 
         /// <summary>
         /// サウンドを停止します。
@@ -59,6 +100,17 @@ namespace Amaoto
             if (IsEnable)
             {
                 DX.StopSoundMem(ID);
+            }
+        }
+
+        private void SetFreq()
+        {
+            if (!Frequency.HasValue)
+            {
+                if (DX.CheckHandleASyncLoad(ID) == DX.FALSE)
+                {
+                    Frequency = DX.GetFrequencySoundMem(ID);
+                }
             }
         }
 
@@ -127,14 +179,26 @@ namespace Amaoto
         {
             get
             {
-                var freq = DX.GetFrequencySoundMem(ID);
+                SetFreq();
+                if (!Frequency.HasValue)
+                {
+                    throw new Exception("Sound file is not loaded yet.");
+                }
+
+                var freq = Frequency.Value;
                 var pos = DX.GetCurrentPositionSoundMem(ID);
                 // サンプル数で割ると秒数が出るが出る
                 return 1.0 * pos / freq;
             }
             set
             {
-                var freq = DX.GetFrequencySoundMem(ID);
+                SetFreq();
+                if (!Frequency.HasValue)
+                {
+                    throw new Exception("Sound file is not loaded yet.");
+                }
+
+                var freq = Frequency.Value;
                 var pos = value;
                 DX.SetCurrentPositionSoundMem((int)(1.0 * pos * freq), ID);
             }
@@ -151,15 +215,25 @@ namespace Amaoto
             }
             set
             {
+                SetFreq();
+                if (!Frequency.HasValue)
+                {
+                    throw new Exception("Sound file is not loaded yet.");
+                }
+
                 _ratio = value;
-                DX.ResetFrequencySoundMem(ID);
-                var freq = DX.GetFrequencySoundMem(ID);
+                var freq = Frequency.Value;
                 // 倍率変更
                 var speed = value * freq;
                 // 1秒間に再生すべきサンプル数を上げ下げすると速度が変化する。
                 DX.SetFrequencySoundMem((int)speed, ID);
             }
         }
+
+        /// <summary>
+        /// 音声の周波数。
+        /// </summary>
+        public int? Frequency { get; private set; }
 
         private int _pan;
         private int _volume;

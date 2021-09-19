@@ -3,27 +3,20 @@
 namespace Amaoto
 {
     /// <summary>
-    /// マウス操作。
+    /// マウス操作を管理するクラス。
     /// </summary>
-    public class Mouse
+    public static class Mouse
     {
         /// <summary>
-        /// マウス操作。
+        /// マウスの入力を処理する。必ず毎フレーム呼ぶ必要があります。
         /// </summary>
-        public Mouse()
-        {
-            Buttons = new int[5];
-        }
-
-        /// <summary>
-        /// マウスの入力を処理する。
-        /// </summary>
-        public void Update()
+        public static void Update()
         {
             Wheel = DX.GetMouseWheelRotVolF();
 
             DX.GetMousePoint(out var x, out var y);
-            Point = (x, y);
+            X = x;
+            Y = y;
 
             var mouse = DX.GetMouseInput();
 
@@ -61,36 +54,36 @@ namespace Amaoto
         }
 
         /// <summary>
-        /// マウスが押されたかどうかチェックする。
+        /// マウスが押されたかどうかチェックします。。
         /// </summary>
         /// <param name="mouseButton">ボタン。</param>
         /// <returns>押されたかどうか。</returns>
-        public bool IsPushedButton(MouseButton mouseButton)
+        public static bool IsPushed(MouseButton mouseButton)
         {
             return Buttons[GetIndexFromMouseButton(mouseButton)] == 1;
         }
 
         /// <summary>
-        /// マウスが押されているかどうかチェックする。
+        /// マウスが押されているかどうかチェックします。
         /// </summary>
         /// <param name="mouseButton">ボタン。</param>
         /// <returns>押されているかどうか。</returns>
-        public bool IsPushingButton(MouseButton mouseButton)
+        public static bool IsPushing(MouseButton mouseButton)
         {
             return Buttons[GetIndexFromMouseButton(mouseButton)] > 0;
         }
 
         /// <summary>
-        /// マウスのボタンが離されたかどうかチェックする。
+        /// マウスのボタンが離されたかどうかチェックします。
         /// </summary>
         /// <param name="mouseButton">ボタン。</param>
         /// <returns>離されたかどうか。</returns>
-        public bool IsLeftButton(MouseButton mouseButton)
+        public static bool IsLeft(MouseButton mouseButton)
         {
             return Buttons[GetIndexFromMouseButton(mouseButton)] == -1;
         }
 
-        private int GetIndexFromMouseButton(MouseButton mouseButton)
+        private static int GetIndexFromMouseButton(MouseButton mouseButton)
         {
             switch (mouseButton)
             {
@@ -114,7 +107,7 @@ namespace Amaoto
             }
         }
 
-        private MouseButton GetMouseButtonFromIndex(int index)
+        private static MouseButton GetMouseButtonFromIndex(int index)
         {
             switch (index)
             {
@@ -138,18 +131,22 @@ namespace Amaoto
             }
         }
 
-        private readonly int[] Buttons;
+        private static readonly int[] Buttons = new int[5];
 
         /// <summary>
         /// マウスホイール回転量。
         /// 奥に回すと正の数になる。
         /// </summary>
-        public float Wheel { get; private set; }
+        public static float Wheel { get; private set; }
 
         /// <summary>
-        /// マウス座標。
+        /// マウスX座標。
         /// </summary>
-        public (int x, int y) Point { get; private set; }
+        public static int X { get; private set; }
+        /// <summary>
+        /// マウスY座標。
+        /// </summary>
+        public static int Y { get; private set; }
     }
 
     /// <summary>

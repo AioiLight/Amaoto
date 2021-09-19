@@ -123,6 +123,15 @@ namespace Amaoto.Animation
         }
 
         /// <summary>
+        /// アニメーション中であるかどうか。
+        /// </summary>
+        /// <returns></returns>
+        public bool IsAnimating()
+        {
+            return GetCurrentAnimator().Counter.State == TimerState.Started;
+        }
+
+        /// <summary>
         /// 現在のアニメーターからアニメーション結果を得る。
         /// </summary>
         /// <returns>アニメーション結果。</returns>

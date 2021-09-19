@@ -75,7 +75,7 @@ namespace Amaoto
         {
             get
             {
-                return DX.GetMovieStateToGraph(ID) == 1 ? true : false;
+                return DX.GetMovieStateToGraph(ID) == 1;
             }
         }
 
