@@ -8,7 +8,7 @@ namespace Amaoto
     /// アトラスを生成します。
     /// 単一の画像から複数のテクスチャを切り出すことで、描画の高速化を実現します。
     /// </summary>
-    public class AtlasTexture : IDisposable
+    public class AtlasTexture : IDisposable, ITextureReturnable
     {
         /// <summary>
         /// アトラスを生成します。
@@ -30,7 +30,7 @@ namespace Amaoto
         /// </summary>
         /// <param name="rectangle">切り出す範囲。</param>
         /// <returns>テクスチャ。</returns>
-        public Texture GetTexture(Rectangle rectangle)
+        public Texture DerivateTexture(Rectangle rectangle)
         {
             var t = DX.DerivationGraph(rectangle.X, rectangle.Y,
                 rectangle.Width, rectangle.Height,
@@ -45,6 +45,15 @@ namespace Amaoto
         public void Dispose()
         {
             Source?.Dispose();
+        }
+
+        /// <summary>
+        /// アトラス自体のテクスチャを取得する。
+        /// </summary>
+        /// <returns>アトラス画像本体のTexture。</returns>
+        public Texture GetTexture()
+        {
+            return Source;
         }
 
         private protected Texture Source;
