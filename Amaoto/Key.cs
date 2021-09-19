@@ -76,6 +76,23 @@ namespace Amaoto
         {
             return Keys[key] == -1;
         }
+        
+        /// <summary>
+        /// キーコードに対応する文字列を取得します。
+        /// </summary>
+        /// <param name="key">キーコード。</param>
+        /// <returns><c>key</c> に対応する文字列。正しくないキーコードの場合は <c>UNKNOWN</c> が返る。</returns>
+        public static string GetKeyCodeString(int key)
+        {
+            if (KeyCodeString.TryGetValue(key, out var result))
+            {
+                return result;
+            }
+            else
+            {
+                return "UNKNOWN";
+            }
+        }
 
         private static readonly int[] Keys = new int[256];
         private static readonly byte[] Buffer = new byte[256];
