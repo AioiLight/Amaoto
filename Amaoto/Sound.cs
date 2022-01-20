@@ -24,7 +24,7 @@ namespace Amaoto
             }
             FileName = fileName;
 
-            Volume = 1.0;
+            _volume = 255;
         }
 
         ~Sound()
