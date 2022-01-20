@@ -71,6 +71,30 @@ namespace Amaoto
         }
 
         /// <summary>
+        /// 規定の解像度にスケール済のテクスチャを返します。
+        /// </summary>
+        /// <param name="texture">テクスチャ。</param>
+        /// <param name="width">横幅。</param>
+        /// <param name="height">縦幅。</param>
+        /// <returns>スケール済のテクスチャ。</returns>
+        public static Texture GetScaledTexture(ITextureReturnable texture, int width, int height)
+        {
+            var t = texture.GetTexture();
+            var origScaleX = t.ScaleX;
+            var origScaleY = t.ScaleY;
+            t.ScaleX = GetProperScaleX(t, width, true);
+            t.ScaleY = GetProperScaleY(t, height, true);
+            var screen = new VirtualScreen(width, height);
+            screen.Draw(() =>
+            {
+                t.Draw(0, 0);
+            });
+            t.ScaleX = origScaleX;
+            t.ScaleY = origScaleY;
+            return screen.GetTexture();
+        }
+
+        /// <summary>
         /// ReferencePointと横幅縦幅から適切な位置を計算する。
         /// </summary>
         /// <param name="width">横幅</param>
