@@ -25,21 +25,20 @@ namespace Amaoto
 
             var screen = new VirtualScreen(texWidth, texHeight);
 
-            var drawY = 0;
+            var drawY = padding;
             screen.Draw(() =>
             {
-                drawY += spacing;
                 for (var i = 0; i < children.Length; i++)
                 {
                     var t = children[i].GetTexture();
                     var origRef = t.ReferencePoint;
                     t.ReferencePoint = AmaotoUtil.GetToppedReferencePoint(t.ReferencePoint);
-                    var (drawX, _) = AmaotoUtil.GetProperPositionFromReferencePoint(texWidth - (padding * 2), texHeight, t.ReferencePoint);
-                    if (t.ActualSize.Width > texWidth - (padding * 2))
+                    var (drawX, _) = AmaotoUtil.GetProperPositionFromReferencePoint(texWidth, texHeight, t.ReferencePoint);
+                    if (t.ActualSize.Width > texWidth)
                     {
                         // はみ出してしまうのであれば、拡大率を変更する。
                         var r = t.ScaleX;
-                        t.ScaleX = AmaotoUtil.GetProperScaleX(t, texWidth - (padding * 2));
+                        t.ScaleX = AmaotoUtil.GetProperScaleX(t, texWidth);
                         t.Draw(padding + drawX, drawY);
                         t.ScaleX = r;
                     }
@@ -79,21 +78,20 @@ namespace Amaoto
 
             var screen = new VirtualScreen(texWidth, texHeight);
 
-            var drawX = 0;
+            var drawX = padding;
             screen.Draw(() =>
             {
-                drawX += spacing;
                 for (var i = 0; i < children.Length; i++)
                 {
                     var t = children[i].GetTexture();
                     var origRef = t.ReferencePoint;
                     t.ReferencePoint = AmaotoUtil.GetLeftedReferencePoint(t.ReferencePoint);
-                    var (_, drawY) = AmaotoUtil.GetProperPositionFromReferencePoint(texWidth, texHeight - (padding * 2), t.ReferencePoint);
-                    if (t.ActualSize.Height > texHeight - (padding * 2))
+                    var (_, drawY) = AmaotoUtil.GetProperPositionFromReferencePoint(texWidth, texHeight, t.ReferencePoint);
+                    if (t.ActualSize.Height > texHeight)
                     {
                         // はみ出してしまうのであれば、拡大率を変更する。
                         var r = t.ScaleY;
-                        t.ScaleY = AmaotoUtil.GetProperScaleY(t, texHeight - (padding * 2));
+                        t.ScaleY = AmaotoUtil.GetProperScaleY(t, texHeight);
                         t.Draw(drawX, padding + drawY);
                         t.ScaleY = r;
                     }
