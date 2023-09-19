@@ -43,7 +43,7 @@ namespace Amaoto.GUI
         /// <param name="canHandle"></param>
         /// <param name="pointX"></param>
         /// <param name="pointY"></param>
-        public override void Update(bool canHandle, int? pointX = null, int? pointY = null)
+        public override void Update(bool canHandle, int? pointX = null, int? pointY = null, int parentAbsoluteX = 0, int parentAbsoluteY = 0)
         {
             // 子GUIの更新。
             //base.Update(canHandle, X, Y);
@@ -57,12 +57,15 @@ namespace Amaoto.GUI
                 MousePoint = (pointX.Value - X, pointY.Value - Y);
             }
 
+            AbsoluteX = parentAbsoluteX + X;
+            AbsoluteY = parentAbsoluteY + Y;
+
             foreach (var item in Child)
             {
                 item.Update(canHandle
                     && !IsOutSide() && new Rectangle(item.X, item.Y, item.Width, item.Height).Contains(MousePoint.x, MousePoint.y),
                     MousePoint.x - (int)Position.x,
-                    MousePoint.y - (int)Position.y);
+                    MousePoint.y - (int)Position.y, AbsoluteX, AbsoluteY);
             }
 
             // 最大の子アイテムの座標

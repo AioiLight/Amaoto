@@ -28,12 +28,12 @@ namespace Amaoto.GUI
             UpAnimation = new Animation.EaseOut(95, 100, 1000 * 250);
         }
 
-        public override void Update(bool canHandle, int? pointX = null, int? pointY = null)
+        public override void Update(bool canHandle, int? pointX = null, int? pointY = null, int parentAbsoluteX = 0, int parentAbsoluteY= 0)
         {
             DownAnimation?.Tick();
             UpAnimation?.Tick();
 
-            base.Update(canHandle, pointX, pointY);
+            base.Update(canHandle, pointX, pointY, parentAbsoluteX, parentAbsoluteY);
 
             var v = VirtualScreen.GetTexture();
             if (DownAnimation.Counter.State == TimerState.Started)

@@ -68,7 +68,7 @@ namespace Amaoto.GUI
             ShowingTabIndex = 0;
         }
 
-        public override void Update(bool canHandle, int? pointX = null, int? pointY = null)
+        public override void Update(bool canHandle, int? pointX = null, int? pointY = null, int parentAbsoluteX = 0, int parentAbsoluteY = 0)
         {
             if (ShouldBuild)
             {
@@ -84,12 +84,15 @@ namespace Amaoto.GUI
                 MousePoint = (pointX.Value - X, pointY.Value - Y);
             }
 
-            TabHeaderScroller.Update(canHandle, MousePoint.x, MousePoint.y);
+            AbsoluteX = parentAbsoluteX + X;
+            AbsoluteY = parentAbsoluteY + Y;
+
+            TabHeaderScroller.Update(canHandle, MousePoint.x, MousePoint.y, AbsoluteX, AbsoluteY);
 
             for (int i = 0; i < Child.Count; i++)
             {
                 var handle = canHandle && ShowingTabIndex == i; 
-                Child[i].Update(handle, MousePoint.x, MousePoint.y);
+                Child[i].Update(handle, MousePoint.x, MousePoint.y, X, Y);
             }
 
             if (!canHandle || Amaoto.MouseHandled || !Enabled)

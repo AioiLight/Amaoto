@@ -39,7 +39,7 @@ namespace Amaoto.GUI
         /// <param name="canHandle">クリック判定を行うかどうか。これにかかわらず、MouseHandledがtrueであれば常にクリック判定を行いません。</param>
         /// <param name="pointX">マウスの相対X座標。</param>
         /// <param name="pointY">マウスの相対Y座標。</param>
-        public virtual void Update(bool canHandle, int? pointX = null, int? pointY = null)
+        public virtual void Update(bool canHandle, int? pointX = null, int? pointY = null, int parentAbsoluteX = 0, int parentAbsoluteY = 0)
         {
             if (ShouldBuild)
             {
@@ -48,16 +48,21 @@ namespace Amaoto.GUI
 
             if (!pointX.HasValue || !pointY.HasValue)
             {
+                // 親要素がない。
                 MousePoint = (Mouse.X - X, Mouse.Y - Y);
             }
             else
             {
+                // 親要素があるため、
                 MousePoint = (pointX.Value - X, pointY.Value - Y);
             }
 
+            AbsoluteX = parentAbsoluteX + X;
+            AbsoluteY = parentAbsoluteY + Y;
+
             foreach (var item in Child)
             {
-                item.Update(canHandle, MousePoint.x, MousePoint.y);
+                item.Update(canHandle, MousePoint.x, MousePoint.y, AbsoluteX, AbsoluteY);
             }
 
             if (!canHandle || Amaoto.MouseHandled || !Enabled)
@@ -302,6 +307,15 @@ namespace Amaoto.GUI
         /// Y座標。
         /// </summary>
         public int Y { get; set; }
+
+        /// <summary>
+        /// 最後に計算された絶対座標X。
+        /// </summary>
+        public int AbsoluteX { get; set; }
+        /// <summary>
+        /// 最後に計算された絶対座標Y。
+        /// </summary>
+        public int AbsoluteY { get; set; }
 
         /// <summary>
         /// 横幅。
