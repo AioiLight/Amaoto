@@ -220,7 +220,7 @@ namespace Amaoto.GUI
         /// クリックイベントを発火させる。
         /// </summary>
         /// <param name="e">イベント引数。</param>
-        protected void InvokeClicked(MouseClickEventArgs e)
+        public void InvokeClicked(MouseClickEventArgs e)
         {
             Clicked?.Invoke(this, e);
         }
