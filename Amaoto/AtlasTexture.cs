@@ -20,6 +20,16 @@ namespace Amaoto
             Source = new Texture(fileName);
         }
 
+        /// <summary>
+        /// アトラスを生成します。
+        /// 単一の画像から複数のテクスチャを切り出すことで、描画の高速化を実現します。
+        /// </summary>
+        /// <param name="texture">テクスチャ。</param>
+        public AtlasTexture(Texture texture)
+        {
+            Source = texture;
+        }
+
         ~AtlasTexture()
         {
             Dispose();
