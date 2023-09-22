@@ -15,10 +15,19 @@ namespace Amaoto
             Wheel = DX.GetMouseWheelRotVolF();
 
             DX.GetMousePoint(out var x, out var y);
+
+            IsMouseMoving = false;
+            if (X != x || Y != y || Wheel != 0)
+            {
+                IsMouseMoving = true;
+            }
+
             X = x;
             Y = y;
 
             var mouse = DX.GetMouseInput();
+
+            var isAnyButtonPushed = false;
 
             for (int i = 0; i < Buttons.Length; i++)
             {
@@ -34,6 +43,11 @@ namespace Amaoto
                     {
                         // 押してる状態が継続してる
                         Buttons[i] = 2;
+                    }
+
+                    if (!isAnyButtonPushed)
+                    {
+                        isAnyButtonPushed = true;
                     }
                 }
                 else
@@ -51,6 +65,8 @@ namespace Amaoto
                     }
                 }
             }
+
+            IsAnyButtonPushing = isAnyButtonPushed;
         }
 
         /// <summary>
@@ -147,6 +163,18 @@ namespace Amaoto
         /// マウスY座標。
         /// </summary>
         public static int Y { get; private set; }
+
+        /// <summary>
+        /// マウスボタンのどれかが押下されているかどうか。
+        /// フレームの更新のたびに false になります。
+        /// </summary>
+        public static bool IsAnyButtonPushing { get; private set; }
+
+        /// <summary>
+        /// マウスが動いているかどうか。
+        /// フレームの更新のたびに false になります。
+        /// </summary>
+        public static bool IsMouseMoving { get; private set; }
     }
 
     /// <summary>
