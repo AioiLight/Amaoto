@@ -13,11 +13,17 @@ namespace Amaoto
         /// </summary>
         public static void Update()
         {
+            IsAnyKeyPushing = false;
             DX.GetHitKeyStateAll(Buffer);
             for (int i = 0; i < 256; i++)
             {
                 if (Buffer[i] == 1)
                 {
+                    if (!IsAnyKeyPushing)
+                    {
+                        IsAnyKeyPushing = true;
+                    }
+
                     // 現在押している
                     if (!IsPushing(i))
                     {
@@ -213,5 +219,11 @@ namespace Amaoto
                 { 121, "CONVERT" },
                 { 69, "NUMLOCK" }
             };
+
+        /// <summary>
+        /// キーのどれかが押されているかどうか。
+        /// フレームの更新のたびに false になる。
+        /// </summary>
+        public static bool IsAnyKeyPushing { get; private set; }
     }
 }
