@@ -180,13 +180,13 @@ namespace Amaoto.GUI
         public event EventHandler<decimal> ValueChanged;
 
         /// <summary>
-        /// 増加ボタンをクリックして増加した。。
+        /// 増加ボタンをクリックして増加した。
         /// 直接数値を変更して値が増加した場合は、このイベントは呼び出されない。
         /// </summary>
         public event EventHandler<decimal> Increased;
 
         /// <summary>
-        /// 現象ボタンをクリックして減少した。
+        /// 減少ボタンをクリックして減少した。
         /// 直接数値を変更して値が減少した場合は、このイベントは呼び出されない。
         /// </summary>
         public event EventHandler<decimal> Decreased;

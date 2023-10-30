@@ -13,7 +13,7 @@ namespace Amaoto
     public class TextureMask : IDisposable
     {
         /// <summary>
-        /// テクスチャを使用したマウス区を作成します。
+        /// テクスチャを使用したマスクを作成します。
         /// </summary>
         /// <param name="width">マスクの横解像度。</param>
         /// <param name="height">マスクの縦解像度。</param>

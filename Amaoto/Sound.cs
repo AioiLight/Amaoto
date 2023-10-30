@@ -187,7 +187,7 @@ namespace Amaoto
 
                 var freq = Frequency.Value;
                 var pos = DX.GetCurrentPositionSoundMem(ID);
-                // サンプル数で割ると秒数が出るが出る
+                // サンプル数で割ると秒数が出る
                 return 1.0 * pos / freq;
             }
             set
