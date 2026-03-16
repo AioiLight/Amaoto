@@ -7,6 +7,7 @@
     <RootNamespace>Amaoto</RootNamespace>
     <AssemblyName>Amaoto</AssemblyName>
     <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
