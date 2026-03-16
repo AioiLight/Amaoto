@@ -124,12 +124,12 @@ namespace Amaoto
                 float offsetY = Edge / 2f;
                 float radius = Edge / 2f;
 
-                using var font = new Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel);
-
                 // バリアブルフォントは GraphicsPath.AddString でグリフアウトラインが正しく生成されないため、
                 // Graphics.DrawString を使い、円形マルチパス描画で縁取りを実現する。
                 int steps = Math.Max(8, Edge * 2);
+                using (var font = new Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel))
                 using (var outlineBrush = new SolidBrush(BackColor))
+                using (var foreBrush = new SolidBrush(ForeColor))
                 {
                     for (int i = 0; i < steps; i++)
                     {
@@ -149,10 +149,7 @@ namespace Amaoto
                                 offsetX + dx, offsetY + dy, stringFormat);
                         }
                     }
-                }
 
-                using (var foreBrush = new SolidBrush(ForeColor))
-                {
                     if (size.HasValue)
                     {
                         graphics.DrawString(text, font, foreBrush,
