@@ -80,6 +80,10 @@ namespace Amaoto
                         DX.SetDrawValidAlphaChannelGraphCreateFlag(DX.FALSE);
                     }
                 }
+                if (ID != -1)
+                {
+                    IsEnable = true;
+                }
             }
         }
 
