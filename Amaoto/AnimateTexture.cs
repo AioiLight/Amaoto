@@ -38,7 +38,6 @@
         {
             get
             {
-                Animation.Tick();
                 return Animation.Value;
             }
             set
