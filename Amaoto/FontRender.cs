@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 
 namespace Amaoto
 {
@@ -109,39 +110,62 @@ namespace Amaoto
             graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             // アンチエイリアスをかける
             graphics.SmoothingMode = SmoothingMode.HighQuality;
+            // 透過背景対応のアンチエイリアス (ClearTypeは不透明背景前提のため使用しない)
+            graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
         }
 
         private GraphicsPath DrawString(string text, Graphics graphics, StringFormat stringFormat, Size? size)
         {
             var gp = new GraphicsPath();
 
-            if (Edge > 0)
+            // GraphicsPath.AddString はバリアブルフォントのグリフアウトラインを
+            // 正しく生成できないため、Graphics.DrawString で直接描画する。
+            using (var font = new Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel))
             {
-                if (size.HasValue)
+                float offsetX = Edge / 2f;
+                float offsetY = Edge / 2f;
+
+                if (Edge > 0)
                 {
-                    gp.AddString(text, FontFamily, (int)FontStyle, FontSize, new Rectangle(Edge / 2, Edge / 2, size.Value.Width, size.Value.Height), stringFormat);
-                }
-                else
-                {
-                    gp.AddString(text, FontFamily, (int)FontStyle, FontSize, new Point(Edge / 2, Edge / 2), stringFormat);
+                    // 縁取り: 円形マルチパスで BackColor をオフセット描画してから前景を重ねる。
+                    int steps = Math.Max(8, Edge * 2);
+                    float radius = Edge / 2f;
+                    using (var outlineBrush = new SolidBrush(BackColor))
+                    {
+                        for (int i = 0; i < steps; i++)
+                        {
+                            double angle = 2.0 * Math.PI * i / steps;
+                            float dx = (float)(radius * Math.Cos(angle));
+                            float dy = (float)(radius * Math.Sin(angle));
+
+                            if (size.HasValue)
+                            {
+                                graphics.DrawString(text, font, outlineBrush,
+                                    new RectangleF(offsetX + dx, offsetY + dy, size.Value.Width, size.Value.Height),
+                                    stringFormat);
+                            }
+                            else
+                            {
+                                graphics.DrawString(text, font, outlineBrush,
+                                    offsetX + dx, offsetY + dy, stringFormat);
+                            }
+                        }
+                    }
                 }
 
-                // 縁取りをする。
-                graphics.DrawPath(new Pen(BackColor, Edge) { LineJoin = LineJoin.Round }, gp);
-
-                graphics.FillPath(new SolidBrush(ForeColor), gp);
-            }
-            else
-            {
-                if (size.HasValue)
+                using (var foreBrush = new SolidBrush(ForeColor))
                 {
-                    gp.AddString(text, FontFamily, (int)FontStyle, FontSize, new Rectangle(0, 0, size.Value.Width, size.Value.Height), stringFormat);
+                    if (size.HasValue)
+                    {
+                        graphics.DrawString(text, font, foreBrush,
+                            new RectangleF(offsetX, offsetY, size.Value.Width, size.Value.Height),
+                            stringFormat);
+                    }
+                    else
+                    {
+                        graphics.DrawString(text, font, foreBrush, offsetX, offsetY, stringFormat);
+                    }
                 }
-                else
-                {
-                    gp.AddString(text, FontFamily, (int)FontStyle, FontSize, new Point(0, 0), stringFormat);
-                }
-                graphics.FillPath(new SolidBrush(ForeColor), gp);
             }
 
             return gp;
