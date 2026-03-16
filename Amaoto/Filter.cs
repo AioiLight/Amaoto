@@ -62,7 +62,7 @@ namespace Amaoto
         /// <param name="saturation">彩度。-255～の範囲。</param>
         public static void Saturation(this ITextureReturnable g, int saturation)
         {
-            DX.GraphFilter(g.GetTexture().ID, DX.DX_GRAPH_FILTER_PMA_HSB, 0, 0, Clamp(saturation, -255, saturation), 0);
+            DX.GraphFilter(g.GetTexture().ID, DX.DX_GRAPH_FILTER_PMA_HSB, 0, 0, Clamp(saturation, -255, 255), 0);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Amaoto
             var hueType = absHue ? 1 : 0;
             DX.GraphFilter(g.GetTexture().ID, DX.DX_GRAPH_FILTER_PMA_HSB, hueType,
                 absHue ? Clamp(hue, 0, 360) : Clamp(hue, -180, 180), // 色相
-                Clamp(saturation, -255, saturation), // 彩度
+                Clamp(saturation, -255, 255), // 彩度
                 Clamp(brightness, -255, 255)); // 輝度
         }
 
