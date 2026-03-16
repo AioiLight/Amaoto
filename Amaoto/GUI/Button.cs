@@ -147,7 +147,7 @@ namespace Amaoto.GUI
                 // 左上
                 backTex.ReferencePoint = ReferencePoint.TopLeft;
                 backTex.ScaleX = 1.0;
-                backTex.ScaleX = 1.0;
+                backTex.ScaleY = 1.0;
                 backTex.Draw(0, 0, new Rectangle(0, 0, oneSize.Item1, oneSize.Item2));
 
                 // 中央上
