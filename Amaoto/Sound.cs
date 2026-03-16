@@ -59,7 +59,7 @@ namespace Amaoto
         /// 次再生されるときの音量を設定します。プロパティは変更されません。
         /// </summary>
         /// <param name="volume">音量。</param>
-        public void SetNextVolue(double volume)
+        public void SetNextVolume(double volume)
         {
             DX.ChangeNextPlayVolumeSoundMem((int)(volume * 255), ID);
         }
