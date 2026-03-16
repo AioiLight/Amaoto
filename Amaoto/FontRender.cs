@@ -156,10 +156,16 @@ namespace Amaoto
 
             var bitmap = new Bitmap(16, 16);
             // .NETの敗北
-            var graphicsSize = Graphics.FromImage(bitmap).
-                MeasureString(text, new Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel));
-            var trueGraphicsSize = Graphics.FromImage(bitmap).
-                MeasureString(text, new Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel), (int)graphicsSize.Width, stringFormat);
+            SizeF graphicsSize;
+            using (var g = Graphics.FromImage(bitmap))
+            {
+                graphicsSize = g.MeasureString(text, new Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel));
+            }
+            SizeF trueGraphicsSize;
+            using (var g = Graphics.FromImage(bitmap))
+            {
+                trueGraphicsSize = g.MeasureString(text, new Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel), (int)graphicsSize.Width, stringFormat);
+            }
             bitmap.Dispose();
             if (trueGraphicsSize.Width == 0 || trueGraphicsSize.Height == 0)
             {
@@ -180,8 +186,11 @@ namespace Amaoto
         private SizeF MeasureText(string text, int width, StringFormat stringFormat)
         {
             var bitmap = new Bitmap(16, 16);
-            var trueGraphicsSize = Graphics.FromImage(bitmap).
-                MeasureString(text, new Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel), width, stringFormat);
+            SizeF trueGraphicsSize;
+            using (var g = Graphics.FromImage(bitmap))
+            {
+                trueGraphicsSize = g.MeasureString(text, new Font(FontFamily, FontSize, FontStyle, GraphicsUnit.Pixel), width, stringFormat);
+            }
             bitmap.Dispose();
             if (trueGraphicsSize.Width == 0 || trueGraphicsSize.Height == 0)
             {
